@@ -38,13 +38,14 @@ export default function Cards() {
             shadow="md"
             transition="0.25s ease-in-out"
             _hover={{ shadow: "xl" }}
+            key={c.id}
           >
             <Flex w="100%" justify="space-between" align="center">
               <Heading size="sm">{c.name}</Heading>
               <Text size="sm">{c.attribute}</Text>
             </Flex>
 
-            <Image src={c.image} borderRadius="8px" />
+            <Image src={c.image} alt={c.name} borderRadius="8px" />
           </VStack>
         ))}
       </HStack>
