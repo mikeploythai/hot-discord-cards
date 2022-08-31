@@ -15,8 +15,8 @@ export default function Cards() {
 
       let { data: card, error } = await supabase
         .from("cards")
-        .select(`name, id, image, attribute`)
-        .eq("owner", user.id);
+        .select(`name, id, image, attribute, owners (owner_id)`)
+        .eq("owners.owner_id", user.id);
       if (error) throw error;
 
       if (card) setCard(card);
