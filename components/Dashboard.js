@@ -31,7 +31,7 @@ export default function Dashboard({ session }) {
         .from("profiles")
         .select(`username, bio, avatar_url, points`)
         .eq("id", user.id)
-        .single();
+        .maybeSingle();
       if (error) throw error;
 
       if (data) {
@@ -45,7 +45,7 @@ export default function Dashboard({ session }) {
     }
   }
 
-  async function updateProfile({ username }) {
+  async function updateProfile() {
     try {
       const user = supabase.auth.user();
 
@@ -95,7 +95,7 @@ export default function Dashboard({ session }) {
         <Button
           colorScheme="blue"
           onClick={() => {
-            updateProfile({ username, bio });
+            updateProfile();
             alert("Changes saved!");
             setDisable(true);
           }}
