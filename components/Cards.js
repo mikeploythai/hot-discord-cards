@@ -7,10 +7,7 @@ export default function Cards() {
 
   useEffect(() => {
     getCardData();
-    updateCardData();
-  }, []);
 
-  async function updateCardData() {
     const mySub = supabase
       .from("*")
       .on("*", (payload) => {
@@ -22,7 +19,7 @@ export default function Cards() {
     return () => {
       supabase.removeSubscription(mySub);
     };
-  }
+  }, []);
 
   async function getCardData() {
     try {
