@@ -19,13 +19,11 @@ export default function Cards() {
         .eq("owners.user_id", user.id);
       if (error) throw error;
 
-      if (card) setCard(card);
-
       supabase
         .from("*")
         .on("*", (payload) => {
           console.log("Change received!", payload);
-          setCard(card.new);
+          if (card) setCard(card);
         })
         .subscribe();
     } catch (error) {
