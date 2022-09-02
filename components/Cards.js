@@ -10,12 +10,12 @@ export default function Cards() {
     updateCardData();
   }, []);
 
-  async function updateCardData({ card }) {
+  async function updateCardData() {
     const mySub = supabase
       .from("*")
       .on("*", (payload) => {
         console.log("Change received!", payload);
-        setCard(card);
+        getCardData();
       })
       .subscribe();
 
