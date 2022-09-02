@@ -7,6 +7,17 @@ export default function Cards() {
 
   useEffect(() => {
     getCardData();
+    const mySub = supabase
+      .from("*")
+      .on("*", (payload) => {
+        console.log("Change received!", payload);
+        setCard(card.new);
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeSubscription(mySub);
+    };
   }, []);
 
   async function getCardData() {
