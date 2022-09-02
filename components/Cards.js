@@ -8,8 +8,8 @@ export default function Cards() {
   useEffect(() => {
     getCardData();
 
-    const mySub = supabase
-      .from("*")
+    const realtimeUpdate = supabase
+      .from("owners")
       .on("*", (payload) => {
         console.log("Change received!", payload);
         getCardData();
@@ -17,7 +17,7 @@ export default function Cards() {
       .subscribe();
 
     return () => {
-      supabase.removeSubscription(mySub);
+      supabase.removeSubscription(realtimeUpdate);
     };
   }, []);
 
