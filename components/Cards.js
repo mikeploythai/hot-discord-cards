@@ -7,18 +7,6 @@ export default function Cards() {
 
   useEffect(() => {
     getCardData();
-
-    const mySub = supabase
-      .from("*")
-      .on("*", (payload) => {
-        console.log("Change received!", payload);
-        setCard(card);
-      })
-      .subscribe();
-
-    return () => {
-      supabase.removeSubscription(mySub);
-    };
   }, []);
 
   async function getCardData() {
@@ -32,6 +20,18 @@ export default function Cards() {
       if (error) throw error;
 
       if (card) setCard(card);
+
+      const mySub = supabase
+        .from("*")
+        .on("*", (payload) => {
+          console.log("Change received!", payload);
+          setCard(card);
+        })
+        .subscribe();
+
+      return () => {
+        supabase.removeSubscription(mySub);
+      };
     } catch (error) {
       alert(error.error_description || error.message);
     }
