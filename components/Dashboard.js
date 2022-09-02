@@ -21,6 +21,17 @@ export default function Dashboard({ session }) {
 
   useEffect(() => {
     getProfileData();
+
+    const mySub = supabase
+      .from("*")
+      .on("*", (payload) => {
+        console.log("Change received!", payload);
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeSubscription(mySub);
+    };
   }, [session]);
 
   async function getProfileData() {
