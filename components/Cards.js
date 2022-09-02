@@ -21,15 +21,13 @@ export default function Cards() {
 
       if (card) setCard(card);
 
-      const mySub = supabase
+      supabase
         .from("*")
         .on("*", (payload) => {
           console.log("Change received!", payload);
           setCard(card.new);
         })
         .subscribe();
-
-      return supabase.removeSubscription(mySub);
     } catch (error) {
       alert(error.error_description || error.message);
     }
