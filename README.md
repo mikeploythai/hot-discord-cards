@@ -2,5 +2,5 @@
 
 | Developer      | GitHub                                        |
 | -------------- | --------------------------------------------- |
-| Mike Ploythai  | [TheCodeGoat](https://github.com/TheCodeGoat) |
+| Mike Ploythai  | [mikeploythai](https://github.com/mikeploythai) |
 | Shaleen Mathur | [shaleen23](https://github.com/shaleen23)     |
