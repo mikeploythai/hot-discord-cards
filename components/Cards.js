@@ -10,8 +10,7 @@ export default function Cards() {
 
     const realtimeUpdate = supabase
       .from("owners")
-      .on("*", (payload) => {
-        console.log("Change received!", payload);
+      .on("*", () => {
         getCardData();
       })
       .subscribe();
