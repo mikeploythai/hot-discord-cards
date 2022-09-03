@@ -59,6 +59,23 @@ export default function Dashboard({ session }) {
     }
   }
 
+  async function addCard() {
+    try {
+      let card = await supabase.from("cards").select("id");
+      let rand = Math.floor(Math.random() * card.body.length);
+
+      const user = supabase.auth.user();
+      let { error } = await supabase
+        .from("owners")
+        .insert([{ user_id: user.id, card_id: card.body[rand].id }], {
+          upsert: true,
+        });
+      if (error) throw error;
+    } catch (error) {
+      alert(error.error_description || error.message);
+    }
+  }
+
   return (
     <VStack gap="64px">
       <VStack gap="16px">
@@ -104,6 +121,7 @@ export default function Dashboard({ session }) {
           Save Changes
         </Button>
 
+        <Button onClick={() => addCard()}>Add Card</Button>
         <Button onClick={() => supabase.auth.signOut()}>Sign Out</Button>
       </VStack>
 
