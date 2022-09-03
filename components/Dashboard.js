@@ -61,15 +61,36 @@ export default function Dashboard({ session }) {
 
   async function addCard() {
     try {
-      let card = await supabase.from("cards").select("id");
-      let rand = Math.floor(Math.random() * card.body.length);
+      let { data: card } = await supabase.from("cards").select("id");
+      let rand = Math.floor(Math.random() * card.length);
+      let result = card[rand].id;
 
       const user = supabase.auth.user();
-      let { error } = await supabase
+      let { data: db, error } = await supabase
         .from("owners")
-        .insert([{ user_id: user.id, card_id: card.body[rand].id }], {
-          upsert: true,
-        });
+        .select("card_id, cards!inner (name)")
+        .eq("user_id", user.id);
+
+      let insert = async () => {
+        await supabase
+          .from("owners")
+          .insert([{ user_id: user.id, card_id: result }], {
+            upsert: true,
+          });
+      };
+
+      if (db.length === 0) {
+        insert();
+      } else {
+        for (let i = 0; i < db.length; i++) {
+          if (db[i].card_id === result) {
+            alert(`You already own ${db[i].cards.name}!`);
+          } else {
+            insert();
+          }
+        }
+      }
+
       if (error) throw error;
     } catch (error) {
       alert(error.error_description || error.message);
