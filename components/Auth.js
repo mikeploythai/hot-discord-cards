@@ -1,59 +1,35 @@
-import { Button, Heading, HStack, VStack } from "@chakra-ui/react";
+import { Button, Heading, Text, VStack } from "@chakra-ui/react";
 import { supabase } from "../utils/supabaseClient";
-import { FaDiscord, FaGithub } from "react-icons/fa";
+import { FaDiscord } from "react-icons/fa";
 
 export default function Auth() {
-  const handleGitHubLogin = async () => {
+  const handleLogin = async () => {
     try {
-      const { error } = await supabase.auth.signIn({
-        provider: "github",
-      });
+      const { error } = await supabase.auth.signIn({ provider: "discord" });
       if (error) throw error;
     } catch (error) {
-      alert(error.error_description || error.message);
-    }
-  };
-
-  const handleDiscordLogin = async () => {
-    try {
-      const { error } = await supabase.auth.signIn({
-        provider: "discord",
-      });
-      if (error) throw error;
-    } catch (error) {
-      alert(error.error_description || error.message);
+      alert(error.message);
     }
   };
 
   return (
-    <VStack gap="16px">
-      <Heading>Sign In Test</Heading>
+    <VStack gap="64px">
+      <VStack gap="8px">
+        <Heading size="3xl">Hot Discord Cards</Heading>
+        <Text fontSize="lg">One of the trading card games of all time.</Text>
+      </VStack>
 
-      <HStack gap="32px">
-        <Button
-          size="lg"
-          colorScheme="gray"
-          leftIcon={<FaGithub />}
-          onClick={(e) => {
-            e.preventDefault();
-            handleGitHubLogin();
-          }}
-        >
-          GitHub
-        </Button>
-
-        <Button
-          size="lg"
-          colorScheme="gray"
-          leftIcon={<FaDiscord />}
-          onClick={(e) => {
-            e.preventDefault();
-            handleDiscordLogin();
-          }}
-        >
-          Discord
-        </Button>
-      </HStack>
+      <Button
+        size="lg"
+        colorScheme="purple"
+        leftIcon={<FaDiscord />}
+        onClick={(e) => {
+          e.preventDefault();
+          handleLogin();
+        }}
+      >
+        <Text fontSize="md">Sign In with Discord</Text>
+      </Button>
     </VStack>
   );
 }
