@@ -18,9 +18,21 @@ export default function Dashboard({ session }) {
   const [bio, setBio] = useState(null);
   const [points, setPoints] = useState(0);
   const [disable, setDisable] = useState(true);
+  const [disableCard, setDisableCard] = useState(true);
 
   useEffect(() => {
     getProfileData();
+
+    const realtimeUpdate = supabase
+      .from("profiles")
+      .on("*", () => {
+        getProfileData();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeSubscription(realtimeUpdate);
+    };
   }, [session]);
 
   async function getProfileData() {
@@ -39,6 +51,7 @@ export default function Dashboard({ session }) {
         setBio(data.bio);
         setAvatarURL(data.avatar_url);
         setPoints(data.points);
+        setDisableCard(false);
       }
     } catch (error) {
       alert(error.error_description || error.message);
@@ -98,58 +111,62 @@ export default function Dashboard({ session }) {
   }
 
   return (
-    <VStack gap="64px">
-      <VStack gap="16px">
-        <Avatar size="2xl" src={avatar_url} />
+    <>
+      <VStack gap="64px">
+        <VStack gap="16px">
+          <Avatar size="2xl" src={avatar_url} />
 
-        <FormControl>
-          <FormLabel>Username</FormLabel>
-          <Input
-            id="username"
-            type="text"
-            placeholder={username || "Add a username"}
-            onChange={(e) => {
-              setUsername(e.target.value);
-              setDisable(false);
+          <FormControl>
+            <FormLabel>Username</FormLabel>
+            <Input
+              id="username"
+              type="text"
+              placeholder={username || "Add a username"}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                setDisable(false);
+              }}
+            />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Bio</FormLabel>
+            <Input
+              id="bio"
+              type="text"
+              placeholder={bio || "Add a bio"}
+              onChange={(e) => {
+                setBio(e.target.value);
+                setDisable(false);
+              }}
+            />
+          </FormControl>
+
+          <Text>Points: {points}</Text>
+
+          <Button
+            colorScheme="blue"
+            onClick={() => {
+              updateProfile();
+              alert("Changes saved!");
+              setDisable(true);
             }}
-          />
-        </FormControl>
+            isDisabled={disable}
+          >
+            Save Changes
+          </Button>
 
-        <FormControl>
-          <FormLabel>Bio</FormLabel>
-          <Input
-            id="bio"
-            type="text"
-            placeholder={bio || "Add a bio"}
-            onChange={(e) => {
-              setBio(e.target.value);
-              setDisable(false);
-            }}
-          />
-        </FormControl>
+          <Button onClick={() => addCard()} isDisabled={disableCard}>
+            Add Card
+          </Button>
+          <Button onClick={() => supabase.auth.signOut()}>Sign Out</Button>
+        </VStack>
 
-        <Text>Points: {points}</Text>
-
-        <Button
-          colorScheme="blue"
-          onClick={() => {
-            updateProfile();
-            alert("Changes saved!");
-            setDisable(true);
-          }}
-          isDisabled={disable}
-        >
-          Save Changes
-        </Button>
-
-        <Button onClick={() => addCard()}>Add Card</Button>
-        <Button onClick={() => supabase.auth.signOut()}>Sign Out</Button>
+        <VStack gap="16px">
+          <Heading size="md">Your Cards</Heading>
+          <Cards />
+        </VStack>
       </VStack>
-
-      <VStack gap="16px">
-        <Heading size="md">Your Cards</Heading>
-        <Cards />
-      </VStack>
-    </VStack>
+    </>
   );
 }
