@@ -14,10 +14,7 @@ export default function Cards() {
         getCardData();
       })
       .subscribe();
-
-    return () => {
-      supabase.removeSubscription(realtimeUpdate);
-    };
+    return () => supabase.removeSubscription(realtimeUpdate);
   }, []);
 
   async function getCardData() {
@@ -32,7 +29,7 @@ export default function Cards() {
 
       if (card) setCard(card);
     } catch (error) {
-      alert(error.error_description || error.message);
+      alert(error.message);
     }
   }
 
@@ -44,7 +41,7 @@ export default function Cards() {
         .match({ card_id: id });
       if (error) throw error;
     } catch (error) {
-      alert(error.error_description || error.message);
+      alert(error.message);
     }
   }
 
@@ -52,15 +49,16 @@ export default function Cards() {
     <HStack gap="32px" maxW="1280px" wrap="wrap" justify="center">
       {card.map((c) => (
         <VStack
+          key={c.id}
           w="250px"
           minH="350px"
           borderRadius="16px"
           padding="16px"
           gap="8px"
+          bgColor="gray.100"
           shadow="md"
           transition="0.25s ease-in-out"
-          _hover={{ shadow: "xl", cursor: "pointer" }}
-          key={c.id}
+          _hover={{ shadow: "xl", cursor: "pointer", transform: "scale(1.025)" }}
           onClick={() => deleteCard(c.id)}
         >
           <Flex w="100%" justify="space-between" align="center">
