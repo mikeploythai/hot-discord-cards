@@ -4,7 +4,6 @@ import {
   FormLabel,
   Input,
   VStack,
-  Text,
   Avatar,
   Heading,
 } from "@chakra-ui/react";
@@ -14,10 +13,9 @@ import Cards from "./Cards";
 
 export default function Dashboard({ session }) {
   const [username, setUsername] = useState(null);
-  const [avatar_url, setAvatarURL] = useState(null);
   const [bio, setBio] = useState(null);
-  const [points, setPoints] = useState(0);
-  const [disable, setDisable] = useState(true);
+
+  const [disableSave, setDisableSave] = useState(true);
   const [disableCard, setDisableCard] = useState(true);
 
   useEffect(() => {
@@ -29,10 +27,7 @@ export default function Dashboard({ session }) {
         getProfileData();
       })
       .subscribe();
-
-    return () => {
-      supabase.removeSubscription(realtimeUpdate);
-    };
+    return () => supabase.removeSubscription(realtimeUpdate);
   }, [session]);
 
   async function getProfileData() {
@@ -41,7 +36,7 @@ export default function Dashboard({ session }) {
 
       let { data, error } = await supabase
         .from("profiles")
-        .select(`username, bio, avatar_url, points`)
+        .select("username, bio")
         .eq("id", user.id)
         .maybeSingle();
       if (error) throw error;
@@ -49,34 +44,32 @@ export default function Dashboard({ session }) {
       if (data) {
         setUsername(data.username);
         setBio(data.bio);
-        setAvatarURL(data.avatar_url);
-        setPoints(data.points);
         setDisableCard(false);
       }
     } catch (error) {
-      alert(error.error_description || error.message);
+      alert(error.message);
     }
   }
 
   async function updateProfile() {
     try {
       const user = supabase.auth.user();
-
       const updates = { id: user.id, username, bio, updated_at: new Date() };
+
       let { error } = await supabase
         .from("profiles")
         .upsert(updates, { returning: "minimal" });
       if (error) throw error;
     } catch (error) {
-      alert(error.error_description || error.message);
+      alert(error.message);
     }
   }
 
   async function addCard() {
     try {
       let { data: card } = await supabase.from("cards").select("id");
-      let rand = Math.floor(Math.random() * card.length);
-      let result = card[rand].id;
+      const rand = Math.floor(Math.random() * card.length);
+      const result = card[rand].id;
 
       const user = supabase.auth.user();
       let { data: db, error } = await supabase
@@ -106,67 +99,65 @@ export default function Dashboard({ session }) {
 
       if (error) throw error;
     } catch (error) {
-      alert(error.error_description || error.message);
+      alert(error.message);
     }
   }
 
   return (
-    <>
-      <VStack gap="64px">
-        <VStack gap="16px">
-          <Avatar size="2xl" src={avatar_url} />
+    <VStack gap="64px">
+      <VStack gap="16px">
+        <Avatar size="2xl" name={username} />
 
-          <FormControl>
-            <FormLabel>Username</FormLabel>
-            <Input
-              id="username"
-              type="text"
-              placeholder={username || "Add a username"}
-              onChange={(e) => {
-                setUsername(e.target.value);
-                setDisable(false);
-              }}
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>Bio</FormLabel>
-            <Input
-              id="bio"
-              type="text"
-              placeholder={bio || "Add a bio"}
-              onChange={(e) => {
-                setBio(e.target.value);
-                setDisable(false);
-              }}
-            />
-          </FormControl>
-
-          <Text>Points: {points}</Text>
-
-          <Button
-            colorScheme="blue"
-            onClick={() => {
-              updateProfile();
-              alert("Changes saved!");
-              setDisable(true);
+        <FormControl>
+          <FormLabel>Username</FormLabel>
+          <Input
+            id="username"
+            type="text"
+            placeholder={username || "Add a username"}
+            onChange={(e) => {
+              setUsername(e.target.value);
+              setDisableSave(false);
             }}
-            isDisabled={disable}
-          >
-            Save Changes
-          </Button>
+          />
+        </FormControl>
 
+        <FormControl>
+          <FormLabel>Bio</FormLabel>
+          <Input
+            id="bio"
+            type="text"
+            placeholder={bio || "Add a bio"}
+            onChange={(e) => {
+              setBio(e.target.value);
+              setDisableSave(false);
+            }}
+          />
+        </FormControl>
+
+        <Button
+          colorScheme="blue"
+          onClick={() => {
+            updateProfile();
+            alert("Changes saved!");
+            setDisableSave(true);
+          }}
+          isDisabled={disableSave}
+        >
+          Save Changes
+        </Button>
+
+        <Button onClick={() => supabase.auth.signOut()}>Sign Out</Button>
+      </VStack>
+
+      <VStack gap="32px">
+        <VStack gap="16px">
+          <Heading size="md">Your Cards</Heading>
           <Button onClick={() => addCard()} isDisabled={disableCard}>
             Add Card
           </Button>
-          <Button onClick={() => supabase.auth.signOut()}>Sign Out</Button>
         </VStack>
-
-        <VStack gap="16px">
-          <Heading size="md">Your Cards</Heading>
-          <Cards />
-        </VStack>
+        <Cards />
       </VStack>
-    </>
+    </VStack>
   );
 }
