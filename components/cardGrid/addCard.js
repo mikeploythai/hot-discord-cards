@@ -3,11 +3,8 @@ import { useState } from "react";
 import { supabase } from "../../utils/supabaseClient";
 
 export default function AddCard() {
-  const [loaded, setLoaded] = useState(false);
-
   async function addRandomCard() {
     try {
-      setLoaded(false);
       let { data: card } = await supabase.from("cards").select("id");
       const rand = Math.floor(Math.random() * card.length);
       const result = card[rand].id;
@@ -42,13 +39,11 @@ export default function AddCard() {
       if (error) throw error;
     } catch (error) {
       alert(error.message);
-    } finally {
-      setLoaded(true);
     }
   }
 
   return (
-    <Button onClick={() => addRandomCard()} isLoading={loaded}>
+    <Button onClick={() => addRandomCard()}>
       Add Card
     </Button>
   );
