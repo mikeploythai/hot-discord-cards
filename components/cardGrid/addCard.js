@@ -4,6 +4,7 @@ import { supabase } from "../../utils/supabaseClient";
 
 export default function AddCard() {
   const [loaded, setLoaded] = useState(false);
+  const [card, setCard] = useState([]);
 
   useEffect(() => {
     getCardData();
