@@ -1,6 +1,6 @@
-import { Flex } from "@chakra-ui/react";
-import Auth from "../components/Auth";
-import Dashboard from "../components/Dashboard";
+import { Center, Flex } from "@chakra-ui/react";
+import Auth from "../components/auth";
+import Dashboard from "../components/dashboard";
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
 
@@ -15,9 +15,11 @@ export default function Home() {
   }, []);
 
   return (
-    <Flex minH="100vh" align="center" justify="center" padding="128px">
+    <Flex minH="100vh" justify="center">
       {!session ? (
-        <Auth />
+        <Center>
+          <Auth />
+        </Center>
       ) : (
         <Dashboard key={session.user.id} session={session} />
       )}
