@@ -4,10 +4,10 @@ import Link from "next/link";
 
 export default function Nav() {
   const navItems = [
-    { title: "Dashboard", page: "/" },
-    { title: "Clicker", page: "/#", disabled: true },
-    { title: "Buy", page: "/#", disabled: true },
-    { title: "Trade", page: "/#", disabled: true },
+    { title: "Dashboard", page: "/", id: 1 },
+    { title: "Clicker", page: "/#", id: 2, disabled: true },
+    { title: "Buy", page: "/#", id: 3, disabled: true },
+    { title: "Trade", page: "/#", id: 4, disabled: true },
   ];
 
   function NavItems() {
@@ -15,7 +15,7 @@ export default function Nav() {
       <HStack display={{ base: "none", md: "initial" }}>
         {navItems.map((items) => {
           return (
-            <Link href={items.page}>
+            <Link key={items.id} href={items.page}>
               <Button size="sm" variant="ghost" isDisabled={items.disabled}>
                 {items.title}
               </Button>

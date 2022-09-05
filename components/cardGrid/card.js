@@ -59,10 +59,9 @@ export default function Card() {
   return (
     <SimpleGrid columns={[1, 2, 3]} gap="64px">
       {card.map((c) => (
-        <Skeleton isLoaded={loaded}>
+        <Skeleton isLoaded={loaded} key={c.id}>
           <VStack
-            key={c.id}
-            w={{base: "300px", md: "200px"}}
+            w={{ base: "300px", md: "200px" }}
             h="auto"
             p="16px"
             gap="8px"
