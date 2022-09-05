@@ -1,8 +1,41 @@
 import { Button } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "../../utils/supabaseClient";
 
 export default function AddCard() {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    getCardData();
+
+    const realtimeUpdate = supabase
+      .from("owners")
+      .on("*", () => {
+        getCardData();
+      })
+      .subscribe();
+    return () => supabase.removeSubscription(realtimeUpdate);
+  }, []);
+
+  async function getCardData() {
+    try {
+      setLoaded(false);
+      let user = supabase.auth.user();
+
+      let { data: card, error } = await supabase
+        .from("cards")
+        .select(`name, id, image, attribute, owners!inner (*)`)
+        .eq("owners.user_id", user.id);
+      if (error) throw error;
+
+      if (card) setCard(card);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoaded(true);
+    }
+  }
+
   async function addRandomCard() {
     try {
       let { data: card } = await supabase.from("cards").select("id");
@@ -43,7 +76,7 @@ export default function AddCard() {
   }
 
   return (
-    <Button onClick={() => addRandomCard()}>
+    <Button onClick={() => addRandomCard()} isLoading={loaded}>
       Add Card
     </Button>
   );
