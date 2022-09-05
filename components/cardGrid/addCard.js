@@ -20,7 +20,6 @@ export default function AddCard() {
 
   async function getCardData() {
     try {
-      setLoaded(false);
       let user = supabase.auth.user();
 
       let { data: card, error } = await supabase
@@ -32,8 +31,6 @@ export default function AddCard() {
       if (card) setCard(card);
     } catch (error) {
       alert(error.message);
-    } finally {
-      setLoaded(true);
     }
   }
 
