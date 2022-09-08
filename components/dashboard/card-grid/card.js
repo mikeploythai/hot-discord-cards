@@ -1,8 +1,28 @@
-import { Box, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  HStack,
+  Image,
+  Skeleton,
+  SkeletonText,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import { supabase } from "../../../utils/supabaseClient";
 
-export default function Card() {
+export default function Card({ name, attr, img, id }) {
+  async function deleteCard(id) {
+    try {
+      let { error } = await supabase
+        .from("owners")
+        .delete()
+        .match({ card_id: id });
+      if (error) throw error;
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
   return (
-    <Box
+    <VStack
       bgColor="white"
       maxW="200px"
       w="100%"
@@ -11,16 +31,17 @@ export default function Card() {
       rounded="lg"
       boxShadow="xs"
       transition=".25s ease-in-out"
-      _hover={{ transform: "scale(1.05)" }}
+      _hover={{ transform: "scale(1.05)", cursor: "pointer" }}
+      onClick={() => deleteCard(id)}
     >
-      <VStack w="100%" h="100%" gap="4px">
-        <HStack w="100%" justify="space-between">
-          <Heading size="sm">Test</Heading>
-          <Text fontSize="xs">Attr</Text>
-        </HStack>
+      <HStack w="100%" justify="space-between">
+        <Text fontSize="sm">
+          <b>{name}</b>
+        </Text>
+        <Text fontSize="xs">{attr}</Text>
+      </HStack>
 
-        <Box bgColor="gray.100" w="100%" h="100%" rounded="md"></Box>
-      </VStack>
-    </Box>
+      <Image src={img} alt={name} w="100%" h="100%" rounded="md" />
+    </VStack>
   );
 }

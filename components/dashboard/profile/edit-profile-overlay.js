@@ -15,7 +15,7 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "../../../utils/supabaseClient";
 
 export default function EditProfileOverlay({
@@ -28,6 +28,16 @@ export default function EditProfileOverlay({
 }) {
   const [username, setUsername] = useState(null);
   const [bio, setBio] = useState(null);
+
+  useEffect(() => {
+    const realtime = supabase
+      .channel("profiles")
+      .on("postgres_changes", { event: "*", schema: "*" }, () => {
+        getProfileData();
+      })
+      .subscribe();
+    return () => supabase.removeChannel(realtime);
+  }, []);
 
   async function updateProfileData() {
     try {
@@ -50,8 +60,6 @@ export default function EditProfileOverlay({
       if (error) throw error;
     } catch (error) {
       alert(error.message);
-    } finally {
-      getProfileData();
     }
   }
 

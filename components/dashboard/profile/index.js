@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../../utils/supabaseClient";
 import EditProfileOverlay from "./edit-profile-overlay";
 
-export default function Profile({ session }) {
+export default function Profile({ session, getCurrentUser }) {
   const [loaded, isLoaded] = useState(true);
   const [username, setUsername] = useState(null);
   const [bio, setBio] = useState(null);
@@ -24,16 +24,6 @@ export default function Profile({ session }) {
   useEffect(() => {
     getProfileData();
   }, [session]);
-
-  async function getCurrentUser() {
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.getSession();
-    if (error) throw error;
-    if (!session?.user) throw new Error("User not logged in");
-    return session.user;
-  }
 
   async function getProfileData() {
     try {
@@ -86,11 +76,13 @@ export default function Profile({ session }) {
             </Button>
           </HStack>
 
-          <SkeletonText w="80%" isLoaded={loaded}>
-            <Text fontSize="sm" whiteSpace="pre-wrap">
-              {bio}
-            </Text>
-          </SkeletonText>
+          {bio === null ? null : (
+            <SkeletonText w="80%" isLoaded={loaded}>
+              <Text fontSize="sm" whiteSpace="pre-wrap">
+                {bio}
+              </Text>
+            </SkeletonText>
+          )}
         </VStack>
       </HStack>
 
