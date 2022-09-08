@@ -113,9 +113,8 @@ export default function CardGrid({ getCurrentUser }) {
         >
           {card.map((c) => {
             return (
-              <Skeleton isLoaded={loaded} rounded="lg">
+              <Skeleton key={c.id} isLoaded={loaded} rounded="lg">
                 <Card
-                  key={c.id}
                   name={c.name}
                   attr={c.attribute}
                   img={c.image}
