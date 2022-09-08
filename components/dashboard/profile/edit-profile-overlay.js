@@ -86,7 +86,7 @@ export default function EditProfileOverlay({
                         onChange={(e) => setUsername(e.target.value)}
                       />
                       <FormHelperText>
-                        Make sure it's more than 2 letters!
+                        Make sure it&apos;s more than 2 letters!
                       </FormHelperText>
                     </FormControl>
 
@@ -107,7 +107,7 @@ export default function EditProfileOverlay({
                         }}
                       />
                       <FormHelperText>
-                        Type 'clear' to delete your bio.
+                        Type &apos;clear&apos; to delete your bio.
                       </FormHelperText>
                     </FormControl>
                   </VStack>
