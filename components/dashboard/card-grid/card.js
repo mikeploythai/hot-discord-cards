@@ -1,27 +1,8 @@
-import {
-  HStack,
-  Image,
-  Skeleton,
-  SkeletonText,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import { supabase } from "../../../utils/supabaseClient";
+import { HStack, Image, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import DeleteCardOverlay from "./delete-card-overlay";
 
 export default function Card({ name, attr, img, id, getCardData }) {
-  async function deleteCard(id) {
-    try {
-      let { error } = await supabase
-        .from("owners")
-        .delete()
-        .match({ card_id: id });
-      if (error) throw error;
-    } catch (error) {
-      alert(error.message);
-    } finally {
-      getCardData();
-    }
-  }
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <VStack
@@ -34,7 +15,7 @@ export default function Card({ name, attr, img, id, getCardData }) {
       boxShadow="xs"
       transition=".25s ease-in-out"
       _hover={{ transform: "scale(1.05)", cursor: "pointer" }}
-      onClick={() => deleteCard(id)}
+      onClick={onOpen}
     >
       <HStack w="100%" justify="space-between">
         <Text fontSize="sm">
@@ -44,6 +25,7 @@ export default function Card({ name, attr, img, id, getCardData }) {
       </HStack>
 
       <Image src={img} alt={name} w="100%" h="100%" rounded="md" />
+      <DeleteCardOverlay isOpen={isOpen} onClose={onClose} id={id} getCardData={getCardData} />
     </VStack>
   );
 }
