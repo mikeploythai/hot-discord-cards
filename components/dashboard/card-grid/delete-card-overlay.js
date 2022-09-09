@@ -7,7 +7,6 @@ import {
   AlertDialogOverlay,
   Button,
   HStack,
-  Text,
   useToast,
 } from "@chakra-ui/react";
 import { useRef } from "react";
@@ -59,7 +58,12 @@ export default function DeleteCardOverlay({
 
           <AlertDialogFooter>
             <HStack>
-              <Button ref={cancelRef} onClick={onClose} variant="ghost">
+              <Button
+                ref={cancelRef}
+                onClick={onClose}
+                variant="ghost"
+                _focusVisible={{ boxShadow: "0 0 0 2px #3182ce" }}
+              >
                 Cancel
               </Button>
 
