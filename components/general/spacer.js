@@ -1,4 +1,11 @@
-import { Button, Container, Flex, Heading, HStack } from "@chakra-ui/react";
+import {
+  Button,
+  Container,
+  Flex,
+  Heading,
+  HStack,
+  IconButton,
+} from "@chakra-ui/react";
 
 export default function Spacer() {
   return (
@@ -9,7 +16,14 @@ export default function Spacer() {
             This is a spacer component
           </Heading>
 
-          <Button size="sm">Hey :D</Button>
+          <Button display={{ base: "none", md: "initial" }} size="sm">
+            Hey :D
+          </Button>
+          
+          <IconButton
+            display={{ base: "initial", md: "none" }}
+            aria-label="spacer"
+          />
         </HStack>
       </Container>
     </Flex>
