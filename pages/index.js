@@ -8,7 +8,6 @@ import Nav from "../components/nav";
 export default function Home() {
   const [loaded, isLoaded] = useState(false);
   const [session, setSession] = useState(null);
-  const toast = useToast();
 
   useEffect(() => {
     let mounted = true;
@@ -36,31 +35,12 @@ export default function Home() {
     };
   }, []);
 
-  const handleLogin = async () => {
-    try {
-      isLoaded(false);
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "discord",
-      });
-      if (error) throw error;
-    } catch (error) {
-      toast({
-        title: "Error!",
-        description: error.message,
-        status: "error",
-        isClosable: true,
-      });
-    } finally {
-      isLoaded(true);
-    }
-  };
-
   return (
     <Flex minH="100vh" justify="center" p="16px" bgColor="gray.50">
-      <Nav session={session} handleLogin={handleLogin} />
+      <Nav session={session} />
       {!session ? (
         <Center m="0" p="0">
-          <Landing handleLogin={handleLogin} />
+          <Landing />
         </Center>
       ) : (
         <Dashboard session={session} />
