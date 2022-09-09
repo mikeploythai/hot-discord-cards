@@ -4,9 +4,6 @@ import {
   Container,
   Heading,
   HStack,
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
   Text,
   useDisclosure,
   VStack,
@@ -16,7 +13,6 @@ import { supabase } from "../../../utils/supabaseClient";
 import EditProfileOverlay from "./edit-profile-overlay";
 
 export default function Profile({ session, getCurrentUser }) {
-  const [loaded, isLoaded] = useState(true);
   const [username, setUsername] = useState(null);
   const [bio, setBio] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -27,7 +23,6 @@ export default function Profile({ session, getCurrentUser }) {
 
   async function getProfileData() {
     try {
-      isLoaded(false);
       const user = await getCurrentUser();
 
       let { data, error } = await supabase
@@ -43,8 +38,6 @@ export default function Profile({ session, getCurrentUser }) {
       }
     } catch (error) {
       alert(error.message);
-    } finally {
-      isLoaded(true);
     }
   }
 
@@ -57,15 +50,11 @@ export default function Profile({ session, getCurrentUser }) {
         rounded="lg"
         gap={{ base: "16px", md: "32px" }}
       >
-        <SkeletonCircle isLoaded={loaded} h="auto" w="auto">
-          <Avatar size={{ base: "md", md: "xl" }} name={username} />
-        </SkeletonCircle>
+        <Avatar size={{ base: "md", md: "xl" }} name={username} />
 
         <VStack w="100%" align="start" gap={{ base: "0", md: "2px" }}>
           <HStack w="100%" justify="space-between">
-            <Skeleton w="40%" isLoaded={loaded}>
-              <Heading size={{ base: "md", md: "lg" }}>@{username}</Heading>
-            </Skeleton>
+            <Heading size={{ base: "md", md: "lg" }}>@{username}</Heading>
 
             <Button
               size={{ base: "xs", md: "sm" }}
@@ -77,11 +66,9 @@ export default function Profile({ session, getCurrentUser }) {
           </HStack>
 
           {bio === null ? null : (
-            <SkeletonText w="80%" isLoaded={loaded}>
-              <Text fontSize="sm" whiteSpace="pre-wrap">
-                {bio}
-              </Text>
-            </SkeletonText>
+            <Text fontSize="sm" whiteSpace="pre-wrap">
+              {bio}
+            </Text>
           )}
         </VStack>
       </HStack>
