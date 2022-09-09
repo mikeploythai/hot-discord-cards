@@ -1,9 +1,27 @@
-import { Button, Heading, Text, VStack } from "@chakra-ui/react";
+import { Button, Heading, Text, useToast, VStack } from "@chakra-ui/react";
 import { FaDiscord } from "react-icons/fa";
 import { useState } from "react";
+import { supabase } from "../../utils/supabaseClient";
 
-export default function Landing({ handleLogin }) {
+export default function Landing() {
   const [loading, isLoading] = useState(false);
+  const toast = useToast();
+
+  async function handleLogin() {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "discord",
+      });
+      if (error) throw error;
+    } catch (error) {
+      toast({
+        title: "Error!",
+        description: error.message,
+        status: "error",
+        isClosable: true,
+      });
+    }
+  }
 
   return (
     <VStack gap={{ base: "32px", md: "48px" }} zIndex={1}>
@@ -28,7 +46,7 @@ export default function Landing({ handleLogin }) {
         }}
         isLoading={loading}
       >
-        Sign Up with Discord
+        Sign In with Discord
       </Button>
     </VStack>
   );
