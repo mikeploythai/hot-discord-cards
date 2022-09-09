@@ -12,7 +12,7 @@ import { supabase } from "../../../utils/supabaseClient";
 import Card from "./card";
 
 export default function CardGrid({ getCurrentUser }) {
-  const [loaded, setLoaded] = useState(false);
+  const [loading, isLoading] = useState(false);
   const [card, setCard] = useState([]);
 
   useEffect(() => {
@@ -29,7 +29,6 @@ export default function CardGrid({ getCurrentUser }) {
 
   async function getCardData() {
     try {
-      setLoaded(false);
       const user = await getCurrentUser();
 
       let { data: card, error } = await supabase
@@ -41,14 +40,12 @@ export default function CardGrid({ getCurrentUser }) {
       if (card) setCard(card);
     } catch (error) {
       alert(error.message);
-    } finally {
-      setLoaded(true);
     }
   }
 
   async function addRandomCard() {
     try {
-      setLoaded(false);
+      isLoading(true);
       let { data: card } = await supabase.from("cards").select("id");
       const rand = Math.floor(Math.random() * card.length);
       const result = card[rand].id;
@@ -59,24 +56,22 @@ export default function CardGrid({ getCurrentUser }) {
         .select("card_id, cards!inner (name)")
         .eq("user_id", user.id);
 
-      let insert = async () => {
+      async function insert() {
         await supabase
           .from("owners")
           .insert([{ user_id: user.id, card_id: result }], {
             upsert: true,
           });
-      };
+        getCardData();
+      }
 
-      if (db.length === 0) {
-        insert();
-      } else {
+      if (db.length === 0) insert();
+      else {
         for (let i = 0; i < db.length; i++) {
           if (db[i].card_id === result) {
-            setLoaded(true);
+            isLoading(false);
             alert(`You already own ${db[i].cards.name}!`);
-          } else {
-            insert();
-          }
+          } else insert();
         }
       }
 
@@ -84,7 +79,7 @@ export default function CardGrid({ getCurrentUser }) {
     } catch (error) {
       alert(error.message);
     } finally {
-      setLoaded(true);
+      isLoading(false);
     }
   }
 
@@ -99,7 +94,7 @@ export default function CardGrid({ getCurrentUser }) {
       >
         <HStack w="100%" justify="space-between">
           <Heading size="md">Your Cards</Heading>
-          <Button size="sm" onClick={() => addRandomCard()}>
+          <Button size="sm" onClick={() => addRandomCard()} isLoading={loading}>
             Add
           </Button>
         </HStack>
@@ -113,14 +108,14 @@ export default function CardGrid({ getCurrentUser }) {
         >
           {card.map((c) => {
             return (
-              <Skeleton key={c.id} isLoaded={loaded} rounded="lg">
-                <Card
-                  name={c.name}
-                  attr={c.attribute}
-                  img={c.image}
-                  id={c.id}
-                />
-              </Skeleton>
+              <Card
+                key={c.id}
+                name={c.name}
+                attr={c.attribute}
+                img={c.image}
+                id={c.id}
+                getCardData={getCardData}
+              />
             );
           })}
         </SimpleGrid>

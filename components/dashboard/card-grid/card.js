@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { supabase } from "../../../utils/supabaseClient";
 
-export default function Card({ name, attr, img, id }) {
+export default function Card({ name, attr, img, id, getCardData }) {
   async function deleteCard(id) {
     try {
       let { error } = await supabase
@@ -18,6 +18,8 @@ export default function Card({ name, attr, img, id }) {
       if (error) throw error;
     } catch (error) {
       alert(error.message);
+    } finally {
+      getCardData();
     }
   }
 
