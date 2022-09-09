@@ -13,6 +13,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Textarea,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -28,6 +29,7 @@ export default function EditProfileOverlay({
 }) {
   const [username, setUsername] = useState(null);
   const [bio, setBio] = useState(null);
+  const toast = useToast();
 
   useEffect(() => {
     const realtime = supabase
@@ -59,7 +61,12 @@ export default function EditProfileOverlay({
         .upsert(updates, { returning: "minimal" });
       if (error) throw error;
     } catch (error) {
-      alert(error.message);
+      toast({
+        title: "Error!",
+        description: error.message,
+        status: "error",
+        isClosable: true,
+      });
     }
   }
 
@@ -113,9 +120,10 @@ export default function EditProfileOverlay({
                           bgColor: "white",
                           boxShadow: "0 0 0 2px #3182ce",
                         }}
+                        autoFocus
                       />
                       <FormHelperText>
-                        Type &apos;clear&apos; to delete your bio.
+                        Type &apos;clear&apos; and save to delete your bio!
                       </FormHelperText>
                     </FormControl>
                   </VStack>

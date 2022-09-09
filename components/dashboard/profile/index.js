@@ -6,6 +6,7 @@ import {
   HStack,
   Text,
   useDisclosure,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -16,6 +17,7 @@ export default function Profile({ session, getCurrentUser }) {
   const [username, setUsername] = useState(null);
   const [bio, setBio] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast()
 
   useEffect(() => {
     getProfileData();
@@ -37,7 +39,12 @@ export default function Profile({ session, getCurrentUser }) {
         setBio(data.bio);
       }
     } catch (error) {
-      alert(error.message);
+      toast({
+        title: "Error!",
+        description: error.message,
+        status: "error",
+        isClosable: true,
+      });
     }
   }
 

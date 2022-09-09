@@ -4,7 +4,7 @@ import {
   Heading,
   HStack,
   SimpleGrid,
-  Skeleton,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -14,6 +14,7 @@ import Card from "./card";
 export default function CardGrid({ getCurrentUser }) {
   const [loading, isLoading] = useState(false);
   const [card, setCard] = useState([]);
+  const toast = useToast();
 
   useEffect(() => {
     getCardData();
@@ -39,7 +40,12 @@ export default function CardGrid({ getCurrentUser }) {
 
       if (card) setCard(card);
     } catch (error) {
-      alert(error.message);
+      toast({
+        title: "Error!",
+        description: error.message,
+        status: "error",
+        isClosable: true,
+      });
     }
   }
 
@@ -70,14 +76,24 @@ export default function CardGrid({ getCurrentUser }) {
         for (let i = 0; i < db.length; i++) {
           if (db[i].card_id === result) {
             isLoading(false);
-            alert(`You already own ${db[i].cards.name}!`);
+            toast({
+              title: "Warning!",
+              description: `You already own "${db[i].cards.name}"`,
+              status: "warning",
+              isClosable: true,
+            });
           } else insert();
         }
       }
 
       if (error) throw error;
     } catch (error) {
-      alert(error.message);
+      toast({
+        title: "Error!",
+        description: error.message,
+        status: "error",
+        isClosable: true,
+      });
     } finally {
       isLoading(false);
     }

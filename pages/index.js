@@ -1,4 +1,4 @@
-import { Center, Flex } from "@chakra-ui/react";
+import { Center, Flex, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { supabase } from "../utils/supabaseClient";
 import Landing from "../components/general/landing";
@@ -8,6 +8,7 @@ import Nav from "../components/nav";
 export default function Home() {
   const [loaded, isLoaded] = useState(false);
   const [session, setSession] = useState(null);
+  const toast = useToast();
 
   useEffect(() => {
     let mounted = true;
@@ -43,7 +44,12 @@ export default function Home() {
       });
       if (error) throw error;
     } catch (error) {
-      alert(error.message);
+      toast({
+        title: "Error!",
+        description: error.message,
+        status: "error",
+        isClosable: true,
+      });
     } finally {
       isLoaded(true);
     }
