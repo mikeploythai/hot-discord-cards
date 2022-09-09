@@ -1,4 +1,4 @@
-import { Button, HStack } from "@chakra-ui/react";
+import { Button, HStack, Link } from "@chakra-ui/react";
 import { useState } from "react";
 import { supabase } from "../../utils/supabaseClient";
 import { FaSignOutAlt, FaSignInAlt } from "react-icons/fa";
@@ -9,9 +9,15 @@ export default function NavLinks({ session, handleLogin }) {
   return (
     <HStack>
       {!session ? (
-        <Button href="/" variant="ghost" size="sm">
-          GitHub Repo
-        </Button>
+        <Link
+          href="https://github.com/mploythai/hot-discord-cards"
+          _hover={{ textDecor: "none" }}
+          isExternal
+        >
+          <Button variant="ghost" size="sm">
+            GitHub Repo
+          </Button>
+        </Link>
       ) : null}
 
       {!session ? (
