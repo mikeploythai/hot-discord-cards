@@ -1,6 +1,10 @@
 import {
   Box,
   Button,
+  Editable,
+  EditableInput,
+  EditablePreview,
+  EditableTextarea,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -12,7 +16,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Textarea,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -48,13 +51,9 @@ export default function EditProfileOverlay({
       const updates = {
         id: user.id,
         username: username || userText,
-        bio: bio || bioText,
+        bio: bio,
         updated_at: new Date(),
       };
-
-      if (updates.bio === "clear" || updates.bio === "Clear") {
-        updates.bio = null;
-      }
 
       let { error } = await supabase
         .from("profiles")
@@ -94,36 +93,62 @@ export default function EditProfileOverlay({
                   <VStack gap="8px">
                     <FormControl>
                       <FormLabel>Username</FormLabel>
-                      <Input
-                        variant="filled"
-                        placeholder={userText}
-                        fontSize={{ base: "sm", md: "md" }}
-                        onChange={(e) => setUsername(e.target.value)}
-                      />
+
+                      <Editable defaultValue={userText}>
+                        <Input
+                          as={EditablePreview}
+                          variant="filled"
+                          pt="6px"
+                          fontSize={{ base: "sm", md: "md" }}
+                        />
+
+                        <Input
+                          as={EditableInput}
+                          variant="filled"
+                          fontSize={{ base: "sm", md: "md" }}
+                          onChange={(e) => setUsername(e.target.value)}
+                          _focusVisible={{
+                            bgColor: "white",
+                            boxShadow: "0 0 0 2px #3182ce",
+                          }}
+                        />
+                      </Editable>
+
                       <FormHelperText>
-                        Make sure it&apos;s more than 2 letters!
+                        Usernames must be more than 2 letters!
                       </FormHelperText>
                     </FormControl>
 
                     <FormControl>
                       <FormLabel>Bio</FormLabel>
-                      <Input
-                        as={Textarea}
-                        variant="filled"
-                        placeholder={bioText}
-                        resize="none"
-                        fontSize={{ base: "sm", md: "md" }}
-                        border="none"
-                        outline="none"
-                        onChange={(e) => setBio(e.target.value)}
-                        _focusVisible={{
-                          bgColor: "white",
-                          boxShadow: "0 0 0 2px #3182ce",
-                        }}
-                        autoFocus
-                      />
+
+                      <Editable defaultValue={bioText}>
+                        <Input
+                          as={EditablePreview}
+                          variant="filled"
+                          whiteSpace="pre-wrap"
+                          minH="80px"
+                          fontSize={{ base: "sm", md: "md" }}
+                          overflow="scroll"
+                        />
+
+                        <Input
+                          as={EditableTextarea}
+                          variant="filled"
+                          minH="80px"
+                          maxLength={100}
+                          resize="none"
+                          fontSize={{ base: "sm", md: "md" }}
+                          onChange={(e) => setBio(e.target.value)}
+                          _focusVisible={{
+                            bgColor: "white",
+                            boxShadow: "0 0 0 2px #3182ce",
+                          }}
+                        />
+                      </Editable>
+
                       <FormHelperText>
-                        Type &apos;clear&apos; and save to delete your bio!
+                        Bios can be 100 characters max!
                       </FormHelperText>
                     </FormControl>
                   </VStack>

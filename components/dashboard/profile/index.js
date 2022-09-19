@@ -17,7 +17,7 @@ export default function Profile({ session, getCurrentUser }) {
   const [username, setUsername] = useState(null);
   const [bio, setBio] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const toast = useToast()
+  const toast = useToast();
 
   useEffect(() => {
     getProfileData();
@@ -72,11 +72,9 @@ export default function Profile({ session, getCurrentUser }) {
             </Button>
           </HStack>
 
-          {bio === null ? null : (
-            <Text fontSize="sm" whiteSpace="pre-wrap">
-              {bio}
-            </Text>
-          )}
+          <Text fontSize="sm" whiteSpace="pre-wrap">
+            {bio}
+          </Text>
         </VStack>
       </HStack>
 
