@@ -77,7 +77,7 @@ export default function EditProfileOverlay({
       isCentered
     >
       <ModalOverlay>
-        <ModalContent rounded="lg">
+        <ModalContent rounded="lg" m="16px">
           <ModalHeader>Edit Profile</ModalHeader>
 
           <ModalBody>
