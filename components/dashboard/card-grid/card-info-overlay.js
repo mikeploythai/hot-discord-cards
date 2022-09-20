@@ -61,7 +61,7 @@ export default function CardInfoOverlay({
                     </Heading>
                   </VStack>
 
-                  <Text>// insert stats and stuff here</Text>
+                  <Text>*insert stats and stuff here*</Text>
                 </VStack>
 
                 <HStack
