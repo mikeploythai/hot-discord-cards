@@ -3,7 +3,7 @@ import NavLinks from "./nav-links";
 
 export default function Nav({ session }) {
   return (
-    <Flex pos="fixed" top={0} w="100%" p="16px" zIndex={10}>
+    <Flex pos="fixed" top={0} w="100%" p="16px" zIndex={1}>
       <Container
         maxW="container.lg"
         p={{ base: "24px", md: "32px" }}
