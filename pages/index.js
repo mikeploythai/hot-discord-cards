@@ -43,7 +43,7 @@ export default function Home() {
           <Landing />
         </Center>
       ) : (
-        <Dashboard session={session} />
+        <Dashboard />
       )}
     </Flex>
   );

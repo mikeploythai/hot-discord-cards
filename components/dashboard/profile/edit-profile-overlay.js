@@ -42,7 +42,7 @@ export default function EditProfileOverlay({
       })
       .subscribe();
     return () => supabase.removeChannel(realtime);
-  }, []);
+  });
 
   async function updateProfileData() {
     try {

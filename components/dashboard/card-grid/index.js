@@ -26,7 +26,7 @@ export default function CardGrid({ getCurrentUser }) {
       })
       .subscribe();
     return () => supabase.removeChannel(realtime);
-  }, []);
+  });
 
   async function getCardData() {
     try {

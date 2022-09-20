@@ -4,7 +4,7 @@ import Spacer from "../general/spacer";
 import CardGrid from "./card-grid";
 import Profile from "./profile";
 
-export default function Dashboard({ session }) {
+export default function Dashboard() {
   async function getCurrentUser() {
     const {
       data: { session },
@@ -18,11 +18,7 @@ export default function Dashboard({ session }) {
   return (
     <SimpleGrid w="100%" h="fit-content" gap="16px">
       <Spacer />
-      <Profile
-        key={session.user.id}
-        session={session}
-        getCurrentUser={getCurrentUser}
-      />
+      <Profile getCurrentUser={getCurrentUser} />
       <CardGrid getCurrentUser={getCurrentUser} />
     </SimpleGrid>
   );

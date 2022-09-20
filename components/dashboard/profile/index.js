@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../../utils/supabaseClient";
 import EditProfileOverlay from "./edit-profile-overlay";
 
-export default function Profile({ session, getCurrentUser }) {
+export default function Profile({ getCurrentUser }) {
   const [username, setUsername] = useState(null);
   const [bio, setBio] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -21,7 +21,7 @@ export default function Profile({ session, getCurrentUser }) {
 
   useEffect(() => {
     getProfileData();
-  }, [session]);
+  });
 
   async function getProfileData() {
     try {
