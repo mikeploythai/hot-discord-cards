@@ -27,7 +27,7 @@ export default function Landing() {
     <VStack gap={{ base: "32px", md: "48px" }} zIndex={1}>
       <VStack textAlign="center" gap={{ base: "2px", md: "8px" }}>
         <Heading size={{ base: "xl", md: "3xl" }} maxW="2xl">
-          One of the trading card games of all time
+          One of the trading card games of all time.
         </Heading>
 
         <Text fontSize={{ base: "md", md: "xl" }}>
