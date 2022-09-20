@@ -16,6 +16,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  useBreakpointValue,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -32,9 +33,16 @@ export default function EditProfileOverlay({
 }) {
   const [username, setUsername] = useState(null);
   const [bio, setBio] = useState(null);
+  const [disabled, setDisabled] = useState(true);
+
   const toast = useToast();
+  const toastPos = useBreakpointValue({ base: "bottom", md: "bottom-right" });
+  const toastW = useBreakpointValue({ base: "100%", md: "320px" });
+  const toastP = useBreakpointValue({ base: "0 16px 8px", md: "0 8px 8px" });
 
   useEffect(() => {
+    getProfileData();
+
     const realtime = supabase
       .channel("profiles")
       .on("postgres_changes", { event: "*", schema: "*" }, () => {
@@ -51,9 +59,13 @@ export default function EditProfileOverlay({
       const updates = {
         id: user.id,
         username: username || userText,
-        bio: bio,
+        bio: bio || bioText,
         updated_at: new Date(),
       };
+
+      if (updates.bio === " ") {
+        updates.bio = null;
+      }
 
       let { error } = await supabase
         .from("profiles")
@@ -64,6 +76,23 @@ export default function EditProfileOverlay({
         title: "Error!",
         description: error.message,
         status: "error",
+        position: toastPos,
+        containerStyle: {
+          w: toastW,
+          p: toastP,
+        },
+        isClosable: true,
+      });
+    } finally {
+      toast({
+        title: "Success!",
+        description: "Your profile was saved.",
+        status: "success",
+        position: toastPos,
+        containerStyle: {
+          w: toastW,
+          p: toastP,
+        },
         isClosable: true,
       });
     }
@@ -88,6 +117,7 @@ export default function EditProfileOverlay({
                   onSubmit={(e) => {
                     e.preventDefault();
                     updateProfileData();
+                    setDisabled(true);
                   }}
                 >
                   <VStack gap="8px">
@@ -106,7 +136,10 @@ export default function EditProfileOverlay({
                           as={EditableInput}
                           variant="filled"
                           fontSize={{ base: "sm", md: "md" }}
-                          onChange={(e) => setUsername(e.target.value)}
+                          onChange={(e) => {
+                            setUsername(e.target.value);
+                            setDisabled(false);
+                          }}
                           _focusVisible={{
                             bgColor: "white",
                             boxShadow: "0 0 0 2px #3182ce",
@@ -139,7 +172,11 @@ export default function EditProfileOverlay({
                           maxLength={100}
                           resize="none"
                           fontSize={{ base: "sm", md: "md" }}
-                          onChange={(e) => setBio(e.target.value)}
+                          onChange={(e) => {
+                            if (e.target.value.length === 0) setBio(" ");
+                            else setBio(e.target.value);
+                            setDisabled(false);
+                          }}
                           _focusVisible={{
                             bgColor: "white",
                             boxShadow: "0 0 0 2px #3182ce",
@@ -159,7 +196,11 @@ export default function EditProfileOverlay({
 
           <ModalFooter>
             <HStack>
-              <Button variant="ghost" onClick={onClose}>
+              <Button
+                variant="ghost"
+                onClick={onClose}
+                onClickCapture={() => setDisabled(true)}
+              >
                 Cancel
               </Button>
 
@@ -168,6 +209,7 @@ export default function EditProfileOverlay({
                 type="submit"
                 colorScheme="purple"
                 onClick={onClose}
+                isDisabled={disabled}
               >
                 Save
               </Button>
