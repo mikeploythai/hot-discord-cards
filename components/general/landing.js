@@ -1,11 +1,22 @@
-import { Button, Heading, Text, useToast, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  Heading,
+  Text,
+  useBreakpointValue,
+  useToast,
+  VStack,
+} from "@chakra-ui/react";
 import { FaDiscord } from "react-icons/fa";
 import { useState } from "react";
 import { supabase } from "../../utils/supabaseClient";
 
 export default function Landing() {
   const [loading, isLoading] = useState(false);
+
   const toast = useToast();
+  const toastPos = useBreakpointValue({ base: "bottom", md: "bottom-right" });
+  const toastW = useBreakpointValue({ base: "100%", md: "320px" });
+  const toastP = useBreakpointValue({ base: "0 16px 8px", md: "0 8px 8px" });
 
   async function handleLogin() {
     try {
@@ -18,6 +29,11 @@ export default function Landing() {
         title: "Error!",
         description: error.message,
         status: "error",
+        position: toastPos,
+        containerStyle: {
+          w: toastW,
+          p: toastP,
+        },
         isClosable: true,
       });
     }

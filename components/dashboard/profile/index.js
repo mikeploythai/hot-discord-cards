@@ -5,6 +5,7 @@ import {
   Heading,
   HStack,
   Text,
+  useBreakpointValue,
   useDisclosure,
   useToast,
   VStack,
@@ -17,7 +18,11 @@ export default function Profile({ getCurrentUser }) {
   const [username, setUsername] = useState(null);
   const [bio, setBio] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const toast = useToast();
+  const toastPos = useBreakpointValue({ base: "bottom", md: "bottom-right" });
+  const toastW = useBreakpointValue({ base: "100%", md: "320px" });
+  const toastP = useBreakpointValue({ base: "0 16px 8px", md: "0 8px 8px" });
 
   useEffect(() => {
     getProfileData();
@@ -43,6 +48,11 @@ export default function Profile({ getCurrentUser }) {
         title: "Error!",
         description: error.message,
         status: "error",
+        position: toastPos,
+        containerStyle: {
+          w: toastW,
+          p: toastP,
+        },
         isClosable: true,
       });
     }
