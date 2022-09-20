@@ -12,9 +12,11 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  useBreakpointValue,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
-import DeleteCardPopover from "./delete-card-popover";
+import { supabase } from "../../../utils/supabaseClient";
 
 export default function CardInfoOverlay({
   isOpen,
@@ -25,6 +27,46 @@ export default function CardInfoOverlay({
   id,
   getCardData,
 }) {
+  const toast = useToast();
+  const toastPos = useBreakpointValue({ base: "bottom", md: "bottom-right" });
+  const toastW = useBreakpointValue({ base: "100%", md: "320px" });
+  const toastP = useBreakpointValue({ base: "0 16px 8px", md: "0 8px 8px" });
+
+  async function deleteCard(id) {
+    try {
+      let { error } = await supabase
+        .from("owners")
+        .delete()
+        .match({ card_id: id });
+      if (error) throw error;
+    } catch (error) {
+      toast({
+        title: "Error!",
+        description: error.message,
+        status: "error",
+        position: toastPos,
+        containerStyle: {
+          w: toastW,
+          p: toastP,
+        },
+        isClosable: true,
+      });
+    } finally {
+      getCardData();
+      toast({
+        title: "Success!",
+        description: "The card was deleted.",
+        status: "success",
+        position: toastPos,
+        containerStyle: {
+          w: toastW,
+          p: toastP,
+        },
+        isClosable: true,
+      });
+    }
+  }
+
   return (
     <Modal
       isOpen={isOpen}
@@ -69,11 +111,13 @@ export default function CardInfoOverlay({
                   w="100%"
                   justify="end"
                 >
-                  <DeleteCardPopover
-                    onModalClose={onClose}
-                    id={id}
-                    getCardData={getCardData}
-                  />
+                  <Button
+                    variant="ghost"
+                    colorScheme="red"
+                    onClick={() => deleteCard(id)}
+                  >
+                    Delete
+                  </Button>
 
                   <Button colorScheme="purple" isDisabled>
                     Trade
@@ -85,11 +129,13 @@ export default function CardInfoOverlay({
 
           <ModalFooter>
             <HStack display={{ base: "initial", md: "none" }}>
-              <DeleteCardPopover
-                onModalClose={onClose}
-                id={id}
-                getCardData={getCardData}
-              />
+              <Button
+                variant="ghost"
+                colorScheme="red"
+                onClick={() => deleteCard(id)}
+              >
+                Delete
+              </Button>
 
               <Button colorScheme="purple" isDisabled>
                 Trade
