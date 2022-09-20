@@ -1,5 +1,5 @@
 import { HStack, Image, Text, useDisclosure, VStack } from "@chakra-ui/react";
-import DeleteCardOverlay from "./delete-card-overlay";
+import CardInfoOverlay from "./card-info-overlay";
 
 export default function Card({ name, attr, img, id, getCardData }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -25,7 +25,16 @@ export default function Card({ name, attr, img, id, getCardData }) {
       </HStack>
 
       <Image src={img} alt={name} w="100%" h="100%" rounded="md" />
-      <DeleteCardOverlay isOpen={isOpen} onClose={onClose} id={id} getCardData={getCardData} />
+      
+      <CardInfoOverlay
+        isOpen={isOpen}
+        onClose={onClose}
+        name={name}
+        img={img}
+        attr={attr}
+        id={id}
+        getCardData={getCardData}
+      />
     </VStack>
   );
 }
