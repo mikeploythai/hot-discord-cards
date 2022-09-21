@@ -6,7 +6,7 @@ export default function Nav({ session }) {
     <Flex pos="fixed" top={0} w="100%" p="16px" zIndex={1}>
       <Container
         maxW="container.lg"
-        p={{ base: "24px", md: "48px" }}
+        p={{ base: "24px", md: "32px" }}
         bgColor="white"
         boxShadow="xs"
         rounded="lg"
