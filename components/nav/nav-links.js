@@ -64,15 +64,15 @@ export default function NavLinks({ session }) {
           _hover={{ textDecor: "none" }}
           isExternal
         >
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size={{ base: "sm", md: "md" }}>
             Source Code
           </Button>
         </Link>
       ) : (
         <>
           <HStack display={{ base: "none", md: "initial" }}>
-            <NavButtons size="sm" />
-            <SignOutButton size="sm" />
+            <NavButtons size="md" />
+            <SignOutButton size="md" />
           </HStack>
 
           <IconButton

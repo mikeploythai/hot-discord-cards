@@ -160,7 +160,7 @@ export default function EditProfileOverlay({
                           as={EditablePreview}
                           variant="filled"
                           whiteSpace="pre-wrap"
-                          minH="80px"
+                          minH="100px"
                           fontSize={{ base: "sm", md: "md" }}
                           overflow="scroll"
                         />
@@ -168,7 +168,7 @@ export default function EditProfileOverlay({
                         <Input
                           as={EditableTextarea}
                           variant="filled"
-                          minH="80px"
+                          minH="100px"
                           maxLength={100}
                           resize="none"
                           fontSize={{ base: "sm", md: "md" }}

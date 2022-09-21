@@ -61,7 +61,7 @@ export default function Profile({ getCurrentUser }) {
   return (
     <Container maxW="container.md" p="0">
       <HStack
-        p={{ base: "24px", md: "32px" }}
+        p={{ base: "24px", md: "48px" }}
         bgColor="white"
         boxShadow="xs"
         rounded="lg"
@@ -82,7 +82,12 @@ export default function Profile({ getCurrentUser }) {
             </Button>
           </HStack>
 
-          <Text fontSize="sm" whiteSpace="pre-wrap">
+          <Text
+            fontSize={{ base: "xs", md: "sm" }}
+            wordBreak="break-word"
+            whiteSpace="pre-wrap"
+            noOfLines={5}
+          >
             {bio}
           </Text>
         </VStack>
