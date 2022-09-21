@@ -2,10 +2,9 @@ import { Center, Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { supabase } from "../utils/supabaseClient";
 import Landing from "../components/general/landing";
-import Nav from "../components/nav";
 import Clicker from "../components/clicker";
 
-export default function Home() {
+export default function ClickerPage() {
   const [loaded, isLoaded] = useState(false);
   const [session, setSession] = useState(null);
 
@@ -37,7 +36,6 @@ export default function Home() {
 
   return (
     <Flex minH="100vh" justify="center" p="16px" bgColor="gray.50">
-      <Nav session={session} />
       {!session ? (
         <Center m="0" p="0">
           <Landing />
