@@ -4,6 +4,7 @@ import {
   Heading,
   HStack,
   SimpleGrid,
+  useBreakpointValue,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -14,7 +15,11 @@ import Card from "./card";
 export default function CardGrid({ getCurrentUser }) {
   const [loading, isLoading] = useState(false);
   const [card, setCard] = useState([]);
+
   const toast = useToast();
+  const toastPos = useBreakpointValue({ base: "bottom", md: "bottom-right" });
+  const toastW = useBreakpointValue({ base: "100%", md: "320px" });
+  const toastP = useBreakpointValue({ base: "0 16px 8px", md: "0 8px 8px" });
 
   useEffect(() => {
     getCardData();
@@ -44,6 +49,11 @@ export default function CardGrid({ getCurrentUser }) {
         title: "Error!",
         description: error.message,
         status: "error",
+        position: toastPos,
+        containerStyle: {
+          w: toastW,
+          p: toastP,
+        },
         isClosable: true,
       });
     }
@@ -53,8 +63,8 @@ export default function CardGrid({ getCurrentUser }) {
     try {
       isLoading(true);
       let { data: card } = await supabase.from("cards").select("id");
-      const rand = Math.floor(Math.random() * card.length);
-      const result = card[rand].id;
+      const randNum = Math.floor(Math.random() * card.length);
+      const randCard = card[randNum].id;
 
       const user = await getCurrentUser();
       let { data: db, error } = await supabase
@@ -65,25 +75,32 @@ export default function CardGrid({ getCurrentUser }) {
       async function insert() {
         await supabase
           .from("owners")
-          .insert([{ user_id: user.id, card_id: result }], {
-            upsert: true,
-          });
-        getCardData();
+          .upsert(
+            { user_id: user.id, card_id: randCard },
+            { ignoreDuplicates: true }
+          );
       }
 
       if (db.length === 0) insert();
       else {
-        for (let i = 0; i < db.length; i++) {
-          if (db[i].card_id === result) {
+        for (let i in db) {
+          if (db[i].card_id === randCard) {
             isLoading(false);
             toast({
               title: "Warning!",
               description: `You already own "${db[i].cards.name}"`,
               status: "warning",
+              position: toastPos,
+              containerStyle: {
+                w: toastW,
+                p: toastP,
+              },
               isClosable: true,
             });
-          } else insert();
+            break;
+          }
         }
+        insert();
       }
 
       if (error) throw error;
@@ -92,6 +109,11 @@ export default function CardGrid({ getCurrentUser }) {
         title: "Error!",
         description: error.message,
         status: "error",
+        position: toastPos,
+        containerStyle: {
+          w: toastW,
+          p: toastP,
+        },
         isClosable: true,
       });
     } finally {
@@ -102,7 +124,7 @@ export default function CardGrid({ getCurrentUser }) {
   return (
     <Container maxW="container.md" p="0">
       <VStack
-        p={{ base: "24px 24px 48px", md: "32px" }}
+        p={{ base: "24px 24px 48px", md: "48px" }}
         bgColor="white"
         boxShadow="xs"
         rounded="lg"
