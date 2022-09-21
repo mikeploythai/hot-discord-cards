@@ -18,7 +18,7 @@ export default function NavLinks({ session }) {
   const links = [
     { name: "Dashboard", href: "/", id: 1 },
     { name: "Clicker", href: "/clicker", id: 2 },
-    { name: "Buy", href: "/buy", disabled: true, id: 3 },
+    { name: "Buy", href: "/buy", id: 3 },
     { name: "Trade", href: "/trade", disabled: true, id: 4 },
   ];
 
