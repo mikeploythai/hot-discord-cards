@@ -2,13 +2,14 @@ import {
   Button,
   HStack,
   IconButton,
-  Link,
+  Link as ChakraLink,
   useDisclosure,
 } from "@chakra-ui/react";
 import { supabase } from "../../utils/supabaseClient";
 import { FaSignOutAlt, FaBars } from "react-icons/fa";
 import { useRef } from "react";
 import MenuOverlay from "./menu-overlay";
+import Link from "next/link";
 
 export default function NavLinks({ session }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -16,7 +17,7 @@ export default function NavLinks({ session }) {
 
   const links = [
     { name: "Dashboard", href: "/", id: 1 },
-    { name: "Clicker", href: "/clicker", disabled: true, id: 2 },
+    { name: "Clicker", href: "/clicker", id: 2 },
     { name: "Buy", href: "/buy", disabled: true, id: 3 },
     { name: "Trade", href: "/trade", disabled: true, id: 4 },
   ];
@@ -26,16 +27,16 @@ export default function NavLinks({ session }) {
       <>
         {links.map((link) => {
           return (
-            <Button
-              key={link.id}
-              variant="ghost"
-              size={size}
-              href={link.href}
-              isDisabled={link.disabled}
-              onClick={onClose}
-            >
-              {link.name}
-            </Button>
+            <Link key={link.id} href={link.href} passHref scroll>
+              <Button
+                variant="ghost"
+                size={size}
+                isDisabled={link.disabled}
+                onClick={onClose}
+              >
+                {link.name}
+              </Button>
+            </Link>
           );
         })}
       </>
@@ -59,7 +60,7 @@ export default function NavLinks({ session }) {
   return (
     <>
       {!session ? (
-        <Link
+        <ChakraLink
           href="https://github.com/mploythai/hot-discord-cards"
           _hover={{ textDecor: "none" }}
           isExternal
@@ -67,7 +68,7 @@ export default function NavLinks({ session }) {
           <Button variant="ghost" size="sm">
             Source Code
           </Button>
-        </Link>
+        </ChakraLink>
       ) : (
         <>
           <HStack display={{ base: "none", md: "initial" }}>

@@ -34,7 +34,7 @@ export default function Profile({ getCurrentUser }) {
 
       let { data, error } = await supabase
         .from("profiles")
-        .select("username, bio")
+        .select("username, bio, points")
         .eq("id", user.id)
         .maybeSingle();
       if (error) throw error;

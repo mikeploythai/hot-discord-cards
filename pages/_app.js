@@ -1,4 +1,5 @@
 import { ChakraProvider } from "@chakra-ui/react";
+import "../utils/globals.css";
 
 function HotDiscordCards({ Component, pageProps }) {
   return (
