@@ -27,7 +27,7 @@ export default function NavLinks({ session }) {
       <>
         {links.map((link) => {
           return (
-            <Link key={link.id} href={link.href} passHref>
+            <Link key={link.id} href={link.href} passHref scroll>
               <Button
                 variant="ghost"
                 size={size}
