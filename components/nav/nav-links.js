@@ -27,16 +27,15 @@ export default function NavLinks({ session }) {
       <>
         {links.map((link) => {
           return (
-            <Link href={link.href} passHref>
+            <Link key={link.id} href={link.href} passHref>
               <Button
-              key={link.id}
-              variant="ghost"
-              size={size}
-              isDisabled={link.disabled}
-              onClick={onClose}
-            >
-              {link.name}
-            </Button>
+                variant="ghost"
+                size={size}
+                isDisabled={link.disabled}
+                onClick={onClose}
+              >
+                {link.name}
+              </Button>
             </Link>
           );
         })}
