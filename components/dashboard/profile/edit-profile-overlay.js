@@ -64,7 +64,7 @@ export default function EditProfileOverlay({
       };
 
       if (updates.bio === " ") {
-        updates.bio = null;
+        updates.bio = "";
       }
 
       let { error } = await supabase
