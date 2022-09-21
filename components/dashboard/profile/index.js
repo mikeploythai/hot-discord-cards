@@ -42,7 +42,6 @@ export default function Profile({ getCurrentUser }) {
       if (data) {
         setUsername(data.username);
         setBio(data.bio);
-        setPoints(data.points);
       }
     } catch (error) {
       toast({
@@ -91,7 +90,6 @@ export default function Profile({ getCurrentUser }) {
           >
             {bio}
           </Text>
-         
         </VStack>
       </HStack>
 
