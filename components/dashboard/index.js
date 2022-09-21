@@ -16,7 +16,7 @@ export default function Dashboard() {
   }
 
   return (
-    <SimpleGrid w="100%" h="fit-content" gap={{ base: "16px", md: "32px" }}>
+    <SimpleGrid w="100%" h="fit-content" gap="16px">
       <Spacer />
       <Profile getCurrentUser={getCurrentUser} />
       <CardGrid getCurrentUser={getCurrentUser} />
