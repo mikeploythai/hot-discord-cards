@@ -1,9 +1,4 @@
-import {
-  Container,
-  useBreakpointValue,
-  useToast,
-  VStack,
-} from "@chakra-ui/react";
+import { useBreakpointValue, useToast, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { supabase } from "../../../utils/supabaseClient";
 import ClickPhoto from "./click-photo";
@@ -50,20 +45,18 @@ export default function ClickerGame({ getCurrentUser }) {
   }
 
   return (
-    <Container maxW="container.md" p="0">
-      <VStack
-        p={{ base: "24px", md: "48px" }}
-        bgColor="white"
-        boxShadow="xs"
-        rounded="lg"
-        gap={{ base: "16px", md: "32px" }}
-      >
-        <ClickPhoto
-          points={points}
-          getCurrentUser={getCurrentUser}
-          getPointData={getPointData}
-        />
-      </VStack>
-    </Container>
+    <VStack
+      p={{ base: "24px", md: "48px" }}
+      bgColor="white"
+      boxShadow="xs"
+      rounded="lg"
+      gap={{ base: "16px", md: "32px" }}
+    >
+      <ClickPhoto
+        points={points}
+        getCurrentUser={getCurrentUser}
+        getPointData={getPointData}
+      />
+    </VStack>
   );
 }
