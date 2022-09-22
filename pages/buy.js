@@ -2,6 +2,7 @@ import { Center, Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { supabase } from "../utils/supabaseClient";
 import Landing from "../components/general/landing";
+import Buy from "../components/buy";
 
 export default function BuyPage() {
   const [loaded, isLoaded] = useState(false);
@@ -39,7 +40,9 @@ export default function BuyPage() {
         <Center m="0" p="0">
           <Landing />
         </Center>
-      ) : null}
+      ) : (
+        <Buy />
+      )}
     </Flex>
   );
 }
