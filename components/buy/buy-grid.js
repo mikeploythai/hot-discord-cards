@@ -2,7 +2,6 @@ import {
   Button,
   Container,
   Heading,
-  HStack,
   SimpleGrid,
   useBreakpointValue,
   useToast,
