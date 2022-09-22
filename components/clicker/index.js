@@ -1,9 +1,9 @@
 import { Container, Grid, GridItem, SimpleGrid } from "@chakra-ui/react";
 import { supabase } from "../../utils/supabaseClient";
 import Spacer from "../general/spacer";
-import ClickerGame from "./clicker-game";
-import Leaderboard from "./clicker-game/leaderboard";
-import Powerups from "./clicker-game/powerups";
+import Game from "./game";
+import Leaderboard from "./game/leaderboard";
+import Powerups from "./game/powerups";
 
 export default function Clicker() {
   const desktopLayout = `
@@ -38,7 +38,7 @@ export default function Clicker() {
           templateAreas={{ base: mobileLayout, md: desktopLayout }}
         >
           <GridItem area={"game"}>
-            <ClickerGame getCurrentUser={getCurrentUser} />
+            <Game getCurrentUser={getCurrentUser} />
           </GridItem>
 
           <GridItem area={"powerup"}>

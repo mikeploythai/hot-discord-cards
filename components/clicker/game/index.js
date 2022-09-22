@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../../utils/supabaseClient";
 import ClickPhoto from "./click-photo";
 
-export default function ClickerGame({ getCurrentUser }) {
+export default function Game({ getCurrentUser }) {
   const [points, setPoints] = useState(0);
 
   const toast = useToast();
@@ -26,9 +26,7 @@ export default function ClickerGame({ getCurrentUser }) {
         .maybeSingle();
       if (error) throw error;
 
-      if (data) {
-        setPoints(data.points);
-      }
+      if (data) setPoints(data.points);
     } catch (error) {
       toast({
         title: "Error!",
