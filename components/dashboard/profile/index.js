@@ -31,10 +31,11 @@ export default function Profile({ getCurrentUser }) {
   async function getProfileData() {
     try {
       const user = await getCurrentUser();
+      const email = user.email.split("@");
 
       let { data, error } = await supabase
         .from("profiles")
-        .select("username, bio, points")
+        .select("username, bio")
         .eq("id", user.id)
         .maybeSingle();
       if (error) throw error;
@@ -42,6 +43,17 @@ export default function Profile({ getCurrentUser }) {
       if (data) {
         setUsername(data.username);
         setBio(data.bio);
+      } else {
+        const update = {
+          id: user.id,
+          username: email[0],
+          updated_at: new Date(),
+        };
+
+        let { error } = await supabase
+          .from("profiles")
+          .upsert(update, { returning: "minimal" });
+        if (error) throw error;
       }
     } catch (error) {
       toast({
@@ -71,7 +83,7 @@ export default function Profile({ getCurrentUser }) {
 
         <VStack w="100%" align="start" gap={{ base: "0", md: "2px" }}>
           <HStack w="100%" justify="space-between">
-            <Heading size={{ base: "md", md: "lg" }}>@{username}</Heading>
+            <Heading size={{ base: "md", md: "lg" }}>{username}</Heading>
 
             <Button
               size={{ base: "xs", md: "sm" }}
