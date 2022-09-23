@@ -6,7 +6,6 @@ import {
   Image,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -22,6 +21,7 @@ export default function BuyRevealOverlay({
   attr,
   img,
   own,
+  reset,
 }) {
   return (
     <Modal
@@ -33,7 +33,6 @@ export default function BuyRevealOverlay({
       <ModalOverlay>
         <ModalContent rounded="2xl" m={{ base: "0", md: "16px" }} zIndex={2}>
           <ModalHeader>You have unlocked...</ModalHeader>
-          <ModalCloseButton size="lg" />
 
           <ModalBody>
             <Flex direction={{ base: "column", md: "row" }} gap="24px">
@@ -54,6 +53,7 @@ export default function BuyRevealOverlay({
                 <VStack w="100%" align="start" gap="32px">
                   <VStack align="start">
                     <Heading>{name}</Heading>
+                    
                     <Heading size="md" fontWeight="medium">
                       attribute: {attr}
                     </Heading>
@@ -69,15 +69,20 @@ export default function BuyRevealOverlay({
                   gap="8px"
                 >
                   <Text
-                    display={own ? "initial" : "none"}
                     fontSize="sm"
                     fontWeight="semibold"
                     color="red.500"
+                    opacity={own ? 1 : 0}
+                    transition=".25s ease-in-out"
                   >
                     You already own this card!
                   </Text>
 
-                  <Button colorScheme="purple" onClick={onClose}>
+                  <Button
+                    colorScheme="purple"
+                    onClick={onClose}
+                    onClickCapture={() => reset(false)}
+                  >
                     Continue
                   </Button>
                 </HStack>
@@ -88,15 +93,20 @@ export default function BuyRevealOverlay({
           <ModalFooter>
             <HStack display={{ base: "flex", md: "none" }} gap="8px">
               <Text
-                display={own ? "initial" : "none"}
                 fontSize="sm"
                 fontWeight="semibold"
                 color="red.500"
+                opacity={own ? 1 : 0}
+                transition=".25s ease-in-out"
               >
                 You already own this card!
               </Text>
 
-              <Button colorScheme="purple" onClick={onClose}>
+              <Button
+                colorScheme="purple"
+                onClick={onClose}
+                onClickCapture={() => reset(false)}
+              >
                 Continue
               </Button>
             </HStack>

@@ -5,7 +5,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { supabase } from "../../utils/supabaseClient";
+import { supabase } from "../../../utils/supabaseClient";
 import BuyRevealOverlay from "./buy-reveal-overlay";
 
 export default function BuyCard({
@@ -21,6 +21,7 @@ export default function BuyCard({
   const [img, setImg] = useState(null);
   const [attr, setAttr] = useState(null);
   const [own, setOwn] = useState(false);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const toast = useToast();
@@ -41,6 +42,7 @@ export default function BuyCard({
       let { error } = await supabase
         .from("profiles")
         .upsert(updates, { returning: "minimal" });
+
       if (error) throw error;
     } catch (error) {
       toast({
@@ -65,6 +67,7 @@ export default function BuyCard({
         .from("cards")
         .select("id, name, image, attribute")
         .eq("level", level);
+
       const randNum = Math.floor(Math.random() * card.length);
       const randCard = card[randNum].id;
 
@@ -75,6 +78,7 @@ export default function BuyCard({
       }
 
       const user = await getCurrentUser();
+
       let { data: db, error } = await supabase
         .from("owners")
         .select("card_id, cards!inner (name)")
@@ -111,6 +115,13 @@ export default function BuyCard({
     }
   }
 
+  function reset() {
+    setOwn(false);
+    setName(null);
+    setImg(null);
+    setAttr(null);
+  }
+
   return (
     <>
       <Button
@@ -120,7 +131,6 @@ export default function BuyCard({
         h="300px"
         p="16px"
         rounded="lg"
-        boxShadow="xs"
         textTransform="capitalize"
         transition=".25s ease-in-out"
         _hover={{ transform: points >= cost ? "scale(1.05)" : "unset" }}
@@ -143,6 +153,7 @@ export default function BuyCard({
         img={img}
         attr={attr}
         own={own}
+        reset={reset}
       />
     </>
   );

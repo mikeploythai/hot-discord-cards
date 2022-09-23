@@ -7,7 +7,8 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { supabase } from "../../utils/supabaseClient";
+import { supabase } from "../../../utils/supabaseClient";
+
 import BuyCard from "./buy-card";
 
 export default function BuyGrid({ getCurrentUser }) {
@@ -34,6 +35,7 @@ export default function BuyGrid({ getCurrentUser }) {
       key: 3,
     },
   ];
+
   const [points, setPoints] = useState(0);
 
   const toast = useToast();
@@ -54,6 +56,7 @@ export default function BuyGrid({ getCurrentUser }) {
         .select("points")
         .eq("id", user.id)
         .maybeSingle();
+        
       if (error) throw error;
 
       if (data) setPoints(data.points);
