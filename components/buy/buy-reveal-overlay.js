@@ -34,7 +34,6 @@ export default function BuyRevealOverlay({
       <ModalOverlay>
         <ModalContent rounded="2xl" m={{ base: "0", md: "16px" }} zIndex={2}>
           <ModalHeader>You have unlocked...</ModalHeader>
-          <ModalCloseButton size="lg" />
 
           <ModalBody>
             <Flex direction={{ base: "column", md: "row" }} gap="24px">
