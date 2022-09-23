@@ -103,7 +103,11 @@ export default function BuyRevealOverlay({
                 You already own this card!
               </Text>
 
-              <Button colorScheme="purple" onClick={onClose}>
+              <Button
+                colorScheme="purple"
+                onClick={onClose}
+                onClickCapture={() => reset(false)}
+              >
                 Continue
               </Button>
             </HStack>
