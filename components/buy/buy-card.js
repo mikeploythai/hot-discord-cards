@@ -111,6 +111,13 @@ export default function BuyCard({
     }
   }
 
+  function reset() {
+    setOwn(false);
+    setName(null);
+    setImg(null);
+    setAttr(null);
+  }
+
   return (
     <>
       <Button
@@ -143,6 +150,7 @@ export default function BuyCard({
         img={img}
         attr={attr}
         own={own}
+        reset={reset}
       />
     </>
   );

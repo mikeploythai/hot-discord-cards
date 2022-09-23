@@ -22,6 +22,7 @@ export default function BuyRevealOverlay({
   attr,
   img,
   own,
+  reset,
 }) {
   return (
     <Modal
@@ -69,15 +70,20 @@ export default function BuyRevealOverlay({
                   gap="8px"
                 >
                   <Text
-                    display={own ? "initial" : "none"}
                     fontSize="sm"
                     fontWeight="semibold"
                     color="red.500"
+                    opacity={own ? 1 : 0}
+                    transition=".25s ease-in-out"
                   >
                     You already own this card!
                   </Text>
 
-                  <Button colorScheme="purple" onClick={onClose}>
+                  <Button
+                    colorScheme="purple"
+                    onClick={onClose}
+                    onClickCapture={() => reset(false)}
+                  >
                     Continue
                   </Button>
                 </HStack>
@@ -88,10 +94,10 @@ export default function BuyRevealOverlay({
           <ModalFooter>
             <HStack display={{ base: "flex", md: "none" }} gap="8px">
               <Text
-                display={own ? "initial" : "none"}
                 fontSize="sm"
                 fontWeight="semibold"
                 color="red.500"
+                transition=".25s ease-in-out"
               >
                 You already own this card!
               </Text>
