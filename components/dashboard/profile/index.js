@@ -47,6 +47,7 @@ export default function Profile({ getCurrentUser }) {
         const update = {
           id: user.id,
           username: email[0],
+          bio: "Tap on edit to change your username and bio!",
           updated_at: new Date(),
         };
 
