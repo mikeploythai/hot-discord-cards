@@ -97,6 +97,7 @@ export default function BuyRevealOverlay({
                 fontSize="sm"
                 fontWeight="semibold"
                 color="red.500"
+                opacity={own ? 1 : 0}
                 transition=".25s ease-in-out"
               >
                 You already own this card!
