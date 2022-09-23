@@ -6,7 +6,6 @@ import {
   Image,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -54,6 +53,7 @@ export default function BuyRevealOverlay({
                 <VStack w="100%" align="start" gap="32px">
                   <VStack align="start">
                     <Heading>{name}</Heading>
+                    
                     <Heading size="md" fontWeight="medium">
                       attribute: {attr}
                     </Heading>
