@@ -1,5 +1,4 @@
 import {
-  Button,
   Container,
   Heading,
   SimpleGrid,
@@ -9,8 +8,32 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { supabase } from "../../utils/supabaseClient";
+import BuyCard from "./buy-card";
 
 export default function BuyGrid({ getCurrentUser }) {
+  const cards = [
+    {
+      level: "bronze",
+      color: "orange.800",
+      active: "orange.700",
+      cost: 250,
+      key: 1,
+    },
+    {
+      level: "silver",
+      color: "gray.500",
+      active: "gray.400",
+      cost: 500,
+      key: 2,
+    },
+    {
+      level: "gold",
+      color: "yellow.500",
+      active: "yellow.400",
+      cost: 1000,
+      key: 3,
+    },
+  ];
   const [points, setPoints] = useState(0);
 
   const toast = useToast();
@@ -49,37 +72,6 @@ export default function BuyGrid({ getCurrentUser }) {
     }
   }
 
-  async function updatePointData(cost) {
-    try {
-      const user = await getCurrentUser();
-
-      const updates = {
-        id: user.id,
-        points: points - cost,
-        updated_at: new Date(),
-      };
-
-      let { error } = await supabase
-        .from("profiles")
-        .upsert(updates, { returning: "minimal" });
-      if (error) throw error;
-    } catch (error) {
-      toast({
-        title: "Error!",
-        description: error.message,
-        status: "error",
-        position: toastPos,
-        containerStyle: {
-          w: toastW,
-          p: toastP,
-        },
-        isClosable: true,
-      });
-    } finally {
-      getPointData();
-    }
-  }
-
   return (
     <Container maxW="container.lg" p="0">
       <VStack
@@ -97,51 +89,20 @@ export default function BuyGrid({ getCurrentUser }) {
           justifyItems={{ base: "center", md: "initial" }}
           m="0"
         >
-          <Button
-            bgColor="orange.800"
-            color="white"
-            w="200px"
-            h="300px"
-            p="16px"
-            rounded="lg"
-            boxShadow="xs"
-            transition=".25s ease-in-out"
-            _hover={{ transform: points >= 250 ? "scale(1.05)" : "unset" }}
-            onClick={() => updatePointData(250)}
-            isDisabled={points >= 250 ? false : true}
-          >
-            Bronze Pack<br></br>250 Points
-          </Button>
-
-          <Button
-            bgColor="gray.400"
-            w="200px"
-            h="300px"
-            p="16px"
-            rounded="lg"
-            boxShadow="xs"
-            transition=".25s ease-in-out"
-            _hover={{ transform: points >= 500 ? "scale(1.05)" : "unset" }}
-            onClick={() => updatePointData(500)}
-            isDisabled={points >= 500 ? false : true}
-          >
-            Silver Pack<br></br>500 Points
-          </Button>
-
-          <Button
-            bgColor="yellow.400"
-            w="200px"
-            h="300px"
-            p="16px"
-            rounded="lg"
-            boxShadow="xs"
-            transition=".25s ease-in-out"
-            _hover={{ transform: points >= 1000 ? "scale(1.05)" : "unset" }}
-            onClick={() => updatePointData(1000)}
-            isDisabled={points >= 1000 ? false : true}
-          >
-            Gold Pack<br></br>1000 Points
-          </Button>
+          {cards.map((c) => {
+            return (
+              <BuyCard
+                key={c.key}
+                level={c.level}
+                color={c.color}
+                active={c.active}
+                cost={c.cost}
+                points={points}
+                getPointData={getPointData}
+                getCurrentUser={getCurrentUser}
+              />
+            );
+          })}
         </SimpleGrid>
       </VStack>
     </Container>

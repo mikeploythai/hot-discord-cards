@@ -1,8 +1,6 @@
 import {
-  Button,
   Container,
   Heading,
-  HStack,
   SimpleGrid,
   useBreakpointValue,
   useToast,
@@ -13,7 +11,6 @@ import { supabase } from "../../../utils/supabaseClient";
 import Card from "./card";
 
 export default function CardGrid({ getCurrentUser }) {
-  const [loading, isLoading] = useState(false);
   const [card, setCard] = useState([]);
 
   const toast = useToast();
@@ -59,68 +56,6 @@ export default function CardGrid({ getCurrentUser }) {
     }
   }
 
-  async function addRandomCard() {
-    try {
-      isLoading(true);
-      let { data: card } = await supabase.from("cards").select("id");
-      const randNum = Math.floor(Math.random() * card.length);
-      const randCard = card[randNum].id;
-
-      const user = await getCurrentUser();
-      let { data: db, error } = await supabase
-        .from("owners")
-        .select("card_id, cards!inner (name)")
-        .eq("user_id", user.id);
-
-      async function insert() {
-        await supabase
-          .from("owners")
-          .upsert(
-            { user_id: user.id, card_id: randCard },
-            { ignoreDuplicates: true }
-          );
-      }
-
-      if (db.length === 0) insert();
-      else {
-        for (let i in db) {
-          if (db[i].card_id === randCard) {
-            isLoading(false);
-            toast({
-              title: "Warning!",
-              description: `You already own "${db[i].cards.name}"`,
-              status: "warning",
-              position: toastPos,
-              containerStyle: {
-                w: toastW,
-                p: toastP,
-              },
-              isClosable: true,
-            });
-            break;
-          }
-        }
-        insert();
-      }
-
-      if (error) throw error;
-    } catch (error) {
-      toast({
-        title: "Error!",
-        description: error.message,
-        status: "error",
-        position: toastPos,
-        containerStyle: {
-          w: toastW,
-          p: toastP,
-        },
-        isClosable: true,
-      });
-    } finally {
-      isLoading(false);
-    }
-  }
-
   return (
     <Container maxW="container.md" p="0">
       <VStack
@@ -130,12 +65,7 @@ export default function CardGrid({ getCurrentUser }) {
         rounded="lg"
         gap="20px"
       >
-        <HStack w="100%" justify="space-between">
-          <Heading size="md">Your Cards</Heading>
-          <Button size="sm" onClick={() => addRandomCard()} isLoading={loading}>
-            Add
-          </Button>
-        </HStack>
+        <Heading size="md" w="100%" alignItems="start">Your Cards</Heading>
 
         <SimpleGrid
           w="100%"
