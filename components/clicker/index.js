@@ -7,16 +7,16 @@ import Powerups from "./game/powerups";
 
 export default function Clicker() {
   const desktopLayout = `
-  "game game leaderboard"
-  "game game leaderboard"
-  "powerup powerup powerup"
-`;
+    "game game leaderboard"
+    "game game leaderboard"
+    "powerup powerup powerup"
+  `;
 
   const mobileLayout = `
-  "leaderboard"
-  "game"
-  "powerup"
-`;
+    "leaderboard"
+    "game"
+    "powerup"
+  `;
 
   async function getCurrentUser() {
     const {

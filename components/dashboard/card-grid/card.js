@@ -18,14 +18,14 @@ export default function Card({ name, attr, img, id, getCardData }) {
       onClick={onOpen}
     >
       <HStack w="100%" justify="space-between">
-        <Text fontSize="sm">
-          <b>{name}</b>
+        <Text fontSize="sm" fontWeight="bold">
+          {name}
         </Text>
         <Text fontSize="xs">{attr}</Text>
       </HStack>
 
       <Image src={img} alt={name} w="100%" h="100%" rounded="md" />
-      
+
       <CardInfoOverlay
         isOpen={isOpen}
         onClose={onClose}
