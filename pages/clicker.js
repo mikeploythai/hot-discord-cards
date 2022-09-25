@@ -1,12 +1,13 @@
-import { Center, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { supabase } from "../utils/supabaseClient";
-import Landing from "../components/general/landing";
 import Clicker from "../components/clicker";
+import { useRouter } from "next/router";
 
 export default function ClickerPage() {
   const [loaded, isLoaded] = useState(false);
   const [session, setSession] = useState(null);
+  const route = useRouter();
 
   useEffect(() => {
     let mounted = true;
@@ -18,6 +19,7 @@ export default function ClickerPage() {
 
       if (mounted) {
         if (session) setSession(session);
+        else route.push("/");
         isLoaded(true);
       }
     }
@@ -36,13 +38,7 @@ export default function ClickerPage() {
 
   return (
     <Flex minH="100vh" justify="center" p="16px" bgColor="gray.50">
-      {!session ? (
-        <Center m="0" p="0">
-          <Landing />
-        </Center>
-      ) : (
-        <Clicker />
-      )}
+      {!session ? null : <Clicker />}
     </Flex>
   );
 }

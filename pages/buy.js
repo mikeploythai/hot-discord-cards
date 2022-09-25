@@ -1,12 +1,13 @@
-import { Center, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { supabase } from "../utils/supabaseClient";
-import Landing from "../components/general/landing";
 import Buy from "../components/buy";
+import { useRouter } from "next/router";
 
 export default function BuyPage() {
   const [loaded, isLoaded] = useState(false);
   const [session, setSession] = useState(null);
+  const route = useRouter();
 
   useEffect(() => {
     let mounted = true;
@@ -18,6 +19,7 @@ export default function BuyPage() {
 
       if (mounted) {
         if (session) setSession(session);
+        else route.push("/");
         isLoaded(true);
       }
     }
@@ -36,13 +38,7 @@ export default function BuyPage() {
 
   return (
     <Flex minH="100vh" justify="center" p="16px" bgColor="gray.50">
-      {!session ? (
-        <Center m="0" p="0">
-          <Landing />
-        </Center>
-      ) : (
-        <Buy />
-      )}
+      {!session ? null : <Buy />}
     </Flex>
   );
 }
