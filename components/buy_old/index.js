@@ -3,7 +3,7 @@ import { supabase } from "../../utils/supabase-client";
 import EmptySpace from "../general/empty-space";
 import BuyGrid from "./buy-grid";
 
-export default function Buy() {
+export default function Buy({ session }) {
   async function getCurrentUser() {
     const {
       data: { session },
@@ -17,7 +17,7 @@ export default function Buy() {
   return (
     <SimpleGrid w="100%" h="fit-content" gap="16px">
       <EmptySpace />
-      <BuyGrid getCurrentUser={getCurrentUser} />
+      <BuyGrid session={session} getCurrentUser={getCurrentUser} />
     </SimpleGrid>
   );
 }

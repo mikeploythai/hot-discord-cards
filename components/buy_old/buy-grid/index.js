@@ -8,10 +8,16 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { supabase } from "../../../utils/supabase-client";
-
 import BuyCard from "./buy-card";
 
 export default function BuyGrid({ getCurrentUser }) {
+  const [points, setPoints] = useState(0);
+
+  const toast = useToast();
+  const toastPos = useBreakpointValue(["bottom", "bottom-right"]);
+  const toastW = useBreakpointValue(["100%", "320px"]);
+  const toastP = useBreakpointValue(["0 16px 8px", "0 8px 8px"]);
+
   const cards = [
     {
       level: "bronze",
@@ -35,13 +41,6 @@ export default function BuyGrid({ getCurrentUser }) {
       key: 3,
     },
   ];
-
-  const [points, setPoints] = useState(0);
-
-  const toast = useToast();
-  const toastPos = useBreakpointValue({ base: "bottom", md: "bottom-right" });
-  const toastW = useBreakpointValue({ base: "100%", md: "320px" });
-  const toastP = useBreakpointValue({ base: "0 16px 8px", md: "0 8px 8px" });
 
   useEffect(() => {
     getPointData();
@@ -76,30 +75,29 @@ export default function BuyGrid({ getCurrentUser }) {
   }
 
   return (
-    <Container maxW="container.lg" p="0">
+    <Container maxW="container.md" p={0}>
       <VStack
-        p={{ base: "24px", md: "48px" }}
+        p={["24px", "32px"]}
         bgColor="white"
         boxShadow="xs"
         rounded="lg"
-        gap={{ base: "16px", md: "32px" }}
+        gap="32px"
       >
         <Heading size="md">Available Points: {points}</Heading>
-
         <SimpleGrid
           columns={[1, 2, 3]}
           spacing="32px"
-          justifyItems={{ base: "center", md: "initial" }}
-          m="0"
+          justifyItems={["center", "initial"]}
+          m={0}
         >
-          {cards.map((c) => {
+          {cards.map((card) => {
             return (
               <BuyCard
-                key={c.key}
-                level={c.level}
-                color={c.color}
-                active={c.active}
-                cost={c.cost}
+                key={card.key}
+                level={card.level}
+                color={card.color}
+                active={card.active}
+                cost={card.cost}
                 points={points}
                 getPointData={getPointData}
                 getCurrentUser={getCurrentUser}
