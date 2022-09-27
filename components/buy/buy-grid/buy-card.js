@@ -21,7 +21,6 @@ export default function BuyCard({
   const [img, setImg] = useState(null);
   const [attr, setAttr] = useState(null);
   const [own, setOwn] = useState(false);
-  const [load, setLoad] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -64,42 +63,53 @@ export default function BuyCard({
 
   async function addRandomCard(level) {
     try {
-      setLoad(true);
       let { data: card } = await supabase
         .from("cards")
         .select("id, name, image, attribute")
-        .eq("level", level);
+        .eq("level", level)
+        .eq("id", "b8546f94-64d6-4b9a-b1e3-9ed7dc374980");
 
-      const randNum = Math.floor(Math.random() * card.length);
-      const randCard = card[randNum].id;
+      // const randNum = Math.floor(Math.random() * card.length);
+      // const randCard = card[randNum].id;
 
-      if (card) {
-        setName(card[randNum].name);
-        setImg(card[randNum].image);
-        setAttr(card[randNum].attribute);
-      }
+      setName(card.name);
+      setImg(card.image);
+      setAttr(card.attribute);
+
+      // if (card) {
+      //   setName(card[randNum].name);
+      //   setImg(card[randNum].image);
+      //   setAttr(card[randNum].attribute);
+      // }
 
       const user = await getCurrentUser();
 
-      let { data: db, error } = await supabase
+      // let { data: db, error } = await supabase
+      //   .from("owners")
+      //   .select("card_id, cards!inner (name)")
+      //   .eq("user_id", user.id);
+
+      // async function insert() {
+      //   await supabase
+      //     .from("owners")
+      //     .upsert(
+      //       { user_id: user.id, card_id: randCard },
+      //       { ignoreDuplicates: true }
+      //     );
+      // }
+
+      await supabase
         .from("owners")
-        .select("card_id, cards!inner (name)")
-        .eq("user_id", user.id);
+        .upsert(
+          { user_id: user.id, card_id: card.id },
+          { ignoreDuplicates: true }
+        );
 
-      async function insert() {
-        await supabase
-          .from("owners")
-          .upsert(
-            { user_id: user.id, card_id: randCard },
-            { ignoreDuplicates: true }
-          );
-      }
-
-      if (db.length === 0) insert();
-      else {
-        for (let i in db) if (db[i].card_id === randCard) setOwn(true);
-        insert();
-      }
+      // if (db.length === 0) insert();
+      // else {
+      //   for (let i in db) if (db[i].card_id === randCard) setOwn(true);
+      //   insert();
+      // }
 
       if (error) throw error;
     } catch (error) {
@@ -114,8 +124,6 @@ export default function BuyCard({
         },
         isClosable: true,
       });
-    } finally {
-      setLoad(false);
     }
   }
 
@@ -155,8 +163,9 @@ export default function BuyCard({
         gap="8px"
         isOpen={isOpen}
         onClose={onClose}
-        name={"test name"}
-        attr={"test attr"}
+        name={name}
+        img={img}
+        attr={attr}
         own={own}
         reset={reset}
         buy={true}

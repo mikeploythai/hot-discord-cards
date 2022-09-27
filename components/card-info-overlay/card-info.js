@@ -15,7 +15,7 @@ export default function CardInfo({
 }) {
   return (
     <Flex direction="column" gap="16px">
-      {/* <Image src={img} alt={name} w="auto" h="200px" rounded="lg" /> */}
+      <Image src={img} alt={name} w="auto" h="200px" rounded="lg" />
 
       <VStack w="100%" h="auto" justify="space-between" align="start">
         <VStack w="100%" align="start" gap="32px">
