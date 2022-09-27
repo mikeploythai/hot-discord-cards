@@ -66,8 +66,7 @@ export default function BuyCard({
       let { data: card } = await supabase
         .from("cards")
         .select("id, name, image, attribute")
-        .eq("level", level)
-        .eq("id", randNum);
+        .eq("level", level);
 
       const randNum = Math.floor(Math.random() * card.length);
       // const randCard = card[randNum].id;
