@@ -23,7 +23,6 @@ export default function CardInfoOverlay({
   getCardData,
   own,
   reset,
-  load,
 }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={["full", "4xl"]} isCentered>
@@ -34,22 +33,18 @@ export default function CardInfoOverlay({
           <ModalCloseButton size="lg" top="11px" rounded="lg" />
 
           <ModalBody>
-            {load ? (
-              "Loading"
-            ) : (
-              <CardInfo
-                onClose={onClose}
-                gap={gap}
-                buy={buy}
-                name={name}
-                img={img}
-                attr={attr}
-                id={id}
-                getCardData={getCardData}
-                own={own}
-                reset={reset}
-              />
-            )}
+            <CardInfo
+              onClose={onClose}
+              gap={gap}
+              buy={buy}
+              name={name}
+              img={img}
+              attr={attr}
+              id={id}
+              getCardData={getCardData}
+              own={own}
+              reset={reset}
+            />
           </ModalBody>
 
           <ModalFooter>

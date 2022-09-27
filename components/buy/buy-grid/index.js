@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../../utils/supabase-client";
 import BuyCard from "./buy-card";
 
-export default function BuyGrid({ getCurrentUser }) {
+export default function BuyGrid({ session, getCurrentUser }) {
   const [points, setPoints] = useState(0);
 
   const toast = useToast();
@@ -44,7 +44,7 @@ export default function BuyGrid({ getCurrentUser }) {
 
   useEffect(() => {
     getPointData();
-  });
+  }, [session]);
 
   async function getPointData() {
     try {
