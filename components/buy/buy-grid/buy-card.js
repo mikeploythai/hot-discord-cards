@@ -21,7 +21,6 @@ export default function BuyCard({
   const [img, setImg] = useState(null);
   const [attr, setAttr] = useState(null);
   const [own, setOwn] = useState(false);
-  const [load, setLoad] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -158,7 +157,6 @@ export default function BuyCard({
         onClose={onClose}
         buy={true}
         gap="8px"
-        load={load}
         name={name}
         img={img}
         attr={attr}

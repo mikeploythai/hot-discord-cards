@@ -14,7 +14,7 @@ export default function CardInfo({
   reset,
 }) {
   return (
-    <Flex direction="column" gap="16px">
+    <Flex direction="column" gap="16px" onLoad={console.log(name)}>
       <Image src={img} alt={name} w="auto" h="200px" rounded="lg" />
 
       <VStack w="100%" h="auto" justify="space-between" align="start">
