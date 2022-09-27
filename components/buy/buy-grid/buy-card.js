@@ -63,7 +63,6 @@ export default function BuyCard({
 
   async function addRandomCard(level) {
     try {
-      setLoad(true);
       let { data: card } = await supabase
         .from("cards")
         .select("id, name, image, attribute")
@@ -115,8 +114,6 @@ export default function BuyCard({
       });
 
       console.log(error);
-    } finally {
-      setLoad(false);
     }
   }
 
