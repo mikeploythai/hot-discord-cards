@@ -68,10 +68,13 @@ export default function BuyCard({
         .select("id, name, image, attribute")
         .eq("level", level);
 
+      var randomNum = Math.floor(Math.random() * card.length);
+      console.log(randomNum);
+
       if (card) {
-        setName(card[0].name);
-        setImg(card[0].image);
-        setAttr(card[0].attribute);
+        setName(card[randomNum].name);
+        setImg(card[randomNum].image);
+        setAttr(card[randomNum].attribute);
       }
       console.log(card);
 
