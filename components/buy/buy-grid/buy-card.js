@@ -136,11 +136,11 @@ export default function BuyCard({
           transition=".25s ease-in-out"
           _hover={{ transform: points >= cost ? "scale(1.05)" : "unset" }}
           _active={{ bgColor: active }}
-          onClick={onOpen}
-          onClickCapture={() => {
+          onClick={() => {
             addRandomCard(level);
             updatePointData(cost);
           }}
+          onClickCapture={onOpen}
           isDisabled={points >= cost ? false : true}
         >
           {level} Pack<br></br>
