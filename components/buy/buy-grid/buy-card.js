@@ -68,14 +68,12 @@ export default function BuyCard({
         .select("id, name, image, attribute")
         .eq("level", level);
 
-      // const randNum = Math.floor(Math.random() * card.length);
-      // const randCard = card[randNum].id;
-      const randomNum = Math.floor(Math.random() * card.length);
-
-      setName(card[randomNum].name);
-      setImg(card[randomNum].image);
-      setAttr(card[randomNum].attribute);
-      console.log(card[randomNum], card);
+      if (card) {
+        setName(card[0].name);
+        setImg(card[0].image);
+        setAttr(card[0].attribute);
+      }
+      console.log(card);
 
       const user = await getCurrentUser();
 
@@ -83,15 +81,6 @@ export default function BuyCard({
         .from("owners")
         .select("card_id, cards!inner (name)")
         .eq("user_id", user.id);
-
-      // async function insert() {
-      //   await supabase
-      //     .from("owners")
-      //     .upsert(
-      //       { user_id: user.id, card_id: randCard },
-      //       { ignoreDuplicates: true }
-      //     );
-      // }
 
       async function insert() {
         await supabase.from("owners").upsert(
