@@ -155,9 +155,8 @@ export default function BuyCard({
         gap="8px"
         isOpen={isOpen}
         onClose={onClose}
-        name={!load ? name : "Loading"}
-        img={!load ? img : "Loading"}
-        attr={!load ? attr : "Loading"}
+        name={"test name"}
+        attr={"test attr"}
         own={own}
         reset={reset}
         buy={true}
