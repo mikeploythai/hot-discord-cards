@@ -75,6 +75,7 @@ export default function BuyCard({
       setName(card[randomNum].name);
       setImg(card[randomNum].image);
       setAttr(card[randomNum].attribute);
+      console.log(card[randomNum], card);
 
       const user = await getCurrentUser();
 
