@@ -21,6 +21,7 @@ export default function BuyCard({
   const [img, setImg] = useState(null);
   const [attr, setAttr] = useState(null);
   const [own, setOwn] = useState(false);
+  const [load, setLoad] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -63,6 +64,7 @@ export default function BuyCard({
 
   async function addRandomCard(level) {
     try {
+      setLoad(true);
       let { data: card } = await supabase
         .from("cards")
         .select("id, name, image, attribute")
@@ -114,6 +116,8 @@ export default function BuyCard({
       });
 
       console.log(error);
+    } finally {
+      setLoad(false);
     }
   }
 
