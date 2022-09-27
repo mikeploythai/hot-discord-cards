@@ -112,8 +112,6 @@ export default function BuyCard({
         },
         isClosable: true,
       });
-
-      console.log(error);
     }
   }
 
@@ -126,41 +124,42 @@ export default function BuyCard({
 
   return (
     <>
-      <Button
-        bgColor={color}
-        color="white"
-        w="200px"
-        h="300px"
-        p="16px"
-        rounded="lg"
-        textTransform="capitalize"
-        transition=".25s ease-in-out"
-        _hover={{ transform: points >= cost ? "scale(1.05)" : "unset" }}
-        _active={{ bgColor: active }}
-        onClick={onOpen}
-        onClickCapture={() => {
-          addRandomCard(level);
-          updatePointData(cost);
-          console.log(name);
-        }}
-        isDisabled={points >= cost ? false : true}
-      >
-        {level} Pack<br></br>
-        {cost} Points
-      </Button>
+      <>
+        <Button
+          bgColor={color}
+          color="white"
+          w="200px"
+          h="300px"
+          p="16px"
+          rounded="lg"
+          textTransform="capitalize"
+          transition=".25s ease-in-out"
+          _hover={{ transform: points >= cost ? "scale(1.05)" : "unset" }}
+          _active={{ bgColor: active }}
+          onClick={onOpen}
+          onClickCapture={() => {
+            addRandomCard(level);
+            updatePointData(cost);
+          }}
+          isDisabled={points >= cost ? false : true}
+        >
+          {level} Pack<br></br>
+          {cost} Points
+        </Button>
 
-      <CardInfoOverlay
-        header="You've unlocked..."
-        isOpen={isOpen}
-        onClose={onClose}
-        buy={true}
-        gap="8px"
-        name={name}
-        img={img}
-        attr={attr}
-        own={own}
-        reset={reset}
-      />
+        <CardInfoOverlay
+          header="You've unlocked..."
+          gap="8px"
+          isOpen={isOpen}
+          onClose={onClose}
+          name={name}
+          img={img}
+          attr={attr}
+          own={own}
+          reset={reset}
+          buy={true}
+        />
+      </>
     </>
   );
 }
