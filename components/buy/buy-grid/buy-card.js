@@ -141,6 +141,7 @@ export default function BuyCard({
         onClickCapture={() => {
           addRandomCard(level);
           updatePointData(cost);
+          console.log(name);
         }}
         isDisabled={points >= cost ? false : true}
       >
