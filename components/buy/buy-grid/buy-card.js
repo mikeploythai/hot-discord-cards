@@ -112,6 +112,8 @@ export default function BuyCard({
         },
         isClosable: true,
       });
+
+      console.log(error);
     }
   }
 
