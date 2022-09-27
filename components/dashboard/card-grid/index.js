@@ -1,25 +1,22 @@
 import {
-  Button,
   Container,
   Heading,
-  HStack,
   SimpleGrid,
   useBreakpointValue,
   useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { supabase } from "../../../utils/supabaseClient";
+import { supabase } from "../../../utils/supabase-client";
 import Card from "./card";
 
-export default function CardGrid({ getCurrentUser }) {
-  const [loading, isLoading] = useState(false);
+export default function CardGrid({ session, getCurrentUser }) {
   const [card, setCard] = useState([]);
 
   const toast = useToast();
-  const toastPos = useBreakpointValue({ base: "bottom", md: "bottom-right" });
-  const toastW = useBreakpointValue({ base: "100%", md: "320px" });
-  const toastP = useBreakpointValue({ base: "0 16px 8px", md: "0 8px 8px" });
+  const toastPos = useBreakpointValue(["bottom", "bottom-right"]);
+  const toastW = useBreakpointValue(["100%", "320px"]);
+  const toastP = useBreakpointValue(["0 16px 8px", "0 8px 8px"]);
 
   useEffect(() => {
     getCardData();
@@ -31,7 +28,7 @@ export default function CardGrid({ getCurrentUser }) {
       })
       .subscribe();
     return () => supabase.removeChannel(realtime);
-  });
+  }, [session]);
 
   async function getCardData() {
     try {
@@ -59,99 +56,34 @@ export default function CardGrid({ getCurrentUser }) {
     }
   }
 
-  async function addRandomCard() {
-    try {
-      isLoading(true);
-      let { data: card } = await supabase.from("cards").select("id");
-      const randNum = Math.floor(Math.random() * card.length);
-      const randCard = card[randNum].id;
-
-      const user = await getCurrentUser();
-      let { data: db, error } = await supabase
-        .from("owners")
-        .select("card_id, cards!inner (name)")
-        .eq("user_id", user.id);
-
-      async function insert() {
-        await supabase
-          .from("owners")
-          .upsert(
-            { user_id: user.id, card_id: randCard },
-            { ignoreDuplicates: true }
-          );
-      }
-
-      if (db.length === 0) insert();
-      else {
-        for (let i in db) {
-          if (db[i].card_id === randCard) {
-            isLoading(false);
-            toast({
-              title: "Warning!",
-              description: `You already own "${db[i].cards.name}"`,
-              status: "warning",
-              position: toastPos,
-              containerStyle: {
-                w: toastW,
-                p: toastP,
-              },
-              isClosable: true,
-            });
-            break;
-          }
-        }
-        insert();
-      }
-
-      if (error) throw error;
-    } catch (error) {
-      toast({
-        title: "Error!",
-        description: error.message,
-        status: "error",
-        position: toastPos,
-        containerStyle: {
-          w: toastW,
-          p: toastP,
-        },
-        isClosable: true,
-      });
-    } finally {
-      isLoading(false);
-    }
-  }
-
   return (
     <Container maxW="container.md" p="0">
       <VStack
-        p={{ base: "24px 24px 48px", md: "48px" }}
+        p={["24px 24px 48px", "48px"]}
         bgColor="white"
         boxShadow="xs"
         rounded="lg"
         gap="20px"
       >
-        <HStack w="100%" justify="space-between">
-          <Heading size="md">Your Cards</Heading>
-          <Button size="sm" onClick={() => addRandomCard()} isLoading={loading}>
-            Add
-          </Button>
-        </HStack>
+        <Heading size={["sm", "md"]} w="100%" alignItems="start">
+          Your Cards
+        </Heading>
 
         <SimpleGrid
           w="100%"
-          columns={[1, 2, 3]}
-          spacing="32px"
-          justifyItems={{ base: "center", md: "initial" }}
+          columns={[2, 3]}
+          spacing={["16px", "32px"]}
+          justifyItems={["center", "initial"]}
           m="0"
         >
-          {card.map((c) => {
+          {card.map((card) => {
             return (
               <Card
-                key={c.id}
-                name={c.name}
-                attr={c.attribute}
-                img={c.image}
-                id={c.id}
+                key={card.id}
+                name={card.name}
+                attr={card.attribute}
+                img={card.image}
+                id={card.id}
                 getCardData={getCardData}
               />
             );

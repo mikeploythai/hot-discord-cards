@@ -1,12 +1,38 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import "../utils/globals.css";
+import { useEffect, useState } from "react";
+import { supabase } from "../utils/supabase-client";
+import Nav from "../components/nav";
+import "../styles/globals.css";
 
-function HotDiscordCards({ Component, pageProps }) {
+export default function HotDiscordCards({ Component, pageProps }) {
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function getInitialSession() {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (mounted) if (session) setSession(session);
+    }
+
+    getInitialSession();
+
+    const { subscription } = supabase.auth.onAuthStateChange(
+      (_event, session) => setSession(session)
+    );
+
+    return () => {
+      mounted = false;
+      subscription?.unsubscribe();
+    };
+  }, []);
+
   return (
     <ChakraProvider>
-      <Component {...pageProps} />
+      <Nav session={session} />
+      <Component session={session} setSession={setSession} {...pageProps} />
     </ChakraProvider>
   );
 }
-
-export default HotDiscordCards;

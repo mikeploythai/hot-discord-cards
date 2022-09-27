@@ -1,22 +1,23 @@
 import {
   Button,
+  Center,
   Heading,
   Text,
   useBreakpointValue,
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import { FaDiscord } from "react-icons/fa";
 import { useState } from "react";
-import { supabase } from "../../utils/supabaseClient";
+import { supabase } from "../../utils/supabase-client";
+import { FaDiscord } from "react-icons/fa";
 
 export default function Landing() {
   const [loading, isLoading] = useState(false);
 
   const toast = useToast();
-  const toastPos = useBreakpointValue({ base: "bottom", md: "bottom-right" });
-  const toastW = useBreakpointValue({ base: "100%", md: "320px" });
-  const toastP = useBreakpointValue({ base: "0 16px 8px", md: "0 8px 8px" });
+  const toastPos = useBreakpointValue(["bottom", "bottom-right"]);
+  const toastW = useBreakpointValue(["100%", "320px"]);
+  const toastP = useBreakpointValue(["0 16px 8px", "0 8px 8px"]);
 
   async function handleLogin() {
     try {
@@ -40,30 +41,32 @@ export default function Landing() {
   }
 
   return (
-    <VStack gap={{ base: "32px", md: "48px" }} zIndex={1}>
-      <VStack textAlign="center" gap={{ base: "2px", md: "8px" }}>
-        <Heading size={{ base: "xl", md: "3xl" }} maxW="2xl">
-          One of the trading card games of all time.
-        </Heading>
+    <Center m={0} p={0}>
+      <VStack gap={["32px", "48px"]}>
+        <VStack textAlign="center" maxW="2xl" gap={["2px", "8px"]}>
+          <Heading size={["xl", "3xl"]}>
+            One of the trading card games of all time.
+          </Heading>
 
-        <Text fontSize={{ base: "md", md: "xl" }}>
-          A CPSC 362 Project by Mike &amp; Shaleen.
-        </Text>
+          <Text fontSize={["md", "xl"]} fontWeight="medium">
+            A CPSC 362 Project by Mike &amp; Shaleen.
+          </Text>
+        </VStack>
+
+        <Button
+          leftIcon={<FaDiscord />}
+          size={["md", "lg"]}
+          colorScheme="purple"
+          rounded="lg"
+          onClick={() => {
+            isLoading(true);
+            handleLogin();
+          }}
+          isLoading={loading}
+        >
+          Sign In with Discord
+        </Button>
       </VStack>
-
-      <Button
-        leftIcon={<FaDiscord />}
-        size={{ base: "md", md: "lg" }}
-        colorScheme="purple"
-        onClick={(e) => {
-          isLoading(true);
-          e.preventDefault();
-          handleLogin();
-        }}
-        isLoading={loading}
-      >
-        Sign In with Discord
-      </Button>
-    </VStack>
+    </Center>
   );
 }

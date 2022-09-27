@@ -1,10 +1,9 @@
 import { SimpleGrid } from "@chakra-ui/react";
-import { supabase } from "../../utils/supabaseClient";
-import Spacer from "../general/spacer";
-import ClickerGame from "./clicker-game";
-import Powerups from "./clicker-game/powerups";
+import { supabase } from "../../utils/supabase-client";
+import EmptySpace from "../general/empty-space";
+import GameGrid from "./game-grid";
 
-export default function Clicker() {
+export default function Clicker({ session }) {
   async function getCurrentUser() {
     const {
       data: { session },
@@ -17,9 +16,8 @@ export default function Clicker() {
 
   return (
     <SimpleGrid w="100%" h="fit-content" gap="16px">
-      <Spacer />
-      <ClickerGame getCurrentUser={getCurrentUser} />
-      <Powerups />
+      <EmptySpace />
+      <GameGrid session={session} getCurrentUser={getCurrentUser} />
     </SimpleGrid>
   );
 }

@@ -6,14 +6,10 @@ import {
   DrawerOverlay,
   VStack,
 } from "@chakra-ui/react";
+import NavButtons from "../buttons/nav-buttons";
+import SignOutButton from "../buttons/sign-out-button";
 
-export default function MenuOverlay({
-  isOpen,
-  onClose,
-  btnRef,
-  SignOutButton,
-  NavButtons,
-}) {
+export default function Menu({ isOpen, onClose, btnRef }) {
   return (
     <Drawer
       isOpen={isOpen}
@@ -22,13 +18,13 @@ export default function MenuOverlay({
       placement="right"
       size="full"
     >
-      <DrawerOverlay>
+      <DrawerOverlay display={["flex", "none"]}>
         <DrawerContent>
           <DrawerCloseButton size="lg" />
           
           <DrawerBody>
             <VStack h="100%" justify="center" gap="32px">
-              <NavButtons size="lg" />
+              <NavButtons size="lg" onClose={onClose} />
               <SignOutButton size="lg" />
             </VStack>
           </DrawerBody>

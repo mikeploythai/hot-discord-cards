@@ -1,10 +1,9 @@
 import { SimpleGrid } from "@chakra-ui/react";
 import { supabase } from "../../utils/supabase-client";
 import EmptySpace from "../general/empty-space";
-import CardGrid from "./card-grid";
-import Profile from "./profile";
+import BuyGrid from "./buy-grid";
 
-export default function Dashboard({ session }) {
+export default function Buy({ session }) {
   async function getCurrentUser() {
     const {
       data: { session },
@@ -18,8 +17,7 @@ export default function Dashboard({ session }) {
   return (
     <SimpleGrid w="100%" h="fit-content" gap="16px">
       <EmptySpace />
-      <Profile session={session} getCurrentUser={getCurrentUser} />
-      <CardGrid session={session} getCurrentUser={getCurrentUser} />
+      <BuyGrid session={session} getCurrentUser={getCurrentUser} />
     </SimpleGrid>
   );
 }
