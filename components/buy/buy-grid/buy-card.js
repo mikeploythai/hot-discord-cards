@@ -6,7 +6,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { supabase } from "../../../utils/supabase-client";
-import BuyRevealOverlay from "./buy-reveal-overlay";
+import CardInfoOverlay from "../../card-info-overlay";
 
 export default function BuyCard({
   level,
@@ -21,13 +21,14 @@ export default function BuyCard({
   const [img, setImg] = useState(null);
   const [attr, setAttr] = useState(null);
   const [own, setOwn] = useState(false);
+  const [load, setLoad] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const toast = useToast();
-  const toastPos = useBreakpointValue({ base: "bottom", md: "bottom-right" });
-  const toastW = useBreakpointValue({ base: "100%", md: "320px" });
-  const toastP = useBreakpointValue({ base: "0 16px 8px", md: "0 8px 8px" });
+  const toastPos = useBreakpointValue(["bottom", "bottom-right"]);
+  const toastW = useBreakpointValue(["100%", "320px"]);
+  const toastP = useBreakpointValue(["0 16px 8px", "0 8px 8px"]);
 
   async function updatePointData(cost) {
     try {
@@ -63,6 +64,7 @@ export default function BuyCard({
 
   async function addRandomCard(level) {
     try {
+      setLoad(true);
       let { data: card } = await supabase
         .from("cards")
         .select("id, name, image, attribute")
@@ -112,6 +114,8 @@ export default function BuyCard({
         },
         isClosable: true,
       });
+    } finally {
+      setLoad(false);
     }
   }
 
@@ -124,37 +128,43 @@ export default function BuyCard({
 
   return (
     <>
-      <Button
-        bgColor={color}
-        color="white"
-        w="200px"
-        h="300px"
-        p="16px"
-        rounded="lg"
-        textTransform="capitalize"
-        transition=".25s ease-in-out"
-        _hover={{ transform: points >= cost ? "scale(1.05)" : "unset" }}
-        _active={{ bgColor: active }}
-        onClick={onOpen}
-        onClickCapture={() => {
-          addRandomCard(level);
-          updatePointData(cost);
-        }}
-        isDisabled={points >= cost ? false : true}
-      >
-        {level} Pack<br></br>
-        {cost} Points
-      </Button>
+      <>
+        <Button
+          bgColor={color}
+          color="white"
+          w="200px"
+          h="300px"
+          p="16px"
+          rounded="lg"
+          textTransform="capitalize"
+          transition=".25s ease-in-out"
+          _hover={{ transform: points >= cost ? "scale(1.05)" : "unset" }}
+          _active={{ bgColor: active }}
+          onClick={onOpen}
+          onClickCapture={() => {
+            addRandomCard(level);
+            updatePointData(cost);
+          }}
+          isDisabled={points >= cost ? false : true}
+        >
+          {level} Pack<br></br>
+          {cost} Points
+        </Button>
 
-      <BuyRevealOverlay
-        isOpen={isOpen}
-        onClose={onClose}
-        name={name}
-        img={img}
-        attr={attr}
-        own={own}
-        reset={reset}
-      />
+        <CardInfoOverlay
+          header="You've unlocked..."
+          gap="8px"
+          isOpen={isOpen}
+          onClose={onClose}
+          name={name}
+          img={img}
+          attr={attr}
+          own={own}
+          reset={reset}
+          buy={true}
+          load={load}
+        />
+      </>
     </>
   );
 }
