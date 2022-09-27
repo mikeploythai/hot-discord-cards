@@ -158,6 +158,7 @@ export default function BuyCard({
         onClose={onClose}
         buy={true}
         gap="8px"
+        load={load}
         name={name}
         img={img}
         attr={attr}
