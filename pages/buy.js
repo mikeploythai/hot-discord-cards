@@ -5,11 +5,11 @@ import { useEffect } from "react";
 import Buy from "../components/buy";
 
 export default function BuyPage({ session }) {
-  // const route = useRouter();
+  const route = useRouter();
 
-  // useEffect(() => {
-  //   if (!session) route.push("/");
-  // }, [session]);
+  useEffect(() => {
+    if (!session) route.push("/");
+  }, [session]);
 
   return (
     <Flex minH="100vh" justify="center" p="16px" bgColor="gray.50">

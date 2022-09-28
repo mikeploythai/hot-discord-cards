@@ -5,11 +5,11 @@ import { useEffect } from "react";
 import Clicker from "../components/clicker";
 
 export default function ClickerPage({ session }) {
-  // const route = useRouter();
+  const route = useRouter();
 
-  // useEffect(() => {
-  //   if (!session) route.push("/");
-  // }, [session]);
+  useEffect(() => {
+    if (!session) route.push("/");
+  }, [session]);
 
   return (
     <Flex minH="100vh" justify="center" p="16px" bgColor="gray.50">
