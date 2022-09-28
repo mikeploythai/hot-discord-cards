@@ -68,7 +68,7 @@ export default function BuyCard({
         .select("id, name, image, attribute")
         .eq("level", level);
 
-      const randNum = Math.floor(Math.random() * card.length);
+      let randNum = Math.floor(Math.random() * card.length);
       const randCard = card[randNum].id;
 
       if (card) {
