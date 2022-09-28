@@ -24,6 +24,7 @@ export default function Landing() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "discord",
       });
+      
       if (error) throw error;
     } catch (error) {
       toast({

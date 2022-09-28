@@ -22,9 +22,11 @@ export default function GameGrid({ session, getCurrentUser }) {
         <GridItem area={"game"}>
           <Game session={session} getCurrentUser={getCurrentUser} />
         </GridItem>
+
         <GridItem area={"powerup"}>
           <Powerups />
         </GridItem>
+        
         <GridItem area={"leaderboard"}>
           <Leaderboard />
         </GridItem>
