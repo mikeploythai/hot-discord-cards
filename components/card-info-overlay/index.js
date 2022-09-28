@@ -25,7 +25,7 @@ export default function CardInfoOverlay({
   reset,
 }) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={["full", "4xl"]} isCentered>
+    <Modal isOpen={isOpen} onClose={onClose} size={["full", "xl"]} isCentered>
       <ModalOverlay>
         <ModalContent rounded="lg" m={[0, "16px"]} zIndex={2}>
           <ModalHeader textTransform="capitalize">{header}</ModalHeader>
