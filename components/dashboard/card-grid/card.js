@@ -8,6 +8,7 @@ export default function Card({ name, attr, img, id, getCardData }) {
     <>
       <Image
         src={img}
+        alt={name}
         maxW="200px"
         w="100%"
         h={["250px", "300px"]}

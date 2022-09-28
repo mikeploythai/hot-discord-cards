@@ -1,5 +1,4 @@
 import { Image, useBreakpointValue, useToast } from "@chakra-ui/react";
-import { useEffect } from "react";
 import { supabase } from "../../../../../utils/supabase-client";
 
 export default function GamePic({ points, getCurrentUser, getPointData }) {
@@ -43,6 +42,7 @@ export default function GamePic({ points, getCurrentUser, getPointData }) {
   return (
     <Image
       src="https://cdn.discordapp.com/attachments/945912566000001045/1019300849685631046/image0.jpg"
+      alt="moike"
       w="250px"
       boxShadow="lg"
       rounded="lg"
