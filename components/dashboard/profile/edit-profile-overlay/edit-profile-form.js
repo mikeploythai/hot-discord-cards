@@ -132,7 +132,7 @@ export default function EditProfileForm({
                   minH="100px"
                   fontSize={["sm", "md"]}
                   pt={["8px", "6px"]}
-                  overflow="scroll"
+                  overflow="auto"
                   rounded="lg"
                 />
 
