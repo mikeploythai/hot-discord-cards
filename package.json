@@ -1,6 +1,6 @@
 {
-  "name": "cpsc362",
-  "version": "0.1.0",
+  "name": "hot-discord-cards",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,18 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.3.1",
+    "@chakra-ui/react": "^2.3.4",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
-    "@supabase/supabase-js": "^2.0.0-rc.8",
-    "framer-motion": "^7.2.1",
-    "next": "12.2.5",
+    "@supabase/supabase-js": "^2.0.0-rc.10",
+    "framer-motion": "^7.4.0",
+    "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0"
   },
   "devDependencies": {
-    "eslint": "8.23.0",
-    "eslint-config-next": "12.2.5"
+    "eslint": "8.24.0",
+    "eslint-config-next": "12.3.1"
   }
 }

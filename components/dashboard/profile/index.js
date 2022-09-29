@@ -1,32 +1,29 @@
 import {
-  Avatar,
-  Button,
   Container,
-  Heading,
-  HStack,
-  Text,
   useBreakpointValue,
   useDisclosure,
   useToast,
-  VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { supabase } from "../../../utils/supabaseClient";
+import { supabase } from "../../../utils/supabase-client";
 import EditProfileOverlay from "./edit-profile-overlay";
+import ProfileCard from "./profile-card";
 
-export default function Profile({ getCurrentUser }) {
+export default function Profile({ session, getCurrentUser }) {
   const [username, setUsername] = useState(null);
   const [bio, setBio] = useState(null);
+  const [pic, setPic] = useState(null);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const toast = useToast();
-  const toastPos = useBreakpointValue({ base: "bottom", md: "bottom-right" });
-  const toastW = useBreakpointValue({ base: "100%", md: "320px" });
-  const toastP = useBreakpointValue({ base: "0 16px 8px", md: "0 8px 8px" });
+  const toastPos = useBreakpointValue(["bottom", "bottom-right"]);
+  const toastW = useBreakpointValue(["100%", "320px"]);
+  const toastP = useBreakpointValue(["0 16px 8px", "0 8px 8px"]);
 
   useEffect(() => {
     getProfileData();
-  });
+  }, [session]);
 
   async function getProfileData() {
     try {
@@ -34,14 +31,29 @@ export default function Profile({ getCurrentUser }) {
 
       let { data, error } = await supabase
         .from("profiles")
-        .select("username, bio, points")
+        .select("username, bio")
         .eq("id", user.id)
         .maybeSingle();
+
       if (error) throw error;
 
       if (data) {
         setUsername(data.username);
         setBio(data.bio);
+        setPic(user.user_metadata.picture);
+      } else {
+        const update = {
+          id: user.id,
+          username: user.user_metadata.name,
+          bio: "Tap on edit to change your username and bio!",
+          updated_at: new Date(),
+        };
+
+        let { error } = await supabase
+          .from("profiles")
+          .upsert(update, { returning: "minimal" });
+
+        if (error) throw error;
       }
     } catch (error) {
       toast({
@@ -59,39 +71,8 @@ export default function Profile({ getCurrentUser }) {
   }
 
   return (
-    <Container maxW="container.md" p="0">
-      <HStack
-        p={{ base: "24px", md: "48px" }}
-        bgColor="white"
-        boxShadow="xs"
-        rounded="lg"
-        gap={{ base: "16px", md: "32px" }}
-      >
-        <Avatar size={{ base: "md", md: "xl" }} name={username} />
-
-        <VStack w="100%" align="start" gap={{ base: "0", md: "2px" }}>
-          <HStack w="100%" justify="space-between">
-            <Heading size={{ base: "md", md: "lg" }}>@{username}</Heading>
-
-            <Button
-              size={{ base: "xs", md: "sm" }}
-              variant="outline"
-              onClick={onOpen}
-            >
-              Edit
-            </Button>
-          </HStack>
-
-          <Text
-            fontSize={{ base: "xs", md: "sm" }}
-            wordBreak="break-word"
-            whiteSpace="pre-wrap"
-            noOfLines={5}
-          >
-            {bio}
-          </Text>
-        </VStack>
-      </HStack>
+    <Container maxW="container.md" p={0}>
+      <ProfileCard username={username} bio={bio} pic={pic} onOpen={onOpen} />
 
       <EditProfileOverlay
         isOpen={isOpen}

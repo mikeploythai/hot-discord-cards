@@ -2,9 +2,9 @@ import { Flex } from "@chakra-ui/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import Clicker from "../components/clicker";
+import Buy from "../components/buy";
 
-export default function ClickerPage({ session }) {
+export default function BuyPage({ session }) {
   const route = useRouter();
 
   useEffect(() => {
@@ -14,10 +14,10 @@ export default function ClickerPage({ session }) {
   return (
     <Flex minH="100vh" justify="center" p="16px" bgColor="gray.50">
       <Head>
-        <title>Clicker | Hot Discord Cards</title>
+        <title>Buy | Hot Discord Cards</title>
       </Head>
 
-      {!session ? null : <Clicker session={session} />}
+      {!session ? null : <Buy session={session} />}
     </Flex>
   );
 }

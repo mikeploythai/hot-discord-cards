@@ -2,9 +2,9 @@ import { SimpleGrid } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { supabase } from "../../utils/supabase-client";
 import EmptySpace from "../general/empty-space";
-import GameGrid from "./game-grid";
+import BuyGrid from "./buy-grid";
 
-export default function Clicker({ session }) {
+export default function Buy({ session }) {
   const route = useRouter();
 
   async function getCurrentUser() {
@@ -26,7 +26,7 @@ export default function Clicker({ session }) {
   return (
     <SimpleGrid w="100%" h="fit-content" gap="16px">
       <EmptySpace />
-      <GameGrid session={session} getCurrentUser={getCurrentUser} />
+      <BuyGrid session={session} getCurrentUser={getCurrentUser} />
     </SimpleGrid>
   );
 }

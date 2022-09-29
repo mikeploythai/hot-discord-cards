@@ -1,19 +1,19 @@
 import { Container, Flex, Heading, HStack } from "@chakra-ui/react";
-import NavLinks from "./nav-links";
+import NavItems from "./nav-items";
 
 export default function Nav({ session }) {
   return (
     <Flex pos="fixed" top={0} w="100%" p="16px" zIndex={1}>
       <Container
         maxW="container.lg"
-        p={{ base: "24px", md: "32px" }}
+        p={["24px", "32px"]}
         bgColor="white"
         boxShadow="xs"
         rounded="lg"
       >
         <HStack justify="space-between">
-          <Heading size={{ base: "sm", md: "md" }}>Hot Discord Cards</Heading>
-          <NavLinks session={session} />
+          <Heading size={["sm", "md"]}>Hot Discord Cards</Heading>
+          <NavItems session={session} />
         </HStack>
       </Container>
     </Flex>
