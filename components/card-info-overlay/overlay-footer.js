@@ -22,7 +22,6 @@ export default function OverlayFooter({
   own,
   reset,
 }) {
-  const [points, setPoints] = useState(0)
   const toast = useToast();
   const toastPos = useBreakpointValue(["bottom", "bottom-right"]);
   const toastW = useBreakpointValue(["100%", "320px"]);
@@ -76,11 +75,9 @@ export default function OverlayFooter({
         .eq("id", user.id)
         .maybeSingle();
 
-      if(data) setPoints(data.points)
-
       const updates = {
         id: user.id,
-        points: points + cashBack, 
+        points: data.points + cashBack, 
         updated_at: new Date(),
       };
       
