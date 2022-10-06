@@ -85,6 +85,7 @@ export default function CardGrid({ session, getCurrentUser }) {
                 img={card.image}
                 id={card.id}
                 getCardData={getCardData}
+                getCurrentUser={getCurrentUser}
               />
             );
           })}

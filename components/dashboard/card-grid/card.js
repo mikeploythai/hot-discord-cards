@@ -1,7 +1,7 @@
 import { Image, useDisclosure } from "@chakra-ui/react";
 import CardInfoOverlay from "../../card-info-overlay";
 
-export default function Card({ name, attr, img, id, getCardData }) {
+export default function Card({ name, attr, img, id, getCardData, getCurrentUser }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -33,6 +33,7 @@ export default function Card({ name, attr, img, id, getCardData }) {
         attr={attr}
         id={id}
         getCardData={getCardData}
+        getCurrentUser={getCurrentUser}
       />
     </>
   );

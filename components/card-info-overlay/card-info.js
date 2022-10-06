@@ -10,6 +10,7 @@ export default function CardInfo({
   attr,
   id,
   getCardData,
+  getCurrentUser,
   own,
   reset,
 }) {
@@ -42,6 +43,7 @@ export default function CardInfo({
           getCardData={getCardData}
           own={own}
           reset={reset}
+          getCurrentUser={getCurrentUser}
         />
       </VStack>
     </Flex>

@@ -5,6 +5,7 @@ import {
   useBreakpointValue,
   useToast,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { supabase } from "../../utils/supabase-client";
 
 export default function OverlayFooter({
@@ -17,9 +18,11 @@ export default function OverlayFooter({
   onClose,
   id,
   getCardData,
+  getCurrentUser,
   own,
   reset,
 }) {
+  const [points, setPoints] = useState(0)
   const toast = useToast();
   const toastPos = useBreakpointValue(["bottom", "bottom-right"]);
   const toastW = useBreakpointValue(["100%", "320px"]);
@@ -46,11 +49,62 @@ export default function OverlayFooter({
         isClosable: true,
       });
     } finally {
+      updateProfileData(10);
       getCardData();
 
       toast({
         title: "Success!",
         description: "The card was deleted.",
+        status: "success",
+        position: toastPos,
+        containerStyle: {
+          w: toastW,
+          p: toastP,
+        },
+        isClosable: true,
+      });
+    }
+  }
+
+  async function updateProfileData(cashBack) {
+    try {
+      const user = await getCurrentUser();
+
+      let { data } = await supabase
+        .from("profiles")
+        .select("points")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if(data) setPoints(data.points)
+
+      const updates = {
+        id: user.id,
+        points: points + cashBack, 
+        updated_at: new Date(),
+      };
+      
+      let { error } = await supabase
+        .from("profiles")
+        .upsert(updates, { returning: "minimal" });
+
+      if (error) throw error;
+    } catch (error) {
+      toast({
+        title: "Error!",
+        description: error.message,
+        status: "error",
+        position: toastPos,
+        containerStyle: {
+          w: toastW,
+          p: toastP,
+        },
+        isClosable: true,
+      });
+    } finally {
+      toast({
+        title: "Success!",
+        description: `You earned ${cashBack} points back.`, 
         status: "success",
         position: toastPos,
         containerStyle: {

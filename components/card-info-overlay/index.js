@@ -21,6 +21,7 @@ export default function CardInfoOverlay({
   img,
   id,
   getCardData,
+  getCurrentUser,
   own,
   reset,
 }) {
@@ -44,6 +45,7 @@ export default function CardInfoOverlay({
               getCardData={getCardData}
               own={own}
               reset={reset}
+              getCurrentUser={getCurrentUser}
             />
           </ModalBody>
 
