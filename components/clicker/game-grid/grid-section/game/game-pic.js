@@ -11,9 +11,16 @@ export default function GamePic({ points, getCurrentUser, getPointData }) {
     try {
       const user = await getCurrentUser();
 
+      let { data } = await supabase
+        .from("profiles")
+        .select("clicks")
+        .eq("id", user.id)
+        .maybeSingle();
+
       const updates = {
         id: user.id,
         points: points + 1,
+        clicks: data.clicks + 1,
         updated_at: new Date(),
       };
 

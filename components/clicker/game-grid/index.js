@@ -28,7 +28,7 @@ export default function GameGrid({ session, getCurrentUser }) {
         </GridItem>
         
         <GridItem area={"leaderboard"}>
-          <Leaderboard />
+          <Leaderboard session={session} getCurrentUser={getCurrentUser} />
         </GridItem>
       </Grid>
     </Container>
