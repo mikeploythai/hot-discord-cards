@@ -2,14 +2,13 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { supabase } from "../utils/supabase-client";
 import Nav from "../components/nav";
-import "../styles/globals.css";
+import NavButtons from "../components/nav/buttons";
 
-export default function HotDiscordCards({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
   const [session, setSession] = useState(null);
 
   useEffect(() => {
     let mounted = true;
-
     async function getInitialSession() {
       const {
         data: { session },
@@ -31,8 +30,12 @@ export default function HotDiscordCards({ Component, pageProps }) {
 
   return (
     <ChakraProvider>
-      <Nav session={session} />
-      <Component session={session} setSession={setSession} {...pageProps} />
+      <Nav>
+        <NavButtons session={session} />
+      </Nav>
+      <Component session={session} {...pageProps} />
     </ChakraProvider>
   );
 }
+
+export default MyApp;

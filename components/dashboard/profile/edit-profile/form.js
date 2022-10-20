@@ -8,26 +8,15 @@ import {
   FormHelperText,
   FormLabel,
   Input,
-  useBreakpointValue,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { supabase } from "../../../../utils/supabase-client";
+import getCurrentUser from "../../../../utils/hooks/get-current-user";
 
-export default function EditProfileForm({
-  userText,
-  bioText,
-  isDisabled,
-  getCurrentUser,
-}) {
+export default function EditProfileForm({ userValue, bioValue, isDisabled }) {
   const [username, setUsername] = useState(null);
   const [bio, setBio] = useState(null);
-
-  const toast = useToast();
-  const toastPos = useBreakpointValue(["bottom", "bottom-right"]);
-  const toastW = useBreakpointValue(["100%", "320px"]);
-  const toastP = useBreakpointValue(["0 16px 8px", "0 8px 8px"]);
 
   async function updateProfileData() {
     try {
@@ -35,8 +24,8 @@ export default function EditProfileForm({
 
       const updates = {
         id: user.id,
-        username: username || userText,
-        bio: bio || bioText,
+        username: username || userValue,
+        bio: bio || bioValue,
         updated_at: new Date(),
       };
 
@@ -50,34 +39,12 @@ export default function EditProfileForm({
 
       if (error) throw error;
     } catch (error) {
-      toast({
-        title: "Error!",
-        description: error.message,
-        status: "error",
-        position: toastPos,
-        containerStyle: {
-          w: toastW,
-          p: toastP,
-        },
-        isClosable: true,
-      });
-    } finally {
-      toast({
-        title: "Success!",
-        description: "Your profile was saved.",
-        status: "success",
-        position: toastPos,
-        containerStyle: {
-          w: toastW,
-          p: toastP,
-        },
-        isClosable: true,
-      });
+      console.log(error.message);
     }
   }
 
   return (
-    <VStack align="start" gap="16px">
+    <VStack align="start" gap={4}>
       <Box w="100%">
         <form
           id="save"
@@ -87,77 +54,61 @@ export default function EditProfileForm({
             isDisabled(true);
           }}
         >
-          <VStack gap="8px">
+          <VStack gap={2}>
             <FormControl>
               <FormLabel>Username</FormLabel>
-
-              <Editable defaultValue={userText}>
+              <Editable defaultValue={userValue}>
                 <Input
                   as={EditablePreview}
                   variant="filled"
-                  pt={["8px", "6px"]}
-                  fontSize={["sm", "md"]}
+                  pt={{ base: 2, md: 1.5 }}
+                  fontSize={{ base: "sm", md: "md" }}
                   rounded="lg"
                 />
-
                 <Input
                   as={EditableInput}
                   variant="filled"
-                  fontSize={["sm", "md"]}
+                  fontSize={{ base: "sm", md: "md" }}
                   rounded="lg"
-                  _focusVisible={{
-                    bgColor: "white",
-                    boxShadow: "0 0 0 2px #3182ce",
-                  }}
                   onChange={(e) => {
                     isDisabled(false);
                     setUsername(e.target.value);
                   }}
                 />
               </Editable>
-
               <FormHelperText>
                 Usernames must be more than 2 letters!
               </FormHelperText>
             </FormControl>
-
             <FormControl>
               <FormLabel>Bio</FormLabel>
-
-              <Editable defaultValue={bioText}>
+              <Editable defaultValue={bioValue}>
                 <Input
                   as={EditablePreview}
                   variant="filled"
+                  minH="8rem"
+                  pt={{ base: 2, md: 1.5 }}
+                  fontSize={{ base: "sm", md: "md" }}
                   whiteSpace="pre-wrap"
-                  minH="100px"
-                  fontSize={["sm", "md"]}
-                  pt={["8px", "6px"]}
                   overflow="auto"
                   rounded="lg"
                 />
-
                 <Input
                   as={EditableTextarea}
                   variant="filled"
-                  minH="100px"
+                  minH="8rem"
                   maxLength={100}
+                  pt={{ base: 2, md: 1.5 }}
+                  fontSize={{ base: "sm", md: "md" }}
                   resize="none"
-                  fontSize={["sm", "md"]}
-                  pt={["8px", "6px"]}
                   rounded="lg"
-                  _focusVisible={{
-                    bgColor: "white",
-                    boxShadow: "0 0 0 2px #3182ce",
-                  }}
                   onChange={(e) => {
                     isDisabled(false);
-
                     if (e.target.value.length === 0) setBio(" ");
                     else setBio(e.target.value);
                   }}
                 />
               </Editable>
-
               <FormHelperText>Bios can be 100 characters max!</FormHelperText>
             </FormControl>
           </VStack>

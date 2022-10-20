@@ -8,23 +8,23 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { supabase } from "../../utils/supabase-client";
 import { FaDiscord } from "react-icons/fa";
+import { supabase } from "../../utils/supabase-client";
 
 export default function Landing() {
   const [loading, isLoading] = useState(false);
 
   const toast = useToast();
-  const toastPos = useBreakpointValue(["bottom", "bottom-right"]);
-  const toastW = useBreakpointValue(["100%", "320px"]);
-  const toastP = useBreakpointValue(["0 16px 8px", "0 8px 8px"]);
+  const toastPos = useBreakpointValue({ base: "bottom", md: "bottom-right" });
+  const toastW = useBreakpointValue({ base: "100%", md: "320px" });
+  const toastP = useBreakpointValue({ base: "0 16px 8px", md: "0 8px 8px" });
 
   async function handleLogin() {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "discord",
       });
-      
+
       if (error) throw error;
     } catch (error) {
       toast({
@@ -42,21 +42,19 @@ export default function Landing() {
   }
 
   return (
-    <Center m={0} p={0}>
-      <VStack gap={["32px", "48px"]}>
-        <VStack textAlign="center" maxW="2xl" gap={["2px", "8px"]}>
-          <Heading size={["xl", "3xl"]}>
+    <Center pt={{ base: 32, md: 36 }} pb={{ base: 32, md: 36 }}>
+      <VStack gap={{ base: 8, md: 12 }}>
+        <VStack textAlign="center" maxW="2xl" gap={{ base: 0.5, md: 2 }}>
+          <Heading size={{ base: "xl", md: "3xl" }}>
             One of the trading card games of all time.
           </Heading>
-
-          <Text fontSize={["md", "xl"]} fontWeight="medium">
+          <Text fontSize={{ base: "md", md: "xl" }} fontWeight="medium">
             A CPSC 362 Project by Mike &amp; Shaleen.
           </Text>
         </VStack>
-
         <Button
           leftIcon={<FaDiscord />}
-          size={["md", "lg"]}
+          size={{ base: "md", md: "lg" }}
           colorScheme="purple"
           rounded="lg"
           onClick={() => {

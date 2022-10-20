@@ -3,15 +3,12 @@ import Head from "next/head";
 import Dashboard from "../components/dashboard";
 import Landing from "../components/general/landing";
 
-export default function HomePage({ session }) {
+export default function Home({ session }) {
   return (
-    <Flex minH="100vh" justify="center" p="16px" bgColor="gray.50">
+    <Flex minH="100vh" justify="center" p={4} bgColor="gray.100">
       <Head>
-        <title>
-          {!session ? "Hot Discord Cards" : "Dashboard | Hot Discord Cards"}
-        </title>
+        <title>Hot Discord Cards {!session ? null : "| Dashboard"}</title>
       </Head>
-
       {!session ? <Landing /> : <Dashboard session={session} />}
     </Flex>
   );
