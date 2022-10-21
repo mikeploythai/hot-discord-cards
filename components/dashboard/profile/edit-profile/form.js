@@ -8,40 +8,24 @@ import {
   FormHelperText,
   FormLabel,
   Input,
+  useBreakpointValue,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { supabase } from "../../../../utils/supabase-client";
-import getCurrentUser from "../../../../utils/hooks/get-current-user";
+import updateProfileData from "../../../../utils/functions/update-profile-data";
 
 export default function EditProfileForm({ userValue, bioValue, isDisabled }) {
   const [username, setUsername] = useState(null);
   const [bio, setBio] = useState(null);
+  let changes = {};
 
-  async function updateProfileData() {
-    try {
-      const user = await getCurrentUser();
-
-      const updates = {
-        id: user.id,
-        username: username || userValue,
-        bio: bio || bioValue,
-        updated_at: new Date(),
-      };
-
-      if (updates.bio === " ") {
-        updates.bio = "";
-      }
-
-      let { error } = await supabase
-        .from("profiles")
-        .upsert(updates, { returning: "minimal" });
-
-      if (error) throw error;
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
+  let toastProps = {
+    toast: useToast(),
+    toastPos: useBreakpointValue({ base: "bottom", md: "bottom-right" }),
+    toastW: useBreakpointValue({ base: "100%", md: "320px" }),
+    toastP: useBreakpointValue({ base: "0 16px 8px", md: "0 8px 8px" }),
+  };
 
   return (
     <VStack align="start" gap={4}>
@@ -50,7 +34,9 @@ export default function EditProfileForm({ userValue, bioValue, isDisabled }) {
           id="save"
           onSubmit={(e) => {
             e.preventDefault();
-            updateProfileData();
+            changes["username"] = username || userValue;
+            changes["bio"] = bio || bioValue;
+            updateProfileData(changes, toastProps);
             isDisabled(true);
           }}
         >
