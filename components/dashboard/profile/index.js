@@ -11,7 +11,7 @@ export default function Profile({ session }) {
   const { userData } = getProfileData(session);
 
   return (
-    <Container maxW="container.md" p={0}>
+    <Container maxW={{ base: "container.lg", lg: "container.md" }} p={0}>
       <ProfileCard userData={userData} onOpen={onOpen} />
       <EditProfile isOpen={isOpen} onClose={onClose} disabled={disabled}>
         <EditProfileForm
