@@ -1,7 +1,7 @@
 import { useBreakpointValue, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { supabase } from "../supabase-client";
-import getCurrentUser from "./get-current-user";
+import getCurrentUser from "../functions/get-current-user";
 
 export default function getProfileData({ session }) {
   const [userData, setUserData] = useState(null);
