@@ -7,13 +7,21 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  useMediaQuery,
 } from "@chakra-ui/react";
 
 export default function EditProfile({ isOpen, onClose, disabled, children }) {
+  const [notLandscape] = useMediaQuery("(min-height: 480px)");
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={["full", "md"]} isCentered>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      size={{ base: "full", md: notLandscape ? "md" : "full" }}
+      isCentered={notLandscape ? true : false}
+    >
       <ModalOverlay>
-        <ModalContent rounded="lg" m={{ base: 0, md: 4 }}>
+        <ModalContent rounded="lg">
           <ModalHeader>Edit Profile</ModalHeader>
           <ModalBody>{children}</ModalBody>
           <ModalFooter>

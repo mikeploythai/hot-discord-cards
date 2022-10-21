@@ -5,12 +5,15 @@ import {
   Heading,
   HStack,
   IconButton,
+  useMediaQuery,
 } from "@chakra-ui/react";
 
 export default function EmptySpace() {
+  const [notLandscape] = useMediaQuery("(min-height: 480px)");
+
   return (
-    <Flex w="100%" h="fit-content">
-      <Container maxW="container.lg" p={{ base: 6, md: 8 }}>
+    <Flex w="100%" h="fit-content" bgColor="blue.100" opacity={0}>
+      <Container maxW="container.lg" p={{ base: 6, md: notLandscape ? 8 : 6 }}>
         <HStack justify="space-between">
           <Heading size={{ base: "sm", md: "md" }}>
             This is an empty space
