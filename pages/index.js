@@ -1,5 +1,5 @@
 import { useDisclosure } from "@chakra-ui/react";
-import { useSession, useUser } from "@supabase/auth-helpers-react";
+import { useSession } from "@supabase/auth-helpers-react";
 import { useState } from "react";
 import Profile from "../components/profile";
 import Landing from "../components/general/landing";
@@ -11,15 +11,15 @@ import Page from "../components/general/page";
 
 export default function Home() {
   const session = useSession();
-  const user = useUser();
   const [disabled, isDisabled] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { userData } = getUserData();
 
-  if (session) {
-    const { userData } = getUserData("*", "id", user.id);
-
-    return (
-      <Page title="Dashboard">
+  return (
+    <Page title="Dashboard">
+      {!session ? (
+        <Landing />
+      ) : (
         <Profile>
           <ProfileCard userData={userData} onOpen={onOpen} />
 
@@ -27,13 +27,7 @@ export default function Home() {
             <EditProfileForm userData={userData} isDisabled={isDisabled} />
           </EditProfile>
         </Profile>
-      </Page>
-    );
-  } else {
-    return (
-      <Page>
-        <Landing />
-      </Page>
-    );
-  }
+      )}
+    </Page>
+  );
 }
