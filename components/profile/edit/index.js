@@ -21,7 +21,7 @@ export default function EditProfile({ isOpen, onClose, disabled, children }) {
       isCentered={notLandscape ? true : false}
     >
       <ModalOverlay>
-        <ModalContent rounded="lg">
+        <ModalContent rounded="lg" p="6px 4px">
           <ModalHeader>Edit Profile</ModalHeader>
 
           <ModalBody>{children}</ModalBody>

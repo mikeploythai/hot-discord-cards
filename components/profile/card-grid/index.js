@@ -11,13 +11,13 @@ export default function CardGrid({ word, children }) {
         gap={{ base: 2, md: 4 }}
       >
         <Heading size={{ base: "sm", md: "md" }} w="100%" alignItems="start">
-          {word} cards
+          {word} Collection
         </Heading>
 
         <SimpleGrid
           w="100%"
           m={0}
-          columns={{ base: 2, md: 3 }}
+          columns={{ base: 2, sm: 3 }}
           spacing={{ base: "16px", md: "32px" }}
           justifyItems={{ base: "center", md: "initial" }}
         >
