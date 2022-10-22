@@ -16,7 +16,7 @@ export default function User({ user, card }) {
         <ProfileCard userData={user} display="none" />
         <CardGrid word={`${user.username}'s`}>
           {card.map((card) => {
-            return <Card key={card.id} cardData={card} />;
+            return <Card key={card.id} cardData={card} display="none" />;
           })}
         </CardGrid>
       </Profile>
