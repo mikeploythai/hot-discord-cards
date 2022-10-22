@@ -1,21 +1,23 @@
 import {
   Button,
-  Grid,
-  GridItem,
+  Center,
   Heading,
   Text,
   useBreakpointValue,
-  useMediaQuery,
   useToast,
   VStack,
+  Grid,
+  GridItem,
+  useMediaQuery,
 } from "@chakra-ui/react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useState } from "react";
 import { FaDiscord } from "react-icons/fa";
-import { supabase } from "../../utils/supabase-client";
 import EmptySpace from "./empty-space";
 
 export default function Landing() {
-  const [loading, isLoading] = useState(false);
+  const supabase = useSupabaseClient();
+  const [loading, setLoading] = useState(false);
   const [notLandscape] = useMediaQuery("(min-height: 480px)");
 
   const toast = useToast();
@@ -28,7 +30,6 @@ export default function Landing() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "discord",
       });
-
       if (error) throw error;
     } catch (error) {
       toast({
@@ -58,6 +59,7 @@ export default function Landing() {
       <GridItem area={"header"}>
         <EmptySpace />
       </GridItem>
+
       <GridItem area={"main"}>
         <VStack gap={{ base: 8, md: 12 }}>
           <VStack
@@ -68,20 +70,22 @@ export default function Landing() {
             <Heading size={{ base: "xl", md: notLandscape ? "3xl" : "xl" }}>
               One of the trading card games of all time.
             </Heading>
+
             <Text
               fontSize={{ base: "md", md: notLandscape ? "xl" : "md" }}
               fontWeight="medium"
             >
-              A CPSC 362 Project by Mike &amp; Shaleen.
+              Also a social media platform.
             </Text>
           </VStack>
+
           <Button
             leftIcon={<FaDiscord />}
             size={{ base: "md", md: notLandscape ? "lg" : "md" }}
             colorScheme="purple"
             rounded="lg"
             onClick={() => {
-              isLoading(true);
+              setLoading(true);
               handleLogin();
             }}
             isLoading={loading}

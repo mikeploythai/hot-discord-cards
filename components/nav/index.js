@@ -5,8 +5,9 @@ import {
   HStack,
   useMediaQuery,
 } from "@chakra-ui/react";
+import NavButtons from "./buttons";
 
-export default function Nav({ children }) {
+export default function Nav() {
   const [notLandscape] = useMediaQuery("(min-height: 480px)");
 
   return (
@@ -20,7 +21,7 @@ export default function Nav({ children }) {
       >
         <HStack justify="space-between">
           <Heading size={{ base: "sm", md: "md" }}>Hot Discord Cards</Heading>
-          {children}
+          <NavButtons />
         </HStack>
       </Container>
     </Flex>
