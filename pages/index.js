@@ -8,15 +8,19 @@ import EditProfile from "../components/profile/edit";
 import EditProfileForm from "../components/profile/edit/form";
 import getUserData from "../utils/get-user-data";
 import Page from "../components/general/page";
+import CardGrid from "../components/profile/card-grid";
+import getCardData from "../utils/get-card-data";
+import Card from "../components/profile/card-grid/card";
 
 export default function Home() {
   const session = useSession();
   const [disabled, isDisabled] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { userData } = getUserData();
+  const card = getCardData();
 
   return (
-    <Page title="Dashboard">
+    <Page title={!session ? null : "Dashboard"}>
       {!session ? (
         <Landing />
       ) : (
@@ -26,6 +30,12 @@ export default function Home() {
           <EditProfile isOpen={isOpen} onClose={onClose} disabled={disabled}>
             <EditProfileForm userData={userData} isDisabled={isDisabled} />
           </EditProfile>
+
+          <CardGrid word="Your">
+            {card.map((card) => {
+              return <Card key={card.id} cardData={card} />;
+            })}
+          </CardGrid>
         </Profile>
       )}
     </Page>
