@@ -11,6 +11,7 @@ import NavLinks from "./links";
 
 export default function MobileMenu({ isOpen, onClose, btnRef }) {
   const [notLandscape] = useMediaQuery("(min-height: 480px)");
+  
   return (
     <Drawer
       isOpen={isOpen}
