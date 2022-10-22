@@ -10,6 +10,7 @@ import {
 
 export default function EmptySpace() {
   const [notLandscape] = useMediaQuery("(min-height: 480px)");
+  
   return (
     <Flex w="100%" h="fit-content" opacity={0}>
       <Container maxW="container.lg" p={{ base: 6, md: notLandscape ? 8 : 6 }}>
