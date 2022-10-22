@@ -11,12 +11,12 @@ import Page from "../components/general/page";
 
 export default function Home() {
   const session = useSession();
+  const user = useUser();
+  const [disabled, isDisabled] = useState(true);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   if (session) {
-    const user = useUser();
     const { userData } = getUserData("*", "id", user.id);
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [disabled, isDisabled] = useState(true);
 
     return (
       <Page title="Dashboard">
