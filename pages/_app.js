@@ -1,41 +1,23 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { supabase } from "../utils/supabase-client";
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
+import { useState } from "react";
 import Nav from "../components/nav";
-import NavButtons from "../components/nav/buttons";
 
-function MyApp({ Component, pageProps }) {
-  const [session, setSession] = useState(null);
-
-  useEffect(() => {
-    let mounted = true;
-    async function getInitialSession() {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (mounted) if (session) setSession(session);
-    }
-
-    getInitialSession();
-
-    const { subscription } = supabase.auth.onAuthStateChange(
-      (_event, session) => setSession(session)
-    );
-
-    return () => {
-      mounted = false;
-      subscription?.unsubscribe();
-    };
-  }, []);
+function HDC({ Component, pageProps }) {
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
   return (
-    <ChakraProvider>
-      <Nav>
-        <NavButtons session={session} />
-      </Nav>
-      <Component session={session} {...pageProps} />
-    </ChakraProvider>
+    <SessionContextProvider
+      supabaseClient={supabaseClient}
+      initialSession={pageProps.initialSession}
+    >
+      <ChakraProvider>
+        <Nav />
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </SessionContextProvider>
   );
 }
 
-export default MyApp;
+export default HDC;
