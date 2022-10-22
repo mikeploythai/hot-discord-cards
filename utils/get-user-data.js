@@ -1,4 +1,3 @@
-import { useBreakpointValue, useToast } from "@chakra-ui/react";
 import {
   useSession,
   useSupabaseClient,
@@ -11,6 +10,7 @@ import {
   NumberDictionary,
 } from "unique-names-generator";
 import { useEffect, useState } from "react";
+import { useBreakpointValue, useToast } from "@chakra-ui/react";
 import { updateUserData } from "./update-user-data";
 
 export default function getUserData() {
