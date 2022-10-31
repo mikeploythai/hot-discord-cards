@@ -1,50 +1,16 @@
 import {
-  Button,
-  Center,
   Heading,
   Text,
-  useBreakpointValue,
-  useToast,
   VStack,
   Grid,
   GridItem,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useState } from "react";
-import { FaDiscord } from "react-icons/fa";
 import EmptySpace from "./empty-space";
+import SignInButton from "./sign-in-button";
 
 export default function Landing() {
-  const supabase = useSupabaseClient();
-  const [loading, setLoading] = useState(false);
   const [notLandscape] = useMediaQuery("(min-height: 480px)");
-
-  const toast = useToast();
-  const toastPos = useBreakpointValue({ base: "bottom", md: "bottom-right" });
-  const toastW = useBreakpointValue({ base: "100%", md: "320px" });
-  const toastP = useBreakpointValue({ base: "0 16px 8px", md: "0 8px 8px" });
-
-  async function handleLogin() {
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "discord",
-      });
-      if (error) throw error;
-    } catch (error) {
-      toast({
-        title: "Error!",
-        description: error.message,
-        status: "error",
-        position: toastPos,
-        containerStyle: {
-          w: toastW,
-          p: toastP,
-        },
-        isClosable: true,
-      });
-    }
-  }
 
   return (
     <Grid
@@ -79,19 +45,7 @@ export default function Landing() {
             </Text>
           </VStack>
 
-          <Button
-            leftIcon={<FaDiscord />}
-            size={{ base: "md", md: notLandscape ? "lg" : "md" }}
-            colorScheme="purple"
-            rounded="lg"
-            onClick={() => {
-              setLoading(true);
-              handleLogin();
-            }}
-            isLoading={loading}
-          >
-            Sign In with Discord
-          </Button>
+          <SignInButton small="md" large="lg" />
         </VStack>
       </GridItem>
     </Grid>
