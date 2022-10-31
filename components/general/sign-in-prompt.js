@@ -28,7 +28,7 @@ export default function SignInPrompt() {
       <Container maxW="container.lg" p={{ base: 2, md: notLandscape ? 4 : 2 }}>
         <VStack gap={{ base: 1, md: notLandscape ? 2 : 1 }}>
           <Heading size={{ base: "xs", md: "sm" }}>
-            Sign in to view this user's full profile!
+            Sign in to view this user&apos;s full profile!
           </Heading>
           <SignInButton small="xs" large="sm" />
         </VStack>
