@@ -1,5 +1,8 @@
+import { useMediaQuery } from "@chakra-ui/react";
+import { useSession } from "@supabase/auth-helpers-react";
 import { createClient } from "@supabase/supabase-js";
 import Page from "../components/general/page";
+import SignInPrompt from "../components/general/sign-in-prompt";
 import Profile from "../components/profile";
 import ProfileCard from "../components/profile/card";
 import CardGrid from "../components/profile/card-grid";
@@ -10,8 +13,16 @@ const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 export const supabase = createClient(url, key);
 
 export default function User({ user, card }) {
+  const session = useSession();
+  const [notLandscape] = useMediaQuery("(min-height: 480px)");
+
   return (
-    <Page title={user.username}>
+    <Page
+      title={user.username}
+      maxH={!session ? (notLandscape ? "100vh" : "150vh") : null}
+      overflow={!session ? "hidden" : null}
+    >
+      {!session ? <SignInPrompt /> : null}
       <Profile>
         <ProfileCard userData={user} display="none" />
         <CardGrid word={`${user.username}'s`}>
