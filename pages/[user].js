@@ -52,6 +52,7 @@ export async function getStaticProps({ params }) {
       user: data,
       card: cards,
     },
+    revalidate: 1,
   };
 }
 
