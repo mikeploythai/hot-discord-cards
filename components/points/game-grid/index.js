@@ -1,12 +1,7 @@
-import { Container, Grid, GridItem, useMediaQuery } from "@chakra-ui/react";
-import getUserData from "../../../utils/get-user-data";
-import GameImage from "./sections/game-image";
-import Leaderboard from "./sections/leaderboard";
-import Powerups from "./sections/powerups";
+import { Container, Grid, useMediaQuery } from "@chakra-ui/react";
 
-export default function GameGrid() {
+export default function GameGrid({ children }) {
   const [notLandscape] = useMediaQuery("(min-height: 480px)");
-  const { userData } = getUserData();
 
   const desktopLayout = `
   "powerup leaderboard"
@@ -31,17 +26,7 @@ export default function GameGrid() {
         h="100%"
         gap={4}
       >
-        <GridItem area={"game"}>
-          <GameImage />
-        </GridItem>
-
-        <GridItem area={"powerup"}>
-          <Powerups userData={userData} />
-        </GridItem>
-
-        <GridItem area={"leaderboard"}>
-          <Leaderboard userData={userData} />
-        </GridItem>
+        {children}
       </Grid>
     </Container>
   );
