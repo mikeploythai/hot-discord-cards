@@ -10,7 +10,7 @@ export function updateUserData() {
   const toastW = useBreakpointValue({ base: "100%", md: "320px" });
   const toastP = useBreakpointValue({ base: "0 16px 8px", md: "0 8px 8px" });
 
-  async function updateData(changes) {
+  async function updateData(changes, game) {
     try {
       const updates = {
         id: user.id,
@@ -35,17 +35,19 @@ export function updateUserData() {
         isClosable: true,
       });
     } finally {
-      toast({
-        title: "Success!",
-        description: "Your profile has been updated.",
-        status: "success",
-        position: toastPos,
-        containerStyle: {
-          w: toastW,
-          p: toastP,
-        },
-        isClosable: true,
-      });
+      if (!game) {
+        toast({
+          title: "Success!",
+          description: "Your profile has been updated.",
+          status: "success",
+          position: toastPos,
+          containerStyle: {
+            w: toastW,
+            p: toastP,
+          },
+          isClosable: true,
+        });
+      }
     }
   }
 
