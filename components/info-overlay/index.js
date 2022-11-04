@@ -21,7 +21,7 @@ export default function InfoOverlay({ isOpen, onClose, children }) {
       <ModalOverlay>
         <ModalContent rounded="lg" p="6px 4px">
           <ModalHeader>Card Info</ModalHeader>
-          <ModalCloseButton size="lg" top={4} right={4} rounded="lg" />
+          <ModalCloseButton size="lg" top={4} right={4} />
           {children}
         </ModalContent>
       </ModalOverlay>

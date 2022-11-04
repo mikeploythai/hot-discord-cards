@@ -19,8 +19,12 @@ export default function NavButtons() {
   return (
     <>
       {!session ? (
-        <Link href="https://github.com/mploythai/hot-discord-cards" isExternal>
-          <Button size="sm" variant="ghost" rounded="lg">
+        <Link
+          href="https://github.com/mploythai/hot-discord-cards"
+          _hover={{ textDecor: "none" }}
+          isExternal
+        >
+          <Button size="sm" variant="ghost">
             Source Code
           </Button>
         </Link>
@@ -33,7 +37,6 @@ export default function NavButtons() {
           <IconButton
             display={{ base: "flex", md: "none" }}
             icon={<FaBars />}
-            rounded="lg"
             onClick={onOpen}
           />
 

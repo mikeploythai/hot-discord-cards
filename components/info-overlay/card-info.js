@@ -13,23 +13,23 @@ import {
 export default function CardInfo({ cardData }) {
   return (
     <Flex direction="column" gap={4}>
-      <Skeleton w="auto" rounded="lg" isLoaded={cardData}>
+      <Skeleton w="auto" rounded="md" isLoaded={cardData}>
         <Image
           src={cardData.image}
           alt={cardData.name}
           w="100%"
           h="200px"
-          rounded="lg"
+          rounded="md"
         />
       </Skeleton>
 
       <VStack w="100%" align="start" gap={8}>
         <VStack align="start">
-          <Skeleton rounded="lg" isLoaded={cardData}>
+          <Skeleton rounded="md" isLoaded={cardData}>
             <Heading textTransform="capitalize">{cardData.name}</Heading>
           </Skeleton>
 
-          <Skeleton w="60%" rounded="lg" isLoaded={cardData}>
+          <Skeleton w="60%" rounded="md" isLoaded={cardData}>
             <Heading
               size={{ base: "sm", md: "md" }}
               fontWeight="medium"
@@ -43,7 +43,7 @@ export default function CardInfo({ cardData }) {
         <VStack w="100%" align="start">
           <Heading size="sm">Card Stats</Heading>
 
-          <SkeletonText w="100%" rounded="lg" isLoaded={cardData}>
+          <SkeletonText w="100%" rounded="md" isLoaded={cardData}>
             <Stack>
               {cardData.stats ? (
                 Object.entries(cardData.stats).map((stats) => {

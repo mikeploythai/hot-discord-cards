@@ -36,7 +36,7 @@ export default function ProfileCard({ userData, onOpen, display }) {
         <VStack w="100%" align="start" gap={2}>
           <VStack w="100%" align="start">
             <HStack w="100%" justify="space-between">
-              <Skeleton isLoaded={userData}>
+              <Skeleton rounded="md" isLoaded={userData}>
                 <Heading size={{ base: "md", md: "lg" }}>
                   {userData.username}
                 </Heading>
@@ -46,14 +46,13 @@ export default function ProfileCard({ userData, onOpen, display }) {
                 display={breakpoint ? "none" : display}
                 size={{ base: "xs", md: "sm" }}
                 variant="outline"
-                rounded="md"
                 onClick={onOpen}
               >
                 Edit
               </Button>
             </HStack>
 
-            <SkeletonText w="100%" isLoaded={userData}>
+            <SkeletonText w="100%" rounded="md" isLoaded={userData}>
               <Text
                 fontSize={{ base: "xs", md: "sm" }}
                 wordBreak="break-word"
@@ -69,7 +68,6 @@ export default function ProfileCard({ userData, onOpen, display }) {
               size={{ base: "xs", md: "sm" }}
               variant="outline"
               w="100%"
-              rounded="md"
               onClick={onOpen}
             >
               Edit

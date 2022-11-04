@@ -11,7 +11,7 @@ import NavLinks from "./links";
 
 export default function MobileMenu({ isOpen, onClose, btnRef }) {
   const [notLandscape] = useMediaQuery("(min-height: 480px)");
-  
+
   return (
     <Drawer
       isOpen={isOpen}
@@ -22,7 +22,7 @@ export default function MobileMenu({ isOpen, onClose, btnRef }) {
     >
       <DrawerOverlay display={{ base: "flex", md: "none" }}>
         <DrawerContent>
-          <DrawerCloseButton size="lg" rounded="lg" top={4} right={4} />
+          <DrawerCloseButton size="lg" top={4} right={4} />
 
           <DrawerBody>
             <VStack h="100%" justify="center" gap={notLandscape ? 8 : 4}>

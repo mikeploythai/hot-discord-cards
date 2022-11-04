@@ -28,7 +28,7 @@ export default function EditProfile({ isOpen, onClose, disabled, children }) {
 
           <ModalFooter>
             <HStack>
-              <Button variant="ghost" rounded="lg" onClick={onClose}>
+              <Button variant="ghost" onClick={onClose}>
                 Cancel
               </Button>
 
@@ -36,7 +36,6 @@ export default function EditProfile({ isOpen, onClose, disabled, children }) {
                 form="save"
                 type="submit"
                 colorScheme="purple"
-                rounded="lg"
                 onClick={onClose}
                 disabled={disabled}
               >

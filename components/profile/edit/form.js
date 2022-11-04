@@ -41,13 +41,11 @@ export default function EditProfileForm({ userData, isDisabled }) {
                   variant="filled"
                   pt={{ base: 2, md: 1.5 }}
                   fontSize={{ base: "sm", md: "md" }}
-                  rounded="lg"
                 />
                 <Input
                   as={EditableInput}
                   variant="filled"
                   fontSize={{ base: "sm", md: "md" }}
-                  rounded="lg"
                   onChange={(e) => {
                     isDisabled(false);
                     setUsername(e.target.value);
@@ -69,7 +67,6 @@ export default function EditProfileForm({ userData, isDisabled }) {
                   fontSize={{ base: "sm", md: "md" }}
                   whiteSpace="pre-wrap"
                   overflow="auto"
-                  rounded="lg"
                 />
                 <Input
                   as={EditableTextarea}
@@ -79,7 +76,6 @@ export default function EditProfileForm({ userData, isDisabled }) {
                   pt={{ base: 2, md: 1.5 }}
                   fontSize={{ base: "sm", md: "md" }}
                   resize="none"
-                  rounded="lg"
                   onChange={(e) => {
                     isDisabled(false);
                     if (e.target.value.length === 0) setBio(" ");

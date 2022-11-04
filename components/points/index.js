@@ -143,7 +143,7 @@ export default function Points() {
           maxW="300px"
           w="100%"
           boxShadow="lg"
-          rounded="lg"
+          rounded="md"
           cursor="pointer"
           transition=".1s ease-in-out"
           onClick={() => {
@@ -174,7 +174,7 @@ export default function Points() {
           >
             <Heading size="md">Powerups</Heading>
 
-            <Skeleton noOfLines={1} isLoaded={userData}>
+            <Skeleton rounded="md" noOfLines={1} isLoaded={userData}>
               <Text fontSize={{ base: "sm", sm: "xs" }}>
                 <b>{userData.points}</b> Points
               </Text>
@@ -214,7 +214,7 @@ export default function Points() {
         </SkeletonCircle>
 
         <VStack textAlign="end" align="end">
-          <Skeleton isLoaded={data}>
+          <Skeleton rounded="md" isLoaded={data}>
             <Link href={link} passHref>
               <Heading size="sm" noOfLines={1} cursor="pointer">
                 {data.username}
@@ -222,7 +222,7 @@ export default function Points() {
             </Link>
           </Skeleton>
 
-          <Skeleton noOfLines={1} isLoaded={data}>
+          <Skeleton rounded="md" noOfLines={1} isLoaded={data}>
             <Text fontSize="xs">
               <b>{data.clicks}</b> Clicks
             </Text>
