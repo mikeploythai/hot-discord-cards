@@ -79,12 +79,15 @@ export default function Points() {
           base: "50vh",
           sm: notLandscape ? "unset" : foldLandscape ? "100vh" : "80vh",
         }}
+        board={true}
       >
         <UserInfo data={userData} link="/" />
         <Divider />
-        <Heading size="sm">Click Leaderboard</Heading>
+        <Heading size="sm" p="1rem 0">
+          Click Leaderboard
+        </Heading>
 
-        <VStack w="100%" gap={4} overflow="scroll">
+        <VStack w="100%" overflow="scroll">
           {allUsers.map((users) => {
             return (
               <UserInfo
@@ -103,14 +106,14 @@ export default function Points() {
     );
   }
 
-  function GameTemplate({ h, maxH, justify, children }) {
+  function GameTemplate({ h, maxH, justify, board, children }) {
     return (
       <VStack
         pos="relative"
         h={h}
         maxH={maxH}
-        p={{ base: 6, md: 8 }}
-        gap={4}
+        p={board ? { base: 3, md: 4 } : { base: 6, md: 8 }}
+        gap={board ? 0 : 4}
         justify={justify}
         bgColor="white"
         boxShadow="xs"
@@ -200,26 +203,30 @@ export default function Points() {
     const [breakpoint] = useMediaQuery("(max-width: 360px)");
 
     return (
-      <HStack w="100%" justify="space-between">
+      <HStack
+        as={Link}
+        w="100%"
+        justify="space-between"
+        p={{ base: 3, md: 4 }}
+        rounded="md"
+        transition="200ms ease-in-out"
+        href={link}
+        _hover={{ bgColor: "gray.100" }}
+      >
         <SkeletonCircle h="100%" w="auto" isLoaded={data}>
-          <Link href={link} passHref>
-            <Avatar
-              src={data.picture}
-              name={data.username}
-              size={breakpoint ? "sm" : "md"}
-              boxShadow="xs"
-              cursor="pointer"
-            />
-          </Link>
+          <Avatar
+            src={data.picture}
+            name={data.username}
+            size={breakpoint ? "sm" : "md"}
+            boxShadow="xs"
+          />
         </SkeletonCircle>
 
         <VStack textAlign="end" align="end">
           <Skeleton rounded="md" isLoaded={data}>
-            <Link href={link} passHref>
-              <Heading size="sm" noOfLines={1} cursor="pointer">
-                {data.username}
-              </Heading>
-            </Link>
+            <Heading size="sm" noOfLines={1} wordBreak="break-all">
+              {data.username}
+            </Heading>
           </Skeleton>
 
           <Skeleton rounded="md" noOfLines={1} isLoaded={data}>
