@@ -1,7 +1,7 @@
 import { Button, HStack } from "@chakra-ui/react";
 import deleteCard from "../../utils/delete-card";
 
-export default function InfoFooter({ id, publicPage }) {
+export default function InfoFooter({ id, onClose, publicPage }) {
   const { remove } = deleteCard();
 
   if (publicPage) {
@@ -13,7 +13,12 @@ export default function InfoFooter({ id, publicPage }) {
   } else {
     return (
       <HStack>
-        <Button variant="ghost" colorScheme="red" onClick={() => remove(id)}>
+        <Button
+          variant="ghost"
+          colorScheme="red"
+          onClick={onClose}
+          onClickCapture={() => remove(id)}
+        >
           Delete
         </Button>
 

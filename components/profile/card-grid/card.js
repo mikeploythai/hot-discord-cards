@@ -30,7 +30,11 @@ export default function Card({ cardData, publicPage }) {
         </ModalBody>
 
         <ModalFooter>
-          <InfoFooter id={cardData.id} publicPage={publicPage} />
+          <InfoFooter
+            id={cardData.id}
+            onClose={onClose}
+            publicPage={publicPage}
+          />
         </ModalFooter>
       </InfoOverlay>
     </>
