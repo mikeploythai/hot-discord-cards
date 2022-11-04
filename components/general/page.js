@@ -2,6 +2,8 @@ import { Flex } from "@chakra-ui/react";
 import Head from "next/head";
 
 export default function Page({ title, maxH, overflow, children }) {
+  const fullTitle = `${title} | Hot Discord Cards`;
+
   return (
     <Flex
       minH="100vh"
@@ -12,7 +14,7 @@ export default function Page({ title, maxH, overflow, children }) {
       overflow={overflow}
     >
       <Head>
-        <title>{title ? `${title} |` : null} Hot Discord Cards</title>
+        <title>{title ? fullTitle : "Hot Discord Cards"}</title>
       </Head>
 
       {children}
