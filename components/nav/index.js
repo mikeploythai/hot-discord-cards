@@ -5,10 +5,12 @@ import {
   HStack,
   useMediaQuery,
 } from "@chakra-ui/react";
+import { useSession } from "@supabase/auth-helpers-react";
 import Link from "next/link";
 import NavButtons from "./buttons";
 
 export default function Nav() {
+  const session = useSession();
   const [notLandscape] = useMediaQuery("(min-height: 480px)");
 
   return (
@@ -21,14 +23,15 @@ export default function Nav() {
         boxShadow="xs"
       >
         <HStack justify="space-between">
-          <Link href="/" passHref>
-            <Heading
-              size={{ base: "sm", md: "md" }}
-              _hover={{ cursor: "pointer" }}
-            >
-              Hot Discord Cards
-            </Heading>
-          </Link>
+          {!session ? (
+            <Link href="/" passHref>
+              <Heading size={{ base: "sm", md: "md" }} cursor="pointer">
+                Hot Discord Cards
+              </Heading>
+            </Link>
+          ) : (
+            <Heading size={{ base: "sm", md: "md" }}>Hot Discord Cards</Heading>
+          )}
           <NavButtons />
         </HStack>
       </Container>
