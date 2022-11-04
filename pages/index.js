@@ -1,4 +1,4 @@
-import { useDisclosure } from "@chakra-ui/react";
+import { Skeleton, useDisclosure } from "@chakra-ui/react";
 import { useSession } from "@supabase/auth-helpers-react";
 import { useState } from "react";
 import Profile from "../components/profile";
@@ -12,7 +12,7 @@ import CardGrid from "../components/profile/card-grid";
 import getCardData from "../utils/get-card-data";
 import Card from "../components/profile/card-grid/card";
 
-export default function Home() {
+export default function HomePage() {
   const session = useSession();
   const [disabled, isDisabled] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,7 +33,11 @@ export default function Home() {
 
           <CardGrid word="Your">
             {card.map((card) => {
-              return <Card key={card.id} cardData={card} />;
+              return (
+                <Skeleton key={card.id} rounded="lg" isLoaded={card}>
+                  <Card cardData={card} />
+                </Skeleton>
+              );
             })}
           </CardGrid>
         </Profile>
