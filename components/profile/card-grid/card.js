@@ -3,7 +3,7 @@ import InfoOverlay from "../../info-overlay";
 import CardInfo from "../../info-overlay/card-info";
 import InfoFooter from "../../info-overlay/footer";
 
-export default function Card({ cardData, display }) {
+export default function Card({ cardData, publicPage }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -13,7 +13,7 @@ export default function Card({ cardData, display }) {
         alt={cardData.name}
         w="100%"
         h={{ base: "250px", md: "300px" }}
-        rounded={{ base: "md", md: "lg" }}
+        rounded="md"
         filter="auto"
         brightness="50%"
         transition="200ms ease-in-out"
@@ -30,7 +30,7 @@ export default function Card({ cardData, display }) {
         </ModalBody>
 
         <ModalFooter>
-          <InfoFooter id={cardData.id} display={display} />
+          <InfoFooter id={cardData.id} publicPage={publicPage} />
         </ModalFooter>
       </InfoOverlay>
     </>
