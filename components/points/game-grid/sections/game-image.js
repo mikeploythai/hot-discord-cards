@@ -1,10 +1,8 @@
 import { Image } from "@chakra-ui/react";
-import getUserData from "../../../../utils/get-user-data";
 import { updateUserData } from "../../../../utils/update-user-data";
 import Template from "./template";
 
-export default function GameImage() {
-  const { userData, getData } = getUserData();
+export default function GameImage({ userData, getData }) {
   const { updateData } = updateUserData();
 
   function addPoints() {
@@ -14,7 +12,6 @@ export default function GameImage() {
     };
 
     updateData(changes, true);
-    getData();
   }
 
   return (
