@@ -8,22 +8,25 @@ import {
   SkeletonCircle,
   SkeletonText,
   Text,
+  useMediaQuery,
   VStack,
 } from "@chakra-ui/react";
 
 export default function ProfileCard({ userData, onOpen, display }) {
+  const [breakpoint] = useMediaQuery("(max-width: 360px)");
+
   return (
     <Container maxW="container.md" p={0}>
       <HStack
         p={{ base: 6, md: 12 }}
-        gap={{ base: 4, md: 8 }}
+        gap={{ base: breakpoint ? 2 : 4, md: 8 }}
         bgColor="white"
         boxShadow="xs"
         rounded="lg"
       >
         <SkeletonCircle h="100%" w="auto" isLoaded={userData}>
           <Avatar
-            size={{ base: "lg", md: "xl" }}
+            size={{ base: breakpoint ? "md" : "lg", md: "xl" }}
             src={userData.picture}
             name={userData.username}
             boxShadow="xs"
@@ -40,10 +43,10 @@ export default function ProfileCard({ userData, onOpen, display }) {
               </Skeleton>
 
               <Button
-                display={display}
+                display={breakpoint ? "none" : display}
                 size={{ base: "xs", md: "sm" }}
                 variant="outline"
-                rounded="lg"
+                rounded="md"
                 onClick={onOpen}
               >
                 Edit
@@ -60,6 +63,17 @@ export default function ProfileCard({ userData, onOpen, display }) {
                 {userData.bio}
               </Text>
             </SkeletonText>
+
+            <Button
+              display={breakpoint ? display : "none"}
+              size={{ base: "xs", md: "sm" }}
+              variant="outline"
+              w="100%"
+              rounded="md"
+              onClick={onOpen}
+            >
+              Edit
+            </Button>
           </VStack>
 
           <HStack display="none">

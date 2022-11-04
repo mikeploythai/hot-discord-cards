@@ -41,7 +41,7 @@ export default function Landing() {
               fontSize={{ base: "md", md: notLandscape ? "xl" : "md" }}
               fontWeight="medium"
             >
-              Also a social media platform.
+              Also a social media platform, I guess.
             </Text>
           </VStack>
 

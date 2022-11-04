@@ -9,8 +9,8 @@ export default function NavLinks({ size, onClose }) {
   const links = [
     { name: "Dashboard", href: "/", key: 1 },
     { name: "Points", href: "/points", key: 2 },
-    { name: "Buy", href: "/buy", key: 3 },
-    { name: "Trade", href: "/trade", key: 4 },
+    { name: "Buy", href: "/buy", disabled: true, key: 3 },
+    { name: "Trade", href: "/trade", disabled: true, key: 4 },
   ];
 
   return (
@@ -18,7 +18,13 @@ export default function NavLinks({ size, onClose }) {
       {links.map((link) => {
         return (
           <Link key={link.key} href={link.href} passHref>
-            <Button size={size} variant="ghost" rounded="lg" onClick={onClose}>
+            <Button
+              size={size}
+              variant="ghost"
+              rounded="lg"
+              onClick={onClose}
+              disabled={link.disabled}
+            >
               {link.name}
             </Button>
           </Link>

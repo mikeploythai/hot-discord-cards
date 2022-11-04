@@ -18,8 +18,8 @@ export default function SignInPrompt() {
       align="end"
       bgGradient={
         notLandscape
-          ? "linear(to-b, whiteAlpha.100 25%, white 85%)"
-          : "linear(to-b, whiteAlpha.100 25%, white 75%)"
+          ? "linear(to-b, whiteAlpha.100 40%, white 85%)"
+          : "linear(to-b, whiteAlpha.100 30%, white 75%)"
       }
       top={0}
       p={4}

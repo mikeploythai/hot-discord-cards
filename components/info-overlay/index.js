@@ -15,6 +15,7 @@ export default function InfoOverlay({ isOpen, onClose, children }) {
       isOpen={isOpen}
       onClose={onClose}
       size={{ base: "full", md: notLandscape ? "xl" : "full" }}
+      scrollBehavior="inside"
       isCentered={notLandscape ? true : false}
     >
       <ModalOverlay>
