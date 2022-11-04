@@ -85,5 +85,5 @@ export default function getUserData() {
       return userData;
     }
   }
-  return { userData };
+  return { userData, getData };
 }
