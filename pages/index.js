@@ -22,7 +22,10 @@ export default function HomePage() {
   return (
     <Page title={!session ? null : "Dashboard"}>
       {!session ? (
-        <Landing />
+        <Landing
+          title="One of the trading card games of all time."
+          subtitle="Also a social media platform, I guess."
+        />
       ) : (
         <Profile>
           <ProfileCard userData={userData} onOpen={onOpen} />
@@ -34,7 +37,7 @@ export default function HomePage() {
           <CardGrid word="Your">
             {card.map((card) => {
               return (
-                <Skeleton key={card.id} rounded="lg" isLoaded={card}>
+                <Skeleton key={card.id} rounded="md" isLoaded={card}>
                   <Card cardData={card} />
                 </Skeleton>
               );
