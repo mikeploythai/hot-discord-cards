@@ -2,9 +2,11 @@ import { Button } from "@chakra-ui/react";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function NavLinks({ size, onClose }) {
   const supabase = useSupabaseClient();
+  const route = useRouter();
 
   const links = [
     { name: "Dashboard", href: "/", key: 1 },
@@ -21,7 +23,6 @@ export default function NavLinks({ size, onClose }) {
             <Button
               size={size}
               variant="ghost"
-              rounded="lg"
               onClick={onClose}
               disabled={link.disabled}
             >
@@ -36,8 +37,10 @@ export default function NavLinks({ size, onClose }) {
         size={size}
         variant="outline"
         colorScheme="red"
-        rounded="lg"
-        onClick={() => supabase.auth.signOut()}
+        onClick={() => {
+          supabase.auth.signOut();
+          route.push("/");
+        }}
       >
         Sign Out
       </Button>
