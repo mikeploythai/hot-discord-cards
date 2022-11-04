@@ -9,7 +9,7 @@ import {
 import EmptySpace from "./empty-space";
 import SignInButton from "./sign-in-button";
 
-export default function Landing() {
+export default function Landing({ title, subtitle }) {
   const [notLandscape] = useMediaQuery("(min-height: 480px)");
 
   return (
@@ -34,14 +34,14 @@ export default function Landing() {
             gap={{ base: 0.5, md: 2 }}
           >
             <Heading size={{ base: "xl", md: notLandscape ? "3xl" : "xl" }}>
-              One of the trading card games of all time.
+              {title}
             </Heading>
 
             <Text
               fontSize={{ base: "md", md: notLandscape ? "xl" : "md" }}
               fontWeight="medium"
             >
-              Also a social media platform, I guess.
+              {subtitle}
             </Text>
           </VStack>
 
