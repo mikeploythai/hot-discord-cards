@@ -88,6 +88,7 @@ export default function Points() {
           {allUsers.map((users) => {
             return (
               <UserInfo
+                key={users.id}
                 data={users}
                 link={
                   users.username === userData.username
