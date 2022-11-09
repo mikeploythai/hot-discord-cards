@@ -23,7 +23,7 @@ export default function Leaderboard({ userData }) {
         Click Leaderboard
       </Heading>
 
-      <VStack w="100%" overflow="scroll">
+      <VStack w="100%" h="100%" overflow="scroll">
         {allUsers.map((users) => {
           return (
             <UserInfo
