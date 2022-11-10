@@ -4,15 +4,15 @@ export default function GameGrid({ children }) {
   const [notLandscape] = useMediaQuery("(min-height: 480px)");
 
   const desktopLayout = `
-  "powerup leaderboard"
-  "game leaderboard"
-`;
+    "powerup leaderboard"
+    "game leaderboard"
+  `;
 
   const mobileLayout = `
-  "powerup"
-  "game"
-  "leaderboard"
-`;
+    "powerup"
+    "game"
+    "leaderboard"
+  `;
 
   return (
     <Container maxW="container.lg" minH={0} p={0}>

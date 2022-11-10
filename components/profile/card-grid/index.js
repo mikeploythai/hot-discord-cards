@@ -18,7 +18,7 @@ export default function CardGrid({ word, children }) {
           w="100%"
           m={0}
           columns={{ base: 2, sm: 3 }}
-          spacing={{ base: "16px", md: "32px" }}
+          spacing={{ base: 4, md: 8 }}
           justifyItems={{ base: "center", md: "initial" }}
         >
           {children}
