@@ -29,7 +29,7 @@ export default function CardInfo({ cardData }) {
             <Heading textTransform="capitalize">{cardData.name}</Heading>
           </Skeleton>
 
-          <Skeleton w="60%" rounded="md" isLoaded={cardData}>
+          <Skeleton minW="60%" rounded="md" isLoaded={cardData}>
             <Heading
               size={{ base: "xs", md: "sm" }}
               fontWeight="medium"
