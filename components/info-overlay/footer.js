@@ -14,7 +14,7 @@ export default function InfoFooter({ id, onClose, publicPage }) {
     return (
       <HStack>
         <Button
-          variant="ghost"
+          variant="outline"
           colorScheme="red"
           onClick={onClose}
           onClickCapture={() => remove(id)}

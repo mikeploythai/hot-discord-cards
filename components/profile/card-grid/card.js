@@ -24,7 +24,7 @@ export default function Card({ cardData, publicPage }) {
         }}
       />
 
-      <InfoOverlay isOpen={isOpen} onClose={onClose}>
+      <InfoOverlay isOpen={isOpen} onClose={onClose} cardData={cardData}>
         <ModalBody>
           <CardInfo cardData={cardData} />
         </ModalBody>
