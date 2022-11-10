@@ -7,7 +7,13 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 
-export default function InfoOverlay({ isOpen, onClose, cardData, children }) {
+export default function InfoOverlay({
+  isOpen,
+  onClose,
+  cardData,
+  reset,
+  children,
+}) {
   const [notLandscape] = useMediaQuery("(min-height: 480px)");
   let gradient = "";
 
@@ -23,6 +29,7 @@ export default function InfoOverlay({ isOpen, onClose, cardData, children }) {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
+      onCloseComplete={reset}
       size={{ base: "full", md: notLandscape ? "xl" : "full" }}
       isCentered={notLandscape ? true : false}
     >

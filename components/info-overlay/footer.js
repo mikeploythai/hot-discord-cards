@@ -1,7 +1,7 @@
-import { Button, HStack } from "@chakra-ui/react";
+import { Button, HStack, Text } from "@chakra-ui/react";
 import deleteCard from "../../utils/delete-card";
 
-export default function InfoFooter({ id, onClose, pageType }) {
+export default function InfoFooter({ id, onClose, own, pageType }) {
   const { remove } = deleteCard();
 
   if (pageType === "public") {
@@ -12,9 +12,21 @@ export default function InfoFooter({ id, onClose, pageType }) {
     );
   } else if (pageType === "buy") {
     return (
-      <Button colorScheme="purple" onClick={onClose}>
-        Continue
-      </Button>
+      <HStack>
+        <Text
+          fontSize="sm"
+          fontWeight="semibold"
+          color="red.500"
+          opacity={own ? 1 : 0}
+          transition="200ms ease-in-out"
+        >
+          You already own this card!
+        </Text>
+
+        <Button colorScheme="purple" onClick={onClose}>
+          Continue
+        </Button>
+      </HStack>
     );
   } else {
     return (
