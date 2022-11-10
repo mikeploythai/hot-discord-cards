@@ -24,7 +24,7 @@ export default function CardGrid({ word, children }) {
         {children.length === 0 ? (
           <Center h="100%">
             <Heading size={{ base: "xs", md: "sm" }}>
-              There's no cards :/
+              There&apos;s no cards :/
             </Heading>
           </Center>
         ) : (
