@@ -1,9 +1,7 @@
 import {
   Avatar,
-  Flex,
   Heading,
   HStack,
-  IconButton,
   Skeleton,
   SkeletonCircle,
   Text,
@@ -11,8 +9,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { FaBomb, FaHandPeace, FaMagic, FaQuestionCircle } from "react-icons/fa";
-import UserInfo from "../../../points/game-grid/sections/leaderboard/user-info";
 import Template from "./template";
 
 export default function UserCard({ data, link }) {

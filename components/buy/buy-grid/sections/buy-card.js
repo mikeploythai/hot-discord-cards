@@ -1,4 +1,4 @@
-import { Button, Heading, Image, Text, VStack } from "@chakra-ui/react";
+import { Button, Heading, Text, VStack } from "@chakra-ui/react";
 import Template from "./template";
 
 export default function BuyCard() {
