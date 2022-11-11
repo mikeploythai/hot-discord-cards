@@ -1,8 +1,8 @@
 import { Button } from "@chakra-ui/react";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function NavLinks({ size, onClose }) {
   const supabase = useSupabaseClient();

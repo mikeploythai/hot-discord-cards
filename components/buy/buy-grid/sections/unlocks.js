@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Divider,
   Heading,
   HStack,
   Skeleton,
@@ -9,7 +8,6 @@ import {
   useMediaQuery,
   VStack,
 } from "@chakra-ui/react";
-import Link from "next/link";
 import Template from "./template";
 
 export default function Unlocks() {
