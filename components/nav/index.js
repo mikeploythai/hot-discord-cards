@@ -1,19 +1,38 @@
-import { Container, Flex, Heading, HStack } from "@chakra-ui/react";
-import NavItems from "./nav-items";
+import {
+  Container,
+  Flex,
+  Heading,
+  HStack,
+  useMediaQuery,
+} from "@chakra-ui/react";
+import { useSession } from "@supabase/auth-helpers-react";
+import Link from "next/link";
+import NavButtons from "./buttons";
 
-export default function Nav({ session }) {
+export default function Nav() {
+  const session = useSession();
+  const [notLandscape] = useMediaQuery("(min-height: 480px)");
+
   return (
-    <Flex pos="fixed" top={0} w="100%" p="16px" zIndex={1}>
+    <Flex pos="fixed" w="100%" top={0} p={4} zIndex={2}>
       <Container
         maxW="container.lg"
-        p={["24px", "32px"]}
+        p={{ base: 6, md: notLandscape ? 8 : 6 }}
         bgColor="white"
-        boxShadow="xs"
         rounded="lg"
+        boxShadow="xs"
       >
         <HStack justify="space-between">
-          <Heading size={["sm", "md"]}>Hot Discord Cards</Heading>
-          <NavItems session={session} />
+          {!session ? (
+            <Link href="/" passHref>
+              <Heading size={{ base: "sm", md: "md" }} cursor="pointer">
+                Hot Discord Cards
+              </Heading>
+            </Link>
+          ) : (
+            <Heading size={{ base: "sm", md: "md" }}>Hot Discord Cards</Heading>
+          )}
+          <NavButtons />
         </HStack>
       </Container>
     </Flex>

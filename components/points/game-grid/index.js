@@ -1,17 +1,17 @@
 import { Container, Grid, useMediaQuery } from "@chakra-ui/react";
 
-export default function BuyGrid({ children }) {
+export default function GameGrid({ children }) {
   const [notLandscape] = useMediaQuery("(min-height: 480px)");
 
   const desktopLayout = `
-    "user unlocks"
-    "buy unlocks"
+    "powerup leaderboard"
+    "game leaderboard"
   `;
 
   const mobileLayout = `
-    "user"
-    "buy"
-    "unlocks"
+    "powerup"
+    "game"
+    "leaderboard"
   `;
 
   return (

@@ -1,73 +1,57 @@
 import {
-  Button,
-  Center,
   Heading,
   Text,
-  useBreakpointValue,
-  useToast,
   VStack,
+  Grid,
+  GridItem,
+  useMediaQuery,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { supabase } from "../../utils/supabase-client";
-import { FaDiscord } from "react-icons/fa";
+import EmptySpace from "./empty-space";
+import SignInButton from "./sign-in-button";
 
-export default function Landing() {
-  const [loading, isLoading] = useState(false);
-
-  const toast = useToast();
-  const toastPos = useBreakpointValue(["bottom", "bottom-right"]);
-  const toastW = useBreakpointValue(["100%", "320px"]);
-  const toastP = useBreakpointValue(["0 16px 8px", "0 8px 8px"]);
-
-  async function handleLogin() {
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "discord",
-      });
-      
-      if (error) throw error;
-    } catch (error) {
-      toast({
-        title: "Error!",
-        description: error.message,
-        status: "error",
-        position: toastPos,
-        containerStyle: {
-          w: toastW,
-          p: toastP,
-        },
-        isClosable: true,
-      });
-    }
-  }
+export default function Landing({ notHome }) {
+  const [notLandscape] = useMediaQuery("(min-height: 480px)");
 
   return (
-    <Center m={0} p={0}>
-      <VStack gap={["32px", "48px"]}>
-        <VStack textAlign="center" maxW="2xl" gap={["2px", "8px"]}>
-          <Heading size={["xl", "3xl"]}>
-            One of the trading card games of all time.
-          </Heading>
+    <Grid
+      w="100%"
+      templateAreas={`
+        'header'
+        'main'
+        'main'
+      `}
+      gap={4}
+    >
+      <GridItem area={"header"}>
+        <EmptySpace />
+      </GridItem>
 
-          <Text fontSize={["md", "xl"]} fontWeight="medium">
-            A CPSC 362 Project by Mike &amp; Shaleen.
-          </Text>
+      <GridItem area={"main"}>
+        <VStack gap={{ base: 8, md: 12 }}>
+          <VStack
+            textAlign="center"
+            maxW={notLandscape ? "2xl" : "md"}
+            gap={{ base: 0.5, md: 2 }}
+          >
+            <Heading size={{ base: "xl", md: notLandscape ? "3xl" : "xl" }}>
+              {notHome
+                ? "You must be signed in to view this page."
+                : "One of the trading card games of all time."}
+            </Heading>
+
+            <Text
+              fontSize={{ base: "md", md: notLandscape ? "xl" : "md" }}
+              fontWeight="medium"
+            >
+              {notHome
+                ? "It's okay, we forgive you."
+                : "Also a social media platform, I guess."}
+            </Text>
+          </VStack>
+
+          <SignInButton small="md" large="lg" />
         </VStack>
-
-        <Button
-          leftIcon={<FaDiscord />}
-          size={["md", "lg"]}
-          colorScheme="purple"
-          rounded="lg"
-          onClick={() => {
-            isLoading(true);
-            handleLogin();
-          }}
-          isLoading={loading}
-        >
-          Sign In with Discord
-        </Button>
-      </VStack>
-    </Center>
+      </GridItem>
+    </Grid>
   );
 }
