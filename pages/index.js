@@ -17,15 +17,12 @@ export default function HomePage() {
   const [disabled, isDisabled] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { userData } = getUserData();
-  const card = getCardData();
+  const { cardData } = getCardData("*, owners!inner (*)", "owners.user_id");
 
   return (
     <Page title={!session ? null : "Dashboard"}>
       {!session ? (
-        <Landing
-          title="One of the trading card games of all time."
-          subtitle="Also a social media platform, I guess."
-        />
+        <Landing />
       ) : (
         <Profile>
           <ProfileCard userData={userData} onOpen={onOpen} />
@@ -35,7 +32,7 @@ export default function HomePage() {
           </EditProfile>
 
           <CardGrid word="Your">
-            {card.map((card) => {
+            {cardData.map((card) => {
               return (
                 <Skeleton key={card.id} rounded="md" isLoaded={card}>
                   <Card cardData={card} />

@@ -9,7 +9,7 @@ import {
 import EmptySpace from "./empty-space";
 import SignInButton from "./sign-in-button";
 
-export default function Landing({ title, subtitle }) {
+export default function Landing({ notHome }) {
   const [notLandscape] = useMediaQuery("(min-height: 480px)");
 
   return (
@@ -34,14 +34,18 @@ export default function Landing({ title, subtitle }) {
             gap={{ base: 0.5, md: 2 }}
           >
             <Heading size={{ base: "xl", md: notLandscape ? "3xl" : "xl" }}>
-              {title}
+              {notHome
+                ? "You must be signed in to view this page."
+                : "One of the trading card games of all time."}
             </Heading>
 
             <Text
               fontSize={{ base: "md", md: notLandscape ? "xl" : "md" }}
               fontWeight="medium"
             >
-              {subtitle}
+              {notHome
+                ? "It's okay, we forgive you."
+                : "Also a social media platform, I guess."}
             </Text>
           </VStack>
 

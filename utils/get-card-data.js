@@ -6,7 +6,7 @@ import {
 import { useEffect, useState } from "react";
 import { useBreakpointValue, useToast } from "@chakra-ui/react";
 
-export default function getCardData() {
+export default function getCardData(select, param1, param2) {
   const supabase = useSupabaseClient();
   const user = useUser();
   const session = useSession();
@@ -34,11 +34,16 @@ export default function getCardData() {
       if (user) {
         let { data: card, error } = await supabase
           .from("cards")
-          .select("*, owners!inner (*)")
-          .eq("owners.user_id", user.id);
+          .select(select)
+          .eq(param1, param2 || user.id);
         if (error) throw error;
 
-        if (card) setCardData(card);
+        if (card) {
+          if (select === "*") {
+            const randNum = Math.floor(Math.random() * card.length);
+            setCardData(card[randNum]);
+          } else setCardData(card);
+        }
       }
     } catch (error) {
       toast({
@@ -55,5 +60,5 @@ export default function getCardData() {
     }
   }
 
-  return cardData;
+  return { cardData, getData };
 }

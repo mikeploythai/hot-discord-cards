@@ -29,13 +29,13 @@ export default function CardInfo({ cardData }) {
             <Heading textTransform="capitalize">{cardData.name}</Heading>
           </Skeleton>
 
-          <Skeleton w="60%" rounded="md" isLoaded={cardData}>
+          <Skeleton minW="60%" rounded="md" isLoaded={cardData}>
             <Heading
-              size={{ base: "sm", md: "md" }}
+              size={{ base: "xs", md: "sm" }}
               fontWeight="medium"
               textTransform="capitalize"
             >
-              {cardData.attribute}
+              {cardData.level} | {cardData.attribute}
             </Heading>
           </Skeleton>
         </VStack>
@@ -59,7 +59,7 @@ export default function CardInfo({ cardData }) {
                       <Progress
                         value={stats[1]}
                         colorScheme="purple"
-                        bgColor="purple.100"
+                        bgColor="blackAlpha.300"
                         rounded="sm"
                       />
                     </>

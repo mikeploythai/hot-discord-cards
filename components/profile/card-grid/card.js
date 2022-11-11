@@ -3,7 +3,7 @@ import InfoOverlay from "../../info-overlay";
 import CardInfo from "../../info-overlay/card-info";
 import InfoFooter from "../../info-overlay/footer";
 
-export default function Card({ cardData, publicPage }) {
+export default function Card({ cardData, pageType }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -24,17 +24,13 @@ export default function Card({ cardData, publicPage }) {
         }}
       />
 
-      <InfoOverlay isOpen={isOpen} onClose={onClose}>
+      <InfoOverlay isOpen={isOpen} onClose={onClose} cardData={cardData}>
         <ModalBody>
           <CardInfo cardData={cardData} />
         </ModalBody>
 
         <ModalFooter>
-          <InfoFooter
-            id={cardData.id}
-            onClose={onClose}
-            publicPage={publicPage}
-          />
+          <InfoFooter id={cardData.id} onClose={onClose} pageType={pageType} />
         </ModalFooter>
       </InfoOverlay>
     </>

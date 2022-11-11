@@ -1,23 +1,31 @@
 import { Button, HStack } from "@chakra-ui/react";
 import deleteCard from "../../utils/delete-card";
 
-export default function InfoFooter({ id, onClose, publicPage }) {
+export default function InfoFooter({ id, onClose, pageType }) {
   const { remove } = deleteCard();
 
-  if (publicPage) {
+  if (pageType === "public") {
     return (
       <Button colorScheme="purple" isDisabled>
         Request Trade
+      </Button>
+    );
+  } else if (pageType === "buy") {
+    return (
+      <Button colorScheme="purple" onClick={onClose}>
+        Continue
       </Button>
     );
   } else {
     return (
       <HStack>
         <Button
-          variant="ghost"
+          variant="outline"
           colorScheme="red"
-          onClick={onClose}
-          onClickCapture={() => remove(id)}
+          onClick={() => {
+            onClose();
+            remove(id);
+          }}
         >
           Delete
         </Button>
