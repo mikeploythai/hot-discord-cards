@@ -33,10 +33,7 @@ export default function PointsPage() {
           </BuyGrid>
         </Buy>
       ) : (
-        <Landing
-          title="You must be signed in to view this page."
-          subtitle="It's okay, we forgive you."
-        />
+        <Landing notHome={true} />
       )}
     </Page>
   );
