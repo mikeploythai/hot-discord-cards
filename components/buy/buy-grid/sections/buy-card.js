@@ -7,18 +7,17 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { useState } from "react";
-import addRandomCard from "../../../../utils/add-random-card";
+import getCardData from "../../../../utils/get-card-data";
+import getUserData from "../../../../utils/get-user-data";
 import InfoOverlay from "../../../info-overlay";
 import CardInfo from "../../../info-overlay/card-info";
 import InfoFooter from "../../../info-overlay/footer";
 import Template from "./template";
 
 export default function BuyCard() {
-  const user = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { addCard, reset, cardData, own } = addRandomCard(user);
+  const { userData } = getUserData();
+  const { cardData, getData } = getCardData("*", "", "");
 
   return (
     <Template h="100%" justify="center">
@@ -30,29 +29,28 @@ export default function BuyCard() {
         p="16px"
         rounded="lg"
         transition=".25s ease-in-out"
-        onClick={() => {
-          addCard();
-          onOpen();
-        }}
+        onClick={onOpen}
+        isDisabled={!userData || userData.points < 500 ? true : false}
       >
         <VStack>
           <Heading size="md">Unlock a card!</Heading>
-          <Text fontSize="sm">We know you want to.</Text>
+          <Text fontSize="sm">500 Points</Text>
         </VStack>
       </Button>
 
       <InfoOverlay
+        buy={true}
         isOpen={isOpen}
         onClose={onClose}
+        getData={getData}
         cardData={cardData}
-        reset={reset}
       >
         <ModalBody>
           <CardInfo cardData={cardData} />
         </ModalBody>
 
         <ModalFooter>
-          <InfoFooter onClose={onClose} own={own} pageType="buy" />
+          <InfoFooter onClose={onClose} pageType="buy" />
         </ModalFooter>
       </InfoOverlay>
     </Template>
