@@ -18,10 +18,10 @@ The purpose of this project is just to get a laugh out of our friends, and to sh
 - [x] Clicker game to earn points
 - [x] Use points to unlock bronze, silver, and/or gold cards
 - [x] Discard owned cards
+- [x] View card stats
 - [ ] More profile customization (profile pictures, custom backgrounds, links)
 - [ ] Search and view other users' profiles
 - [ ] Follow other users
-- [ ] View card stats
 - [ ] Discard owned cards to earn some points back
 - [ ] Use points in the clicker game to buy powerups to make the game easier
 - [ ] Global leaderboard for most amount of clicks in one session
