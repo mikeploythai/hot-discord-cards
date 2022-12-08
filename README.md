@@ -46,7 +46,7 @@ The purpose of this project is just to get a laugh out of our friends, and to sh
 
 ###### CREDITS
 
-This project wouldn't be possible with our lovely tech stack ([Next.js](https://nextjs.org), [Chakra UI](https://chakra-ui.com), [Supabase](https://supabase.com)) and our [wonderful friends](https://github.com/mploythai/hot-discord-cards/ACKNOWLEDGEMENTS.md) who let us use their faces!
+This project wouldn't be possible with our lovely tech stack ([Next.js](https://nextjs.org), [Chakra UI](https://chakra-ui.com), [Supabase](https://supabase.com)) and our [wonderful friends](https://github.com/mploythai/hot-discord-cards/blob/main/ACKNOWLEDGEMENTS.md) who let us use their faces!
 
 ---
 
