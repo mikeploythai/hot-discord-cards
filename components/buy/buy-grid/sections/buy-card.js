@@ -45,18 +45,18 @@ export default function BuyCard() {
         transition=".25s ease-in-out"
         onClick={() => {
           isLoading(true);
-          updateData({ points: userData.points - 500 }, true);
+          updateData({ points: userData.points - 250 }, true);
           setTimeout(() => {
             onOpen();
             isLoading(false);
           }, 1000);
         }}
-        isDisabled={!userData || userData.points < 500 ? true : false}
+        isDisabled={!userData || userData.points < 250 ? true : false}
         isLoading={loading}
       >
         <VStack>
           <Heading size="md">Unlock a card!</Heading>
-          <Text fontSize="sm">500 Dabloons</Text>
+          <Text fontSize="sm">250 Dabloons</Text>
         </VStack>
       </Button>
 
