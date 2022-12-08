@@ -6,10 +6,10 @@ import {
   Skeleton,
   Text,
 } from "@chakra-ui/react";
-import { FaBomb, FaHandPeace, FaMagic, FaQuestionCircle } from "react-icons/fa";
+import { FaDice, FaHandPeace, FaMagic } from "react-icons/fa";
 import Template from "./template";
 
-export default function Powerups({ userData }) {
+export default function PowerUps({ userData }) {
   return (
     <Template>
       <Flex
@@ -25,11 +25,11 @@ export default function Powerups({ userData }) {
           align={{ base: "center", sm: "start" }}
           justify="space-between"
         >
-          <Heading size="md">Powerups</Heading>
+          <Heading size="md">Power Ups</Heading>
 
           <Skeleton rounded="md" noOfLines={1} isLoaded={userData}>
             <Text fontSize={{ base: "sm", sm: "xs" }}>
-              <b>{userData.points}</b> Points
+              <b>{userData.points}</b> Dabloons
             </Text>
           </Skeleton>
         </Flex>
@@ -41,8 +41,7 @@ export default function Powerups({ userData }) {
         >
           <IconButton icon={<FaHandPeace />} disabled />
           <IconButton icon={<FaMagic />} disabled />
-          <IconButton icon={<FaBomb />} disabled />
-          <IconButton icon={<FaQuestionCircle />} disabled />
+          <IconButton icon={<FaDice />} disabled />
         </HStack>
       </Flex>
     </Template>

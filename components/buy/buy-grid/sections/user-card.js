@@ -44,7 +44,7 @@ export default function UserCard({ data, link }) {
 
           <Skeleton rounded="md" noOfLines={1} isLoaded={data}>
             <Text fontSize="xs">
-              <b>{data.points}</b> Points Available
+              <b>{data.points}</b> Dabloons Available
             </Text>
           </Skeleton>
         </VStack>

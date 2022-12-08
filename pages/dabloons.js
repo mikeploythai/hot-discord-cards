@@ -6,7 +6,7 @@ import Points from "../components/points";
 import GameGrid from "../components/points/game-grid";
 import GameImage from "../components/points/game-grid/sections/game-image";
 import Leaderboard from "../components/points/game-grid/sections/leaderboard";
-import Powerups from "../components/points/game-grid/sections/powerups";
+import PowerUps from "../components/points/game-grid/sections/powerups";
 import getUserData from "../utils/get-user-data";
 
 export default function PointsPage() {
@@ -16,7 +16,7 @@ export default function PointsPage() {
 
   return (
     <Page
-      title="Points"
+      title="Dabloons"
       maxH={{ base: null, sm: notLandscape ? "100vh" : null }}
     >
       {session ? (
@@ -27,7 +27,7 @@ export default function PointsPage() {
             </GridItem>
 
             <GridItem area={"powerup"}>
-              <Powerups userData={userData} />
+              <PowerUps userData={userData} />
             </GridItem>
 
             <GridItem area={"leaderboard"}>

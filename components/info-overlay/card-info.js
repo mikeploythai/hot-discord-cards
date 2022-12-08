@@ -35,7 +35,7 @@ export default function CardInfo({ cardData }) {
               fontWeight="medium"
               textTransform="capitalize"
             >
-              {cardData.level} | {cardData.attribute}
+              {cardData.tier} | {cardData.attribute}
             </Heading>
           </Skeleton>
         </VStack>

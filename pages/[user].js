@@ -38,7 +38,7 @@ export default function User({ user, card }) {
           {card.map((card) => {
             return (
               <Skeleton key={card.id} rounded="md" isLoaded={card}>
-                <Card cardData={card} pageType="public" />
+                <Card cardData={card} userData={userData} pageType="public" />
               </Skeleton>
             );
           })}

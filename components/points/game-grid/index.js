@@ -4,13 +4,13 @@ export default function GameGrid({ children }) {
   const [notLandscape] = useMediaQuery("(min-height: 480px)");
 
   const desktopLayout = `
-    "powerup leaderboard"
     "game leaderboard"
+    "powerup leaderboard"
   `;
 
   const mobileLayout = `
-    "powerup"
     "game"
+    "powerup"
     "leaderboard"
   `;
 
@@ -22,7 +22,7 @@ export default function GameGrid({ children }) {
           lg: notLandscape ? desktopLayout : mobileLayout,
         }}
         templateColumns={{ base: null, lg: notLandscape ? "1fr 30%" : null }}
-        templateRows={"min-content 1fr"}
+        templateRows={"1fr min-content"}
         h="100%"
         gap={4}
       >
