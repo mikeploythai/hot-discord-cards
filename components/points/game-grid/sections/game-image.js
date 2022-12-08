@@ -1,4 +1,4 @@
-import { Image } from "@chakra-ui/react";
+import { Heading, Image, VStack } from "@chakra-ui/react";
 import { updateUserData } from "../../../../utils/update-user-data";
 import Template from "./template";
 
@@ -16,21 +16,25 @@ export default function GameImage({ userData, getData }) {
 
   return (
     <Template h="100%" justify="center">
-      <Image
-        src="https://cdn.discordapp.com/attachments/945912566000001045/1019300849685631046/image0.jpg"
-        alt="moike"
-        maxW="300px"
-        w="100%"
-        boxShadow="lg"
-        rounded="md"
-        cursor="pointer"
-        transition=".1s ease-in-out"
-        onClick={() => {
-          addPoints();
-          getData();
-        }}
-        _active={{ transform: "scale(1.15)", boxShadow: "2xl" }}
-      />
+      <VStack gap={8}>
+        <Heading size="sm">Click me to earn dabloons</Heading>
+
+        <Image
+          src="https://cdn.discordapp.com/attachments/945912566000001045/1019300849685631046/image0.jpg"
+          alt="moike"
+          maxW="300px"
+          w="100%"
+          boxShadow="lg"
+          rounded="md"
+          cursor="pointer"
+          transition=".1s ease-in-out"
+          onClick={() => {
+            addPoints();
+            getData();
+          }}
+          _active={{ transform: "scale(1.15)", boxShadow: "2xl" }}
+        />
+      </VStack>
     </Template>
   );
 }
