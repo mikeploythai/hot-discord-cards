@@ -8,7 +8,7 @@ import {
 
 export default function CardGrid({ word, children }) {
   return (
-    <Container maxW="container.md" p="0" onClick={() => console.log(children)}>
+    <Container maxW="container.md" p={0}>
       <VStack
         h="100%"
         p={{ base: 6, md: 12 }}
