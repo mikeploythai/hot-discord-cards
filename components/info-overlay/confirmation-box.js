@@ -33,7 +33,7 @@ export default function ConfirmationBox({
           <AlertDialogHeader fontSize="lg">Release Card</AlertDialogHeader>
 
           <AlertDialogBody>
-            Are you sure? You can't undo this action afterwards.
+            Are you sure? You can&apos;t undo this action afterwards.
           </AlertDialogBody>
 
           <AlertDialogFooter as={HStack}>
