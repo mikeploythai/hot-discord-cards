@@ -27,7 +27,7 @@ export default function InfoFooter({ id, onClose, pageType }) {
             remove(id);
           }}
         >
-          Delete
+          Release
         </Button>
 
         <Button colorScheme="purple" isDisabled>

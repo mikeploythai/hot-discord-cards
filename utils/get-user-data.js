@@ -63,7 +63,6 @@ export default function getUserData() {
 
           let changes = {
             username: randomName,
-            bio: "Tap the edit button to change your info!",
             picture:
               session.user.user_metadata.picture !== discordAv
                 ? session.user.user_metadata.picture
