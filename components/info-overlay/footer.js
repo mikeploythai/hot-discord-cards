@@ -1,8 +1,10 @@
-import { Button, HStack } from "@chakra-ui/react";
-import deleteCard from "../../utils/delete-card";
+import { Button, HStack, useDisclosure } from "@chakra-ui/react";
+import { useRef } from "react";
+import ConfirmationBox from "./confirmation-box";
 
 export default function InfoFooter({ id, onClose, pageType }) {
-  const { remove } = deleteCard();
+  const { isOpen, onOpen, onClose: closeAlert } = useDisclosure();
+  const cancelRef = useRef();
 
   if (pageType === "public") {
     return (
@@ -19,16 +21,17 @@ export default function InfoFooter({ id, onClose, pageType }) {
   } else {
     return (
       <HStack>
-        <Button
-          variant="outline"
-          colorScheme="red"
-          onClick={() => {
-            onClose();
-            remove(id);
-          }}
-        >
+        <Button variant="ghost" colorScheme="red" onClick={onOpen}>
           Release
         </Button>
+
+        <ConfirmationBox
+          isOpen={isOpen}
+          onClose={onClose}
+          closeAlert={closeAlert}
+          cancelRef={cancelRef}
+          id={id}
+        />
 
         <Button colorScheme="purple" isDisabled>
           Trade
