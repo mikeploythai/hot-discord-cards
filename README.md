@@ -12,28 +12,6 @@ The idea stemmed from the desire to create an interactive app that revolved arou
 
 The purpose of this project is just to get a laugh out of our friends, and to show the gratitude we have towards them.
 
-###### HOW TO RUN LOCALLY
-
-0. You must have a Supabase account and a Discord developer account.
-
-   - In your Discord developer portal, create an app. You may name this app whatever.
-   - In the app's settings, go to `OAuth2` to retrieve your app's **client ID** and **client secret**
-   - In a new tab, create a Supabase project, and go to the authentication settings.
-     - In your authentication settings, scroll to the Discord option, enable it, paste the **client id** and **client secret** in the proper fields.
-     - Finally, copy the **callback URL** and paste it into the Supabase Discord auth settings.
-
-1. In Supabase, create 3 tables: `profiles`, `owners`, and `cards`.
-
-   - In a future update, we will provide .csv templates for you to import to fill theses tables properly.
-
-2. Next, create a storage bucket in Supabase called `cards`. This is where you'll upload your images for the cards.
-
-3. With your backend set up, you may now open up the code.
-   - First, in the `.env.local` file, input the **Supabase URL** and **Supabase anon key**, which are provided in your Supabase project settings.
-     - NOTE: Don't forget to add `.env.local` to `.gitignore` to protect your keys from being exposed if you wanted to host your own instance online.
-   - Next, with **Node.js** installed, install the dependencies using `npm i`
-   - Finally, start up the local server with `npm run dev`
-
 ###### FEATURES (UPDATED 12/08/2022)
 
 - [x] Profile customization (username, bio)

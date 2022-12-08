@@ -1,4 +1,4 @@
-### Special thanks to our friends who allowed us to use their faces and pets as cards
+### Special thanks to our friends
 
 ###### PEOPLE
 
