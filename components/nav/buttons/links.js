@@ -10,8 +10,8 @@ export default function NavLinks({ size, onClose }) {
 
   const links = [
     { name: "Dashboard", href: "/", key: 1 },
-    { name: "Points", href: "/points", key: 2 },
-    { name: "Buy", href: "/buy", key: 3 },
+    { name: "Dabloons", href: "/dabloons", key: 2 },
+    { name: "Unlock", href: "/unlock", key: 3 },
     { name: "Trade", href: "/trade", disabled: true, key: 4 },
   ];
 

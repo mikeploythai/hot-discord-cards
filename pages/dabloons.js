@@ -16,7 +16,7 @@ export default function PointsPage() {
 
   return (
     <Page
-      title="Points"
+      title="Dabloons"
       maxH={{ base: null, sm: notLandscape ? "100vh" : null }}
     >
       {session ? (
