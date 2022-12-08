@@ -8,24 +8,18 @@ import {
 } from "@chakra-ui/react";
 import addRandomCard from "../../utils/add-random-card";
 
-export default function InfoOverlay({
-  buy,
-  isOpen,
-  onClose,
-  cardData,
-  getData,
-  children,
-}) {
+export default function InfoOverlay({ buy, isOpen, onClose, data, children }) {
   const { addCard } = addRandomCard();
   const [notLandscape] = useMediaQuery("(min-height: 480px)");
   let gradient;
 
-  if (cardData.level === "common") gradient = "linear(to-br, gray.400, white)";
-  else if (cardData.level === "rare")
+  if (data.cardData.tier === "common")
+    gradient = "linear(to-br, gray.400, white)";
+  else if (data.cardData.tier === "rare")
     gradient = "linear(to-br, yellow.400, white)";
-  else if (cardData.level === "super rare")
+  else if (data.cardData.tier === "super rare")
     gradient = "linear(to-br, green.400, white)";
-  else if (cardData.level === "mega rare")
+  else if (data.cardData.tier === "mega rare")
     gradient = "linear(to-br, blue.400, white)";
 
   return (
@@ -33,9 +27,9 @@ export default function InfoOverlay({
       isOpen={isOpen}
       onClose={onClose}
       onCloseComplete={() => {
-        if (getData && addCard) {
-          addCard(cardData);
-          getData();
+        if (data.getCard && addCard) {
+          addCard(data.cardData, data.userData.points);
+          data.getCard();
         }
       }}
       size={{ base: "full", md: notLandscape ? "xl" : "full" }}
