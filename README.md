@@ -1,6 +1,6 @@
 ### The Hot Discord Cards Project
 
-> One of the trading card games of all time. Not affiliated with Discord.
+> One of the trading card games of all time. Also a social media platform, I guess.
 
 ---
 
@@ -12,27 +12,41 @@ The idea stemmed from the desire to create an interactive app that revolved arou
 
 The purpose of this project is just to get a laugh out of our friends, and to show the gratitude we have towards them.
 
-###### FEATURES
+###### HOW TO RUN LOCALLY
+
+0. You must have a Supabase account and a Discord developer account.
+
+   - In your Discord developer portal, create an app. You may name this app whatever.
+   - In the app's settings, go to `OAuth2` to retrieve your app's **client ID** and **client secret**
+   - In a new tab, create a Supabase project, and go to the authentication settings.
+     - In your authentication settings, scroll to the Discord option, enable it, paste the **client id** and **client secret** in the proper fields.
+     - Finally, copy the **callback URL** and paste it into the Supabase Discord auth settings.
+
+1. In Supabase, create 3 tables: `profiles`, `owners`, and `cards`.
+
+   - In a future update, we will provide .csv templates for you to import to fill theses tables properly.
+
+2. Next, create a storage bucket in Supabase called `cards`. This is where you'll upload your images for the cards.
+
+3. With your backend set up, you may now open up the code.
+   - First, in the `.env.local` file, input the **Supabase URL** and **Supabase anon key**, which are provided in your Supabase project settings.
+     - NOTE: Don't forget to add `.env.local` to `.gitignore` to protect your keys from being exposed if you wanted to host your own instance online.
+   - Next, with **Node.js** installed, install the dependencies using `npm i`
+   - Finally, start up the local server with `npm run dev`
+
+###### FEATURES (UPDATED 12/08/2022)
 
 - [x] Profile customization (username, bio)
-- [x] Clicker game to earn points
-- [x] Use points to unlock bronze, silver, and/or gold cards
-- [x] Discard owned cards
+- [x] Clicker game to earn virtual currency called dabloons
+- [x] Use points to unlock common, rare, super rare, mega rare cards
+- [x] Discard owned cards to each dabloons back
 - [x] View card stats
-- [ ] More profile customization (profile pictures, custom backgrounds, links)
-- [ ] Search and view other users' profiles
-- [ ] Follow other users
-- [ ] Discard owned cards to earn some points back
-- [ ] Use points in the clicker game to buy powerups to make the game easier
-- [ ] Global leaderboard for most amount of clicks in one session
-- [ ] Unlock monthly mega-rare cards
-- [ ] Put cards up in the trade market
-- [ ] Send trade requests to other users
-- [ ] Dark theme
+- [x] View other users' profiles
+- [x] Global leaderboard for users to compete for the most amount of clicks globally
 
 ###### CREDITS
 
-This project wouldn't be possible with our lovely tech stack ([Next.js](https://nextjs.org), [Chakra UI](https://chakra-ui.com), [Supabase](https://supabase.com)) and our wonderful friends who let us use their faces (credits coming soon!)
+This project wouldn't be possible with our lovely tech stack ([Next.js](https://nextjs.org), [Chakra UI](https://chakra-ui.com), [Supabase](https://supabase.com)) and our [wonderful friends](https://github.com/mploythai/hot-discord-cards/ACKNOWLEDGEMENTS.md) who let us use their faces!
 
 ---
 
