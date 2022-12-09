@@ -49,21 +49,29 @@ export default function User({ user, card }) {
 }
 
 export async function getStaticProps({ params }) {
+  let user = {};
+  let card = [];
+
   let { data } = await supabase
     .from("profiles")
     .select("*")
     .eq("username", params["user"])
     .single();
 
-  let { data: cards } = await supabase
-    .from("cards")
-    .select("*, owners!inner (*)")
-    .eq("owners.user_id", data.id);
+  if (data) {
+    Object.assign(user, data);
+
+    let { data: cards } = await supabase
+      .from("cards")
+      .select("*, owners!inner (*)")
+      .eq("owners.user_id", data.id);
+    card = [...cards];
+  }
 
   return {
     props: {
-      user: data,
-      card: cards,
+      user: user,
+      card: card,
     },
     revalidate: 10,
   };
