@@ -23,7 +23,18 @@ export default function Leaderboard({ userData }) {
         Click Leaderboard
       </Heading>
 
-      <VStack w="100%" h="100%" overflow="scroll">
+      <VStack
+        w="100%"
+        h="100%"
+        overflowY="scroll"
+        sx={{
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+
+          "&": { scrollbarWidth: "none" },
+        }}
+      >
         {allUsers.map((users) => {
           return (
             <UserInfo

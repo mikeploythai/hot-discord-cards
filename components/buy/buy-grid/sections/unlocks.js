@@ -58,7 +58,18 @@ export default function Unlocks() {
         Recent Unlocks
       </Heading>
 
-      <VStack w="100%" h="100%" overflow="scroll">
+      <VStack
+        w="100%"
+        h="100%"
+        overflowY="scroll"
+        sx={{
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+
+          "&": { scrollbarWidth: "none" },
+        }}
+      >
         <TempArea />
         <TempArea />
         <TempArea />
